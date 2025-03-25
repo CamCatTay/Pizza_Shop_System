@@ -69,7 +69,7 @@ public class Order {
 
     public void setAccount(Account newAccount){ this.account = newAccount; }
 
-    public double calcTax(Order order){
+    public double calcTax(Order order, double taxAmount){
 
         List<MenuItem> items = order.getOrderedItems();
         double totalAmount = 0.0;
@@ -78,10 +78,10 @@ public class Order {
             totalAmount += item.getPrice();
         }
 
-        return totalAmount * 0.07;
+        return totalAmount * taxAmount;
     }
 
-    public double calcTip(Order order){
+    public double calcTip(Order order, double tipAmount){
 
         List<MenuItem> items = order.getOrderedItems();
         double totalAmount = 0.0;
@@ -90,7 +90,7 @@ public class Order {
             totalAmount += item.getPrice();
         }
 
-        return totalAmount * 0.15;
+        return totalAmount * tipAmount;
     }
 
     public void generateAndDisplayReceipt(Order order, String customerName, String paymentMethod) {
