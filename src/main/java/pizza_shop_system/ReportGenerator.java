@@ -22,17 +22,17 @@ public class ReportGenerator {
         //        System.out.println(order.getAccount().name + " " + order.getOrderID());
         //        System.out.println(order.getOrderedItems());
         //
-        //        //NEED SUBTOTAL, TAX, TIP, & TOTAL
+        //        //SUBTOTAL, TAX, TIP, & TOTAL
         //        List<MenuItem> items = order.getOrderedItems();
         //        double subtotal = 0.0;
         //        for(MenuItem item: items){
         //            subtotal += item.getPrice();
         //        }
         //        System.out.println("Subtotal: " + String.format("%.2d", subtotal));
-        //        System.out.println("Tax: " + String.format("%.2d", order.calcTax(order)));
-        //        System.out.println("Tip: " + String.format("%.2d", order.calcTip(order)));
+        //        System.out.println("Tax: " + String.format("%.2d", order.calcTax(order, 0.07)));
+        //        System.out.println("Tip: " + String.format("%.2d", order.calcTip(order, 0.15)));
         //
-        //        double total = subtotal + order.calcTax(order) + order.calcTip(order);
+        //        double total = subtotal + order.calcTax(order, 0.07) + order.calcTip(order, 0.15);
         //        System.out.println("Total: " + String.format("%.2d", total));
         //
         //        System.out.println(order.getStatus());
