@@ -1,3 +1,5 @@
+package pizza_shop_system;
+
 import java.util.List;
 
 public class Receipt {

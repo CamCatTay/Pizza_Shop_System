@@ -1,4 +1,4 @@
-package org.example.pizza_shop_system;
+package pizza_shop_system;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
