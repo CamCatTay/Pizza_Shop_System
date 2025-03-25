@@ -11,6 +11,7 @@ public class Order {
     private String orderType;
     private OrderStatus status;
     private LocalDate datePlaced;
+    private Account account;
 
 
     //DEFAULT CONSTRUCTOR
@@ -21,15 +22,17 @@ public class Order {
         this.orderType = "DEFAULT";
         this.status = OrderStatus.INCOMPLETE;
         this.datePlaced = LocalDate.now();
+        this.account = null;
     }
 
-    public Order(String paymentMethod, int orderID, ArrayList<MenuItem> orderedItems, String orderType, OrderStatus status){
+    public Order(String paymentMethod, int orderID, ArrayList<MenuItem> orderedItems, String orderType, OrderStatus status, Account account){
         this.paymentMethod = paymentMethod;
         this.orderID = orderID;
         this.orderedItems = orderedItems;
         this.orderType = orderType;
         this.status = status;
         this.datePlaced = LocalDate.now();
+        this.account = account;
     }
 
     //Getters
@@ -38,6 +41,7 @@ public class Order {
     public String getOrderType(){ return this.orderType; }
     public OrderStatus getStatus(){ return this.status; }
     public LocalDate getDatePlaced(){ return this.datePlaced; }
+    public Account getAccount(){ return this.account; }
 
     //Setters
     //NO Setter for ID so it is immutable
@@ -59,6 +63,32 @@ public class Order {
     public void setPaymentMethod(String newPaymentMethod)
     {
         this.paymentMethod = newPaymentMethod;
+    }
+
+    public void setAccount(Account newAccount){ this.account = newAccount; }
+
+    public double calcTax(Order order){
+
+        List<MenuItem> items = order.getOrderedItems();
+        double totalAmount = 0.0;
+
+        for(MenuItem item: items){
+            totalAmount += item.getPrice();
+        }
+
+        return totalAmount * 0.07;
+    }
+
+    public double calcTip(Order order){
+
+        List<MenuItem> items = order.getOrderedItems();
+        double totalAmount = 0.0;
+
+        for(MenuItem item: items){
+            totalAmount += item.getPrice();
+        }
+
+        return totalAmount * 0.15;
     }
 
     public void generateAndDisplayReceipt(Order order, String customerName, String paymentMethod) {
