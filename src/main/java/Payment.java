@@ -39,14 +39,14 @@ public class Payment {
             if (items == null || items.isEmpty()){
                 System.err.println("Error: no items in the cart. Cannot process payment!");
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
             if (checkAmount < 0){
                 System.err.println("Error: Check amount cannot be negative");
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
@@ -61,7 +61,7 @@ public class Payment {
                 if (item.getPrice() < 0) {
                     System.out.println("Error: Item price cannot be negative! Please check the menu.");
                     setProcessed(false);
-                    order.setStatus("FAILED");
+                    order.setStatus(OrderStatus.INCOMPLETE);
                     return;
                 }
                 this.amount += item.getPrice();
@@ -69,11 +69,11 @@ public class Payment {
 
             if (this.amount > 0 && checkAmount >= this.amount) {
                 setProcessed(true);
-                order.setStatus("PAID");
+                order.setStatus(OrderStatus.IN_PROGRESS);
                 System.out.println("Payment processed successfully");
             } else {
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
 
                 if (checkAmount < this.amount) {
                     System.err.println("Payment processing failed: Insufficient funds.");
@@ -87,14 +87,14 @@ public class Payment {
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         } catch (Exception e) {
             System.err.println("An error occurred, check the stack trace");
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         }
 
@@ -111,14 +111,14 @@ public class Payment {
             if (items == null || items.isEmpty()){
                 System.err.println("Error: no items in the cart. Cannot process payment!");
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
             if (cash < 0){
                 System.err.println("Error: Cash amount cannot be negative");
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
@@ -133,7 +133,7 @@ public class Payment {
                 if (item.getPrice() < 0) {
                     System.err.println("Error: Item price cannot be negative! Please check the menu.");
                     setProcessed(false);
-                    order.setStatus("FAILED");
+                    order.setStatus(OrderStatus.INCOMPLETE);
                     return;
                 }
                 this.amount += item.getPrice();
@@ -147,12 +147,12 @@ public class Payment {
                 change = Math.round(change * 100.0) / 100.0;
 
                 setProcessed(true);
-                order.setStatus("PAID");
+                order.setStatus(OrderStatus.IN_PROGRESS);
                 System.out.println("Payment processed successfully");
                 System.out.println("Amount to give in change: $" + String.format("%.2f", change));
             } else {
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
 
                 if (cash < this.amount) {
                     System.err.println("Payment processing failed: Insufficient funds.");
@@ -166,14 +166,14 @@ public class Payment {
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         } catch (Exception e) {
             System.err.println("An error occurred, check the stack trace");
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         }
 
@@ -208,16 +208,16 @@ public class Payment {
 
                 if (this.amount > 0) {
                     setProcessed(true);
-                    order.setStatus("PAID");
+                    order.setStatus(OrderStatus.IN_PROGRESS);
                     System.out.println("Payment processed successfully");
                 } else {
                     setProcessed(false);
-                    order.setStatus("FAILED");
+                    order.setStatus(OrderStatus.INCOMPLETE);
                     System.err.println("Payment processing failed");
                 }
             } else {
                 setProcessed(false);
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
                 System.err.println("Payment processing failed");
             }
         } catch (ArithmeticException e) {
@@ -225,14 +225,14 @@ public class Payment {
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         } catch (Exception e) {
             System.err.println("An error occurred, check the stack trace");
             e.printStackTrace();
             setProcessed(false);
             if (order != null) {
-                order.setStatus("FAILED");
+                order.setStatus(OrderStatus.INCOMPLETE);
             }
         }
     }
