@@ -1,5 +1,6 @@
 package pizza_shop_system;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,9 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginSceneController {
     private String currentEmail;
     private String currentPassword;
+    private final SceneController sceneController = new SceneController();
+
     @FXML
     private TextField emailTextfield;
     @FXML
@@ -18,6 +23,11 @@ public class LoginSceneController {
     private Button loginButton;
     @FXML
     private Button signupButton;
+
+    //Utilize scene controller class to switch scenes, so I don't have to import all those classes again.
+    public void switchToSignUpScene(ActionEvent actionEvent) throws IOException {
+        sceneController.switchToSignUpScene(actionEvent);
+    }
 
     @FXML
     private void handleLoginButtonClick() {
@@ -40,5 +50,4 @@ public class LoginSceneController {
     private void handlePasswordTextSubmitted(String password) {
         this.currentPassword = password;
     }
-
 }

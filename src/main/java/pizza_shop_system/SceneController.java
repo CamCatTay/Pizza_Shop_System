@@ -7,14 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.util.Objects;
 
 public class SceneController {
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
     public void switchToLoginScene(ActionEvent event) throws IOException {
-        FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginScene.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -22,7 +22,7 @@ public class SceneController {
     }
 
     public void switchToSignUpScene(ActionEvent event) throws IOException {
-        FXMLLoader.load(getClass().getResource("SignUpScene.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SignUpScene.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
