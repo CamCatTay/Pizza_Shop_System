@@ -2,21 +2,26 @@ package pizza_shop_system;
 
 public class Account {
 
-    public String name, email, address, phoneNumber, password, accountType;
-    public CreditCard creditCard;
+    private String name, email, address, phoneNumber, password, accountType;
+    private CreditCard creditCard;
+    private static int nextID;
+    private int id;
+
 
     public Account(){
-        name = "Bob";
-        email = "bobspizza@pizza.com";
-        address = "1234 Pizza Way";
-        phoneNumber = "123-4567";
-        password = "password";
-        accountType = "Customer";
-        creditCard = null;
+        this.name = "Bob";
+        this.id = nextID++;
+        this.email = "bobspizza@pizza.com";
+        this.address = "1234 Pizza Way";
+        this.phoneNumber = "123-4567";
+        this.password = "password";
+        this.accountType = "Customer";
+        this.creditCard = null;
     }
 
     public Account(String name, String email, String address, String phoneNumber, String password, String accountType){
         this.name = name;
+        this.id = nextID++;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -24,9 +29,11 @@ public class Account {
         this.accountType = accountType;
     }
 
+
     //CONSTRUCTOR W/ CREDIT CARD
     public Account(String name, String email, String address, String phoneNumber, String password, String accountType, CreditCard creditCard){
         this.name = name;
+        this.id = nextID++;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -37,6 +44,7 @@ public class Account {
 
     //Getters
     public String getName(){ return this.name;}
+    public int getId(){ return this.id; }
     public String getEmail(){ return this.email;}
     public String getAddress(){ return this.address;}
     public String getPhoneNumber(){ return this.phoneNumber;}
@@ -48,6 +56,8 @@ public class Account {
     public void setName(String newName){
         this.name = newName;
     }
+
+    public void setId(int newID){ this.id = newID; }
 
     public void setEmail(String newEmail){
         this.email = newEmail;
