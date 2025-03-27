@@ -18,7 +18,7 @@ public class RandomAccountGenerator {
         boolean isManagement;
         //boolean creditCard;
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("random_accounts.txt"))) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data_files/random_accounts.txt"))) {
 
             for(int i =0; i < numAccountsToGen; i++){
 
@@ -36,6 +36,7 @@ public class RandomAccountGenerator {
                 //            + account.getAccountType());
                 //}
 
+                //Toggle for management account
                 isManagement = random.nextBoolean();
                 RandomAccount account = new RandomAccount();
                 if(isManagement){
