@@ -50,4 +50,10 @@ public class LoginSceneController {
     private void handlePasswordTextSubmitted(String password) {
         this.currentPassword = password;
     }
+
+    public void handleEmailInput(ActionEvent actionEvent) {
+    }
+
+    public void handlePasswordInput(ActionEvent actionEvent) {
+    }
 }

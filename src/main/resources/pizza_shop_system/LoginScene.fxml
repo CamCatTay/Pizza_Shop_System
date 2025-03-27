@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:controller="pizza_shop_system.LoginSceneController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.LoginSceneController">
    <children>
       <Label layoutX="286.0" layoutY="14.0" text="Login" />
-      <TextField alignment="CENTER" layoutX="227.0" layoutY="58.0" promptText="Email" />
-      <TextField alignment="CENTER" layoutX="227.0" layoutY="90.0" promptText="Password" />
-      <Button layoutX="227.0" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Login" />
-      <Button layoutX="227.0" layoutY="160.0" mnemonicParsing="false" onAction="#switchToSignUpScene" prefHeight="25.0" prefWidth="149.0" text="Sign Up" />
+      <TextField alignment="CENTER" layoutX="227.0" layoutY="108.0" promptText="Email" onAction="#handleEmailInput" />
+      <TextField alignment="CENTER" layoutX="227.0" layoutY="140.0" promptText="Password" onAction= "#handlePasswordInput" />
+      <Button layoutX="227.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Login" />
+      <Button layoutX="223.0" layoutY="55.0" mnemonicParsing="false" onAction="#switchToSignUpScene" prefHeight="43.0" prefWidth="157.0" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
