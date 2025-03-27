@@ -11,49 +11,33 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginSceneController {
-    private String currentEmail;
-    private String currentPassword;
+    private String submittedEmail;
+    private String submittedPassword;
     private final SceneController sceneController = new SceneController();
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField passwordField;
 
-    @FXML
-    private TextField emailTextfield;
-    @FXML
-    private TextField passwordTextfield;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button signupButton;
-
-    //Utilize scene controller class to switch scenes, so I don't have to import all those classes again.
     public void switchToSignUpScene(ActionEvent actionEvent) throws IOException {
         sceneController.switchToSignUpScene(actionEvent);
     }
 
     @FXML
-    private void handleLoginButtonClick() {
-        //Do something if email or password are not entered
-        //Do something if both are entered and valid
-        //Do something if both are entered but invalid
+    public void handleEmailChanged() {
+        this.submittedEmail = emailField.getText();
     }
 
     @FXML
-    private void handleSignupButtonClick() {
-
+    public void handlePasswordChanged() {
+        this.submittedPassword = passwordField.getText();
     }
 
-    @FXML
-    private void handleEmailTextSubmitted(String email) {
-        this.currentEmail = email;
+    public void handleLoginClick() {
+        //Look in users.txt file for specified email and password. If either field is invalid alert user and return
+        //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well.
+        System.out.println(submittedEmail);
+        System.out.println(submittedPassword);
     }
 
-    @FXML
-    private void handlePasswordTextSubmitted(String password) {
-        this.currentPassword = password;
-    }
-
-    public void handleEmailInput(ActionEvent actionEvent) {
-    }
-
-    public void handlePasswordInput(ActionEvent actionEvent) {
-    }
 }
