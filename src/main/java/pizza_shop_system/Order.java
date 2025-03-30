@@ -13,7 +13,7 @@ public class Order {
     private String orderType;
     private OrderStatus status;
     private LocalDate datePlaced;
-    private Account account;
+    private User account;
 
 
     //DEFAULT CONSTRUCTOR
@@ -27,7 +27,7 @@ public class Order {
         this.account = null;
     }
 
-    public Order(String paymentMethod, int orderID, ArrayList<MenuItem> orderedItems, String orderType, OrderStatus status, Account account){
+    public Order(String paymentMethod, int orderID, ArrayList<MenuItem> orderedItems, String orderType, OrderStatus status, User account){
         this.paymentMethod = paymentMethod;
         this.orderID = orderID;
         this.orderedItems = orderedItems;
@@ -43,7 +43,7 @@ public class Order {
     public String getOrderType(){ return this.orderType; }
     public OrderStatus getStatus(){ return this.status; }
     public LocalDate getDatePlaced(){ return this.datePlaced; }
-    public Account getAccount(){ return this.account; }
+    public User getAccount(){ return this.account; }
 
     //Setters
     //NO Setter for ID so it is immutable
@@ -67,7 +67,7 @@ public class Order {
         this.paymentMethod = newPaymentMethod;
     }
 
-    public void setAccount(Account newAccount){ this.account = newAccount; }
+    public void setAccount(User newAccount){ this.account = newAccount; }
 
     public double calcTax(Order order, double taxAmount){
 

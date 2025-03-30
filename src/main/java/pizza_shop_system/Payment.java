@@ -181,7 +181,7 @@ public class Payment {
 
     }
 
-    public void processCard(Order order, Account account){
+    public void processCard(Order order, User account){
         try {
             if(order == null){
                 System.err.println("Error: Order is null. Payment cannot be processed!");

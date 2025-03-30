@@ -40,7 +40,7 @@ public class CreditCard {
     public void setExpDate(LocalDate newDate){ this.expDate = newDate; }
     public void setCvcNum(int newNumber){ this.cvcNum = newNumber; }
 
-    public boolean verifyCard(Account account) {
+    public boolean verifyCard(User account) {
         try {
 
             if (account == null || account.getCreditCard() == null) {

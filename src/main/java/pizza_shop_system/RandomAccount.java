@@ -2,7 +2,7 @@ package pizza_shop_system;
 
 import java.util.Random;
 
-class RandomAccount extends Account {
+class RandomAccount extends User {
 
     static Random random = new Random();
     static String[] firstNames = new String[]{"Olivia", "Ethan", "Ava", "Liam", "Mia", "Noah", "Isabella", "Lucas", "Charlotte", "Mason", "Amelia", "James", "Sophia", "Benjamin", "Emma", "Jacob", "Harper", "William", "Ella", "Henry", "Jackson", "Grace", "Daniel", "Chloe", "Michael", "Zoe", "Alexander", "Lily", "Matthew", "Scarlett", "Jack", "Samantha", "David", "Avery", "Joseph", "Evelyn", "Samuel", "Victoria", "Andrew", "Leah", "Caleb", "Abigail", "Gabriel", "Ella", "Wyatt", "Madison", "Luke", "Grace", "Nathan", "Aria", "Thomas", "Emily", "Isaac", "Julia", "Evan", "Savannah", "Hunter", "Natalie", "Ryan", "Bella", "Logan", "Zoe", "Leo", "Nora", "Elijah", "Eleanor", "Owen", "Madeline", "Carter", "Lily", "Grace", "Oliver", "Sophia", "Mason", "Megan", "Elliot", "Violet", "Landon", "Riley", "Zoey", "Mackenzie", "Jackson", "Addison", "Eli", "Maya", "Jack", "Amos", "Sophie", "Aiden", "Hannah", "Madelyn", "Avery", "Brody", "Tessa", "Carson", "Megan", "Aiden", "Charlotte"};
