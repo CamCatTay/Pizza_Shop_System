@@ -37,23 +37,23 @@ public class SignUpSceneController {
     }
     @FXML
     public void handlePasswordChanged() {
-        this.submittedEmail = emailField.getText();
+        this.submittedPassword = passwordField.getText();
     }
     @FXML
     public void handleVerifyPasswordChanged() {
-        this.submittedEmail = emailField.getText();
+        this.submittedVerifyPassword = verifyPasswordField.getText();
     }
     @FXML
     public void handleNameChanged() {
-        this.submittedEmail = emailField.getText();
+        this.submittedName = nameField.getText();
     }
     @FXML
     public void handleAddressChanged() {
-        this.submittedEmail = emailField.getText();
+        this.submittedAddress = addressField.getText();
     }
     @FXML
     public void handlePhoneNumberChanged() {
-        this.submittedEmail = emailField.getText();
+        this.submittedPhoneNumber = phoneNumberField.getText();
     }
 
     public void handleSignUpClick() {
