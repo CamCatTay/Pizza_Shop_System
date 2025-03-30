@@ -7,12 +7,12 @@
    <children>
       <Label layoutX="286.0" layoutY="14.0" text="Sign Up" />
       <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchToLoginScene" text="Back" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="47.0" promptText="Name" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="78.0" promptText="Email" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="192.0" promptText="Password" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="225.0" promptText="Re-enter Password" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="109.0" promptText="Phone Number" />
-      <TextField alignment="CENTER" layoutX="234.0" layoutY="141.0" promptText="Address" />
-      <Button layoutX="242.0" layoutY="270.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="132.0" text="Sign Up" />
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="47.0" promptText="Name" fx:id="nameField" onKeyTyped="#handleNameChanged" />
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="78.0" promptText="Email" fx:id="emailField" onKeyTyped="#handleEmailChanged"/>
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="192.0" promptText="Password" fx:id="passwordField" onKeyTyped="#handlePasswordChanged"/>
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="225.0" promptText="Re-enter Password" fx:id="verifyPasswordField" onKeyTyped="#handleVerifyPasswordChanged"/>
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="109.0" promptText="Phone Number" fx:id="phoneNumberField" onKeyTyped="#handlePhoneNumberChanged"/>
+      <TextField alignment="CENTER" layoutX="234.0" layoutY="141.0" promptText="Address" fx:id="addressField" onKeyTyped="#handleAddressChanged"/>
+      <Button layoutX="242.0" layoutY="270.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="132.0" text="Sign Up" onAction="#handleSignUpClick"/>
    </children>
 </AnchorPane>
