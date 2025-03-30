@@ -6,18 +6,6 @@ public class User {
     private static int nextID;
     private int id;
 
-
-    public User(){
-        this.name = "Bob";
-        this.id = nextID++;
-        this.email = "bobspizza@pizza.com";
-        this.address = "1234 Pizza Way";
-        this.phoneNumber = "123-4567";
-        this.password = "password";
-        this.accountType = "Customer";
-        this.creditCard = null;
-    }
-
     public User(String name, String email, String address, String phoneNumber, String password, String accountType){
         this.name = name;
         this.id = nextID++;
