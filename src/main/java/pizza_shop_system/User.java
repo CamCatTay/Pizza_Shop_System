@@ -1,14 +1,13 @@
 package pizza_shop_system;
 
-public class Account {
-
+public class User {
     private String name, email, address, phoneNumber, password, accountType;
     private CreditCard creditCard;
     private static int nextID;
     private int id;
 
 
-    public Account(){
+    public User(){
         this.name = "Bob";
         this.id = nextID++;
         this.email = "bobspizza@pizza.com";
@@ -19,7 +18,7 @@ public class Account {
         this.creditCard = null;
     }
 
-    public Account(String name, String email, String address, String phoneNumber, String password, String accountType){
+    public User(String name, String email, String address, String phoneNumber, String password, String accountType){
         this.name = name;
         this.id = nextID++;
         this.email = email;
@@ -31,7 +30,7 @@ public class Account {
 
 
     //CONSTRUCTOR W/ CREDIT CARD
-    public Account(String name, String email, String address, String phoneNumber, String password, String accountType, CreditCard creditCard){
+    public User(String name, String email, String address, String phoneNumber, String password, String accountType, CreditCard creditCard){
         this.name = name;
         this.id = nextID++;
         this.email = email;
