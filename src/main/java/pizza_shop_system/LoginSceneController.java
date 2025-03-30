@@ -14,6 +14,7 @@ public class LoginSceneController {
     private String submittedEmail;
     private String submittedPassword;
     private final SceneController sceneController = new SceneController();
+    private final LoginHandler loginHandler = new LoginHandler();
     @FXML
     private TextField emailField;
     @FXML
@@ -35,9 +36,10 @@ public class LoginSceneController {
 
     public void handleLoginClick() {
         //Look in users.txt file for specified email and password. If either field is invalid alert user and return
-        //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well.
+        //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well
         System.out.println(submittedEmail);
         System.out.println(submittedPassword);
+        System.out.println(loginHandler.AttemptLogin(submittedEmail, submittedPassword));
     }
 
 }
