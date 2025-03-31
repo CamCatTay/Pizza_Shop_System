@@ -61,7 +61,11 @@ public class SignUpHandler {
         return !phoneNumber.isEmpty();
     }
 
-    // Attempts to create a new user account. Returns true if successful, false otherwise for GUI feedback.
+    public void CreateUser() {
+
+    }
+
+    // Attempts to create a new user. Returns true if successful, false otherwise for GUI feedback.
     public ArrayList<String> AttemptSignUp(String submittedEmail, String submittedPassword, String submittedVerifyPassword, String submittedName, String submittedAddress, String submittedPhoneNumber) {
         ArrayList<String> invalidConditions = new ArrayList<>();
 
@@ -85,6 +89,7 @@ public class SignUpHandler {
         if (!invalidConditions.isEmpty()) {
             return invalidConditions;
         } else {
+
             return null;
         }
     }
