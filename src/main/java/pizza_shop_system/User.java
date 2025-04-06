@@ -16,6 +16,16 @@ public class User {
         this.accountType = accountType;
     }
 
+    //CONSTRUCTOR W/ ID SETTING
+    public User(String name, int id, String email, String address, String phoneNumber, String password, String accountType){
+        this.name = name;
+        this.id = id;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.accountType = accountType;
+    }
 
     //CONSTRUCTOR W/ CREDIT CARD
     public User(String name, String email, String address, String phoneNumber, String password, String accountType, CreditCard creditCard){
