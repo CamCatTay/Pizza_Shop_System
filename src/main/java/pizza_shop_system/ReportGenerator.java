@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-
-
 public class ReportGenerator {
 
     private LocalDate date;
@@ -34,16 +32,19 @@ public class ReportGenerator {
                 String[] fields = line.split(",");
                 LocalDate checkDate = LocalDate.parse(fields[3].trim());
 
-                if (checkDate == selectedDate) {
+                if (checkDate.equals(selectedDate)) {
                     int orderID = Integer.parseInt(fields[0].trim());
                     String customerName = fields[1].trim();
                     int customerID = Integer.parseInt(fields[2]);
                     LocalDate date = LocalDate.parse(fields[3].trim());
                     String orderType = fields[4].trim();
-                    String status = fields[5].trim();
+                    OrderStatus status = OrderStatus.valueOf(fields[5].trim());
                     String paymentMethod = fields[6].trim();
-                    List<MenuItem> orderedItems = readOrderItems(orderID);
-                    System.out.println(orders);
+                    ArrayList<MenuItem> orderedItems = readOrderItems(orderID);
+
+                    User account = new User(customerName, customerID);
+                    Order order = new Order(paymentMethod, orderID, orderedItems, orderType, status, account);
+                    orders.add(order);
                 }
 
             }
@@ -59,9 +60,10 @@ public class ReportGenerator {
 
     }
 
-    public static List<MenuItem> readOrderItems(int orderID) throws IOException{
+    //May be issue reading multiple types
+    public static ArrayList<MenuItem> readOrderItems(int orderID) throws IOException{
 
-        List<MenuItem> items = new ArrayList<>();
+        ArrayList<MenuItem> items = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader("data_files/order_items.txt"))) {
             String line;
 
@@ -69,13 +71,14 @@ public class ReportGenerator {
                 String[] fields = line.split(",");
                 String name = fields[1].trim();
                 double price = Double.parseDouble(fields[2]);
-                String category = fields[3].trim();
+                int amount = Integer.parseInt(fields[3]);
+                String category = fields[4].trim();
                 ArrayList<String> toppings = new ArrayList<>();
                 for(int i = 4; i < fields.length; i++){
                     toppings.add(fields[i]);
                 }
 
-                MenuItem menuItem = new MenuItem(name, price, category, toppings);
+                MenuItem menuItem = new MenuItem(name, price, amount, category, toppings);
                 items.add(menuItem);
             }
         } catch (IOException e) {
@@ -129,6 +132,28 @@ public class ReportGenerator {
 
     }
 
+    public static List<String> countItems(List<MenuItem> order){
+
+        List<String> uniqueItems = new ArrayList<>();
+        List<Integer> itemCounts = new ArrayList<>();
+
+        for(MenuItem item: order){
+            String name = item.getName();
+            uniqueItems.add(name);
+
+            int amount = item.getAmount();
+            itemCounts.add(amount);
+        }
+
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i < uniqueItems.size(); i++){
+            result.add(uniqueItems.get(i) + ": " + itemCounts.get(i));
+        }
+
+        return result;
+
+    }
+
     public static void generateDailyReport(LocalDate specifiedDate) throws IOException {
 
         try {
@@ -140,7 +165,7 @@ public class ReportGenerator {
                 return;
             }
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM d, yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 
             System.out.println(specifiedDate.format(formatter));
             System.out.println("__________________________");
@@ -195,25 +220,86 @@ public class ReportGenerator {
         }
     }
 
-    public static void generateWeeklyReport(List<Order> orders, LocalDate startDate, LocalDate endDate){
+    public static void generateWeeklyReport(List<Order> orders, LocalDate startDate, LocalDate endDate) throws IOException{
 
-        if (orders == null || orders.isEmpty()){
-            System.err.println("There are no orders for this date!");
-        }
+        try {
+            if (orders == null || orders.isEmpty()) {
+                System.err.println("There are no orders for this date!");
+                return;
+            }
 
-        LocalDate currentDate = startDate;
-
-        while(!currentDate.isAfter(endDate)){
+            LocalDate currentDate = startDate;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE MMMM dd, yyyy");
             System.out.println("Generating weekly report from" + startDate + " to " + endDate);
 
-            for (Order order : orders){
-                LocalDate orderDate = order.getDatePlaced();
+            while (!currentDate.isAfter(endDate)) {
+                String formattedDate = currentDate.format(formatter);
+                System.out.println(formattedDate);
+                System.out.println("—----------------------");
 
+                double subtotal = 0.0;
 
+                List<String> itemNames = new ArrayList<>();
+                List<Integer> itemQuantities = new ArrayList<>();
+                List<Double> itemPrices = new ArrayList<>();
+
+                for (Order order : orders) {
+                    LocalDate orderDate = order.getDatePlaced();
+                    if (orderDate.equals(currentDate)) {
+                        List<MenuItem> orderItems = readOrderItems(order.getOrderID());
+
+                        for (MenuItem item : orderItems) {
+                            String itemName = item.getName();
+                            int amount = item.getAmount();
+                            double price = item.getPrice();
+                            int index = itemNames.indexOf(itemName);
+
+                            // If the item is already in the list, add the quantity and update the price
+                            if (index >= 0) {
+                                itemQuantities.set(index, itemQuantities.get(index) + amount);
+                            } else {
+                                itemNames.add(itemName);
+                                itemQuantities.add(amount);
+                                itemPrices.add(price);
+                            }
+
+                            subtotal += price * amount;
+                        }
+                    }
+                }
+
+                boolean hasItems = false;
+                for (int i = 0; i < itemNames.size(); i++) {
+                    String itemName = itemNames.get(i);
+                    int quantity = itemQuantities.get(i);
+                    double price = itemPrices.get(i);
+                    double totalItemPrice = price * quantity;
+                    System.out.printf("%dx %s $%.2f\n", quantity, itemName, totalItemPrice); //Learning printf may be jank
+                    hasItems = true;
+                }
+
+                if (!hasItems) {
+                    System.out.println("No orders for this day.");
+                }
+
+                double tax = subtotal * 0.08; // assuming 8% tax rate
+                double total = subtotal + tax;
+
+                System.out.println("—-------");
+                System.out.printf("Subtotal: $%.2f\n", subtotal);
+                System.out.printf("Tax: $%.2f\n", tax);
+                System.out.println("—-------");
+                System.out.printf("Total: $%.2f\n", total);
+
+                currentDate = currentDate.plusDays(1);  // Move to the next day
             }
+        } catch (IOException e){
+            System.err.println("IOException: Unable to read file " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e){
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
-
-
 
     }
 

@@ -16,6 +16,12 @@ public class User {
         this.accountType = accountType;
     }
 
+    //CONSTRUCTOR W/ JUST NAME AND ID
+    public User(String name, int id){
+        this.name = name;
+        this.id = id;
+    }
+
     //CONSTRUCTOR W/ ID SETTING
     public User(String name, int id, String email, String address, String phoneNumber, String password, String accountType){
         this.name = name;

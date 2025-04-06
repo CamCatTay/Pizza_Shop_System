@@ -6,6 +6,7 @@ public class MenuItem {
 
     public String name;
     public double price;
+    public int amount;
     public String category;
     public ArrayList<String> toppings;
 
@@ -13,13 +14,15 @@ public class MenuItem {
     public MenuItem(){
         name = "NAME";
         price = 0;
+        amount = 0;
         category = "DEFAULT";
         toppings = new ArrayList<>();
     }
 
-    public MenuItem(String name, double price, String category, ArrayList<String> toppings){
+    public MenuItem(String name, double price, int amount, String category, ArrayList<String> toppings){
         this.name = name;
         this.price = price;
+        this.amount = amount;
         this.category = category;
         this.toppings = toppings;
     }
@@ -27,6 +30,7 @@ public class MenuItem {
     //Getters
     public String getName(){ return this.name; }
     public double getPrice(){ return this.price; }
+    public int getAmount(){ return this.amount; }
     public String getCategory(){ return this.category; }
     public ArrayList<String> getToppings(){ return this.toppings; }
 
@@ -38,6 +42,8 @@ public class MenuItem {
     public void setPrice(double newPrice){
         price = newPrice;
     }
+
+    public void setAmount(int newAmount) { amount = newAmount; }
 
     public void setCategory(String newCategory){
         category = newCategory;
