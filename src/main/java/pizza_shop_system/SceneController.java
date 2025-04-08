@@ -29,6 +29,14 @@ public class SceneController {
         stage.show();
     }
 
+    public void switchToAccountScene(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AccountScene.fxml"))); //Change path to whatever is needed for Account
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void switchToReportGeneratorScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ReportGeneratorScene.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
