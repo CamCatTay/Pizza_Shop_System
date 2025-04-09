@@ -7,6 +7,16 @@ import java.io.IOException;
 public class AccountHandler {
     private static int nextID = 0;
 
+    // Returns the type of account the user is attempting to create
+    public String DetermineAccountType(String submittedEmail) {
+        String pizzaShopOrganization = "@pizzashop.org";
+        if (submittedEmail.endsWith(pizzaShopOrganization)) {
+            return "Manager";
+        } else {
+            return "Customer";
+        }
+    }
+
     // Writes the data for a new account into the users file
     private void CreateAccount(String submittedEmail, String submittedPassword, String submittedName, String submittedAddress, String submittedPhoneNumber) {
         int id = nextID;
