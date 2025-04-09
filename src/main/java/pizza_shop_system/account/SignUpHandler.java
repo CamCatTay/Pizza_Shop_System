@@ -6,17 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SignUpHandler {
-    // Returns the type of account the user is attempting to create
-    public String DetermineAccountType(String submittedEmail) {
-        String pizzaShopOrganization = "@pizzashop.org";
-        if (submittedEmail.endsWith(pizzaShopOrganization)) {
-            return "Manager";
-        } else {
-            return "Customer";
+    private boolean NotNullNotEmpty(String string) {
+        if (string != null) {
+            return !string.isEmpty();
         }
+        return false;
     }
 
-    public boolean IsEmailValid(String email) {
+    public boolean IsEmailValid(String submittedEmail) {
         // Implement check if email is in correct format: xxx@domain
         // Possibly implement mock 2FA screen to confirm email account belongs to user
 
@@ -30,7 +27,7 @@ public class SignUpHandler {
                 String user_email = loginData[1].trim();
 
                 // Cancel account creation because user already exists
-                if (user_email.equals(email)) {
+                if (NotNullNotEmpty(submittedEmail) && user_email.equals(submittedEmail)) {
                     return true;
                 }
             }
@@ -44,25 +41,25 @@ public class SignUpHandler {
     }
     public boolean IsPasswordValid(String password, String verifyPassword) {
         // Implement check if password meets security standards: >= 8 characters, >= 1 number, >= 1 uppercase, >= 1 special character
-        return password.equals(verifyPassword);
+        if (NotNullNotEmpty(password) && NotNullNotEmpty(verifyPassword)) {
+            return password.equals(verifyPassword);
+        }
+        return false;
     }
 
     public boolean IsNameValid(String name) {
         // Implement check if name is in correct format: firstName lastName
-        return !name.isEmpty();
+        return NotNullNotEmpty(name);
     }
 
     public boolean IsAddressValid(String address) {
         // Implement check if address is in correct format: number streetName streetType
-        return !address.isEmpty();
+        return NotNullNotEmpty(address);
     }
+
     public boolean IsPhoneNumberValid(String phoneNumber) {
         // Implement check if phone number is in correct format: ###-###-####
-        return !phoneNumber.isEmpty();
-    }
-
-    public void CreateUser() {
-
+        return NotNullNotEmpty(phoneNumber);
     }
 
     // Attempts to create a new user. Returns true if successful, false otherwise for GUI feedback.
@@ -85,7 +82,7 @@ public class SignUpHandler {
             invalidConditions.add("InvalidPhoneNumber");
         }
 
-        // If all conditions are valid nothing is returned otherwise an array list of invalid conditions are returned.
+        // If all sign up conditions are valid nothing is returned otherwise an array list of invalid conditions are returned.
         if (!invalidConditions.isEmpty()) {
             return invalidConditions;
         } else {
