@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SignUpHandler {
+    private final AccountHandler accountHandler = new AccountHandler();
     private boolean NotNullNotEmpty(String string) {
         if (string != null) {
             return !string.isEmpty();
@@ -14,6 +15,9 @@ public class SignUpHandler {
     }
 
     public boolean IsEmailValid(String submittedEmail) {
+     return NotNullNotEmpty(submittedEmail);
+    }
+    public boolean DoesEmailAlreadyExist(String submittedEmail) {
         // Implement check if email is in correct format: xxx@domain
         // Possibly implement mock 2FA screen to confirm email account belongs to user
 
@@ -27,7 +31,8 @@ public class SignUpHandler {
                 String user_email = loginData[1].trim();
 
                 // Cancel account creation because user already exists
-                if (NotNullNotEmpty(submittedEmail) && user_email.equals(submittedEmail)) {
+
+                if (user_email.equals(submittedEmail)) {
                     return true;
                 }
             }
@@ -67,6 +72,9 @@ public class SignUpHandler {
         ArrayList<String> invalidConditions = new ArrayList<>();
 
         if (!IsEmailValid(submittedEmail)) {
+            invalidConditions.add("InvalidEmail");
+        }
+        if (DoesEmailAlreadyExist(submittedEmail)) {
             invalidConditions.add("EmailAlreadyExists");
         }
         if (!IsPasswordValid(submittedPassword, submittedVerifyPassword)) {
@@ -82,11 +90,15 @@ public class SignUpHandler {
             invalidConditions.add("InvalidPhoneNumber");
         }
 
-        // If all sign up conditions are valid nothing is returned otherwise an array list of invalid conditions are returned.
-        if (!invalidConditions.isEmpty()) {
-            return invalidConditions;
-        } else {
+        // If all sign up conditions are valid nothing is returned and ACCOUNT IS CREATED, otherwise an array list of invalid conditions are returned.
+        if (invalidConditions.isEmpty()) {
+            // Sign up successful
+            // May need to implement a return statement for if CreateAccount fails but that is unlikely so tbd
+            accountHandler.CreateAccount(submittedEmail, submittedPassword, submittedName, submittedAddress, submittedPhoneNumber);
             return null;
+        } else {
+            // Sign up failed
+            return invalidConditions;
         }
     }
 }
