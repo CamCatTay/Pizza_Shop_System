@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.account;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -89,7 +89,6 @@ public class SignUpHandler {
         if (!invalidConditions.isEmpty()) {
             return invalidConditions;
         } else {
-
             return null;
         }
     }

@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.order;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class Receipt {
     private String orderNumber;
     private String timestamp;
     private String customerName;
-    private List<MenuItem> items; 
+    private List<MenuItem> items;
     private String paymentMethod;
     private double totalAmount;
     private double tax;

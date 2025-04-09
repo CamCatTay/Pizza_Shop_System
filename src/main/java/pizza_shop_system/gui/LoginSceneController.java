@@ -1,12 +1,9 @@
-package pizza_shop_system;
+package pizza_shop_system.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import pizza_shop_system.account.LoginHandler;
 
 import java.io.IOException;
 
@@ -37,8 +34,6 @@ public class LoginSceneController {
     public void handleLoginClick() {
         //Look in users.txt file for specified email and password. If either field is invalid alert user and return
         //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well
-        System.out.println(submittedEmail);
-        System.out.println(submittedPassword);
         System.out.println(loginHandler.AttemptLogin(submittedEmail, submittedPassword));
     }
 

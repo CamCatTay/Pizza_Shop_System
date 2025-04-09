@@ -1,4 +1,6 @@
-package pizza_shop_system;
+package pizza_shop_system.payment;
+
+import pizza_shop_system.account.User;
 
 import java.time.LocalDate;
 

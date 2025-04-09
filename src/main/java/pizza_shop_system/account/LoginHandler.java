@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.account;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +20,7 @@ public class LoginHandler {
                 // Validate login credentials
                 if (user_email.equals(submittedEmail)) {
                     if (user_password.equals(submittedPassword)) {
+                        // If credentials are valid then login succeeds and return user_id
                         return user_id;
                     }
                 }

@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.order;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

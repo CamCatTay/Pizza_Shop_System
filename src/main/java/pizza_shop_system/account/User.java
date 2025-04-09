@@ -1,29 +1,13 @@
-package pizza_shop_system;
+package pizza_shop_system.account;
+
+import pizza_shop_system.payment.CreditCard;
 
 public class User {
     private String name, email, address, phoneNumber, password, accountType;
-    private CreditCard creditCard;
-    private static int nextID;
     private int id;
+    private CreditCard creditCard;
 
-    public User(String name, String email, String address, String phoneNumber, String password, String accountType){
-        this.name = name;
-        this.id = nextID++;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.accountType = accountType;
-    }
-
-    //CONSTRUCTOR W/ JUST NAME AND ID
-    public User(String name, int id){
-        this.name = name;
-        this.id = id;
-    }
-
-    //CONSTRUCTOR W/ ID SETTING
-    public User(String name, int id, String email, String address, String phoneNumber, String password, String accountType){
+    public User(int id, String accountType, String email, String password, String name, String address, String phoneNumber){
         this.name = name;
         this.id = id;
         this.email = email;
@@ -31,18 +15,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.accountType = accountType;
-    }
-
-    //CONSTRUCTOR W/ CREDIT CARD
-    public User(String name, String email, String address, String phoneNumber, String password, String accountType, CreditCard creditCard){
-        this.name = name;
-        this.id = nextID++;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.accountType = accountType;
-        this.creditCard = creditCard;
     }
 
     //Getters

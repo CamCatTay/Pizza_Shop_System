@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.users;
 
 public class Employee {
     public String employeeName;
