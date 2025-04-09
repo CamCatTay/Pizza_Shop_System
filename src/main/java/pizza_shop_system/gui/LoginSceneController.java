@@ -34,7 +34,12 @@ public class LoginSceneController {
     public void handleLoginClick() {
         //Look in users.txt file for specified email and password. If either field is invalid alert user and return
         //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well
-        System.out.println(loginHandler.AttemptLogin(submittedEmail, submittedPassword));
+        String userID = loginHandler.AttemptLogin(submittedEmail, submittedPassword);
+        if (userID == null) {
+            System.out.println("Login Failed");
+        } else {
+            System.out.println("Login Success, Hello user: " + userID);
+        }
     }
 
 }

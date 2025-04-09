@@ -59,7 +59,7 @@ public class SignUpSceneController {
         this.submittedPhoneNumber = phoneNumberField.getText();
     }
 
-    public void handleSignUpClick() {
+    public void handleSignUpClick() throws IOException {
         ArrayList<String> invalidConditions = signUpHandler.AttemptSignUp(submittedEmail, submittedPassword, submittedVerifyPassword, submittedName, submittedAddress, submittedPhoneNumber);
         if (invalidConditions == null) {
             // Sign up successful

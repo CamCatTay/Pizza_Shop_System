@@ -14,8 +14,8 @@ public class LoginHandler {
             while ((line = reader.readLine()) != null) {
                 String[] loginData = line.split(",");
                 String user_id = loginData[0].trim();
-                String user_email = loginData[1].trim();
-                String user_password = loginData[2].trim();
+                String user_email = loginData[2].trim();
+                String user_password = loginData[3].trim();
 
                 // Validate login credentials
                 if (user_email.equals(submittedEmail)) {
