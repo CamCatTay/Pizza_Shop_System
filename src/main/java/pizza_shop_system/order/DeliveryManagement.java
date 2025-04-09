@@ -1,4 +1,6 @@
-package pizza_shop_system;
+package pizza_shop_system.order;
+
+import pizza_shop_system.users.Employee;
 
 import java.util.Random;
 import java.util.Timer;

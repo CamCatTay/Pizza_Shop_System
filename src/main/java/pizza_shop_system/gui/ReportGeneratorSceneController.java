@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

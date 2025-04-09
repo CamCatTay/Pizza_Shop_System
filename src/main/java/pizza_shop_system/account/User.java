@@ -1,4 +1,6 @@
-package pizza_shop_system;
+package pizza_shop_system.account;
+
+import pizza_shop_system.payment.CreditCard;
 
 public class User {
     private String name, email, address, phoneNumber, password, accountType;

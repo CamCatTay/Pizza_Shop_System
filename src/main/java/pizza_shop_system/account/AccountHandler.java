@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.account;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

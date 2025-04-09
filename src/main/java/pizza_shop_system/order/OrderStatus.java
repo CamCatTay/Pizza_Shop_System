@@ -1,4 +1,4 @@
-package pizza_shop_system;
+package pizza_shop_system.order;
 
 public enum OrderStatus {
     INCOMPLETE,      // Order still being modified
