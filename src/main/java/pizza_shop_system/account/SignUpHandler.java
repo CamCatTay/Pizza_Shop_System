@@ -14,10 +14,10 @@ public class SignUpHandler {
         return false;
     }
 
-    public boolean IsEmailValid(String submittedEmail) {
+    private boolean IsEmailValid(String submittedEmail) {
      return NotNullNotEmpty(submittedEmail);
     }
-    public boolean DoesEmailAlreadyExist(String submittedEmail) {
+    private boolean DoesEmailAlreadyExist(String submittedEmail) {
         // Implement check if email is in correct format: xxx@domain
         // Possibly implement mock 2FA screen to confirm email account belongs to user
 
@@ -44,7 +44,7 @@ public class SignUpHandler {
 
         return false;
     }
-    public boolean IsPasswordValid(String password, String verifyPassword) {
+    private boolean IsPasswordValid(String password, String verifyPassword) {
         // Implement check if password meets security standards: >= 8 characters, >= 1 number, >= 1 uppercase, >= 1 special character
         if (NotNullNotEmpty(password) && NotNullNotEmpty(verifyPassword)) {
             return password.equals(verifyPassword);
@@ -52,17 +52,17 @@ public class SignUpHandler {
         return false;
     }
 
-    public boolean IsNameValid(String name) {
+    private boolean IsNameValid(String name) {
         // Implement check if name is in correct format: firstName lastName
         return NotNullNotEmpty(name);
     }
 
-    public boolean IsAddressValid(String address) {
+    private boolean IsAddressValid(String address) {
         // Implement check if address is in correct format: number streetName streetType
         return NotNullNotEmpty(address);
     }
 
-    public boolean IsPhoneNumberValid(String phoneNumber) {
+    private boolean IsPhoneNumberValid(String phoneNumber) {
         // Implement check if phone number is in correct format: ###-###-####
         return NotNullNotEmpty(phoneNumber);
     }
