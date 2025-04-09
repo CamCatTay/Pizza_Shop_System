@@ -16,6 +16,7 @@ import java.util.List;
 import java.io.IOException;
 import java.io.File;
 
+/*
 public class ReportGeneratorSceneController implements Initializable {
 
 
@@ -139,3 +140,4 @@ public class ReportGeneratorSceneController implements Initializable {
     }
 }
 
+ */
