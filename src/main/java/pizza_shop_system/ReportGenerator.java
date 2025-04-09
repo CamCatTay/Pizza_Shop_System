@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
 public class ReportGenerator {
 
     private LocalDate date;
@@ -308,3 +309,5 @@ public class ReportGenerator {
     }
 
 }
+
+ */
