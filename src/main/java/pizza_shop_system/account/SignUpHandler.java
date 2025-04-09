@@ -28,7 +28,7 @@ public class SignUpHandler {
 
             while ((line = reader.readLine()) != null) {
                 String[] loginData = line.split(",");
-                String user_email = loginData[1].trim();
+                String user_email = loginData[2].trim();
 
                 // Cancel account creation because user already exists
 
