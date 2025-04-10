@@ -39,8 +39,8 @@ public class LoginSceneController {
         if (loginSuccess) {
             // Active user has been set in login handler. Use ActiveUser to retrieve it
             System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
-            System.out.println(ActiveUser.getInstance().getActiveUserData());
-
+            String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
+            System.out.println(accountType);
         } else {
             System.out.println("Login Failed. Invalid email or password.");
         }

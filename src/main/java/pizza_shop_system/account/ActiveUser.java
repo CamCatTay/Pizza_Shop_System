@@ -27,7 +27,7 @@ public class ActiveUser {
     }
 
     // Returns the users.txt data of a user based off userID
-    public static String getUserDataById(String userId) {
+    private String getUserDataById(String userId) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("data_files/users.txt"))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
