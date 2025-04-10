@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.CustomerMenuSceneController">
+   <children>
+      <Label layoutX="257.0" layoutY="14.0" text="Customer Menu" />
+      <Button layoutX="253.0" layoutY="82.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Order" />
+      <Button layoutX="253.0" layoutY="139.0" mnemonicParsing="false" text="Manage Account" />
+      <Button layoutX="253.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleLogoutClicked" prefHeight="25.0" prefWidth="106.0" text="Log Out" />
+   </children>
+</AnchorPane>

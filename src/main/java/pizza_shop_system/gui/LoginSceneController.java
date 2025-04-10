@@ -18,8 +18,8 @@ public class LoginSceneController {
     @FXML
     private TextField passwordField;
 
-    public void switchToSignUpScene(ActionEvent actionEvent) throws IOException {
-        sceneController.switchToSignUpScene(actionEvent);
+    public void switchToSignUpScene() throws IOException {
+        sceneController.switchToSignUpScene();
     }
 
     @FXML
@@ -32,7 +32,7 @@ public class LoginSceneController {
         this.submittedPassword = passwordField.getText();
     }
 
-    public void handleLoginClick() {
+    public void handleLoginClick() throws IOException {
         //Look in users.txt file for specified email and password. If either field is invalid alert user and return
         //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well
         boolean loginSuccess = loginHandler.AttemptLogin(submittedEmail, submittedPassword);
@@ -40,6 +40,12 @@ public class LoginSceneController {
             // Active user has been set in login handler. Use ActiveUser to retrieve it
             System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
             String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
+            if (accountType.equals("Manager")) {
+                // Implement Manager GUI
+            }
+            else if (accountType.equals("Customer")) {
+                sceneController.switchToCustomerMenuScene();
+            }
             System.out.println(accountType);
         } else {
             System.out.println("Login Failed. Invalid email or password.");
