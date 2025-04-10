@@ -6,17 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SignUpHandler {
-    // Returns the type of account the user is attempting to create
-    public String DetermineAccountType(String submittedEmail) {
-        String pizzaShopOrganization = "@pizzashop.org";
-        if (submittedEmail.endsWith(pizzaShopOrganization)) {
-            return "Manager";
-        } else {
-            return "Customer";
+    private final AccountHandler accountHandler = new AccountHandler();
+    private boolean NotNullNotEmpty(String string) {
+        if (string != null) {
+            return !string.isEmpty();
         }
+        return false;
     }
 
-    public boolean IsEmailValid(String email) {
+    private boolean IsEmailValid(String submittedEmail) {
+     return NotNullNotEmpty(submittedEmail);
+    }
+    private boolean DoesEmailAlreadyExist(String submittedEmail) {
         // Implement check if email is in correct format: xxx@domain
         // Possibly implement mock 2FA screen to confirm email account belongs to user
 
@@ -27,10 +28,11 @@ public class SignUpHandler {
 
             while ((line = reader.readLine()) != null) {
                 String[] loginData = line.split(",");
-                String user_email = loginData[1].trim();
+                String user_email = loginData[2].trim();
 
                 // Cancel account creation because user already exists
-                if (user_email.equals(email)) {
+
+                if (user_email.equals(submittedEmail)) {
                     return true;
                 }
             }
@@ -42,27 +44,27 @@ public class SignUpHandler {
 
         return false;
     }
-    public boolean IsPasswordValid(String password, String verifyPassword) {
+    private boolean IsPasswordValid(String password, String verifyPassword) {
         // Implement check if password meets security standards: >= 8 characters, >= 1 number, >= 1 uppercase, >= 1 special character
-        return password.equals(verifyPassword);
+        if (NotNullNotEmpty(password) && NotNullNotEmpty(verifyPassword)) {
+            return password.equals(verifyPassword);
+        }
+        return false;
     }
 
-    public boolean IsNameValid(String name) {
+    private boolean IsNameValid(String name) {
         // Implement check if name is in correct format: firstName lastName
-        return !name.isEmpty();
+        return NotNullNotEmpty(name);
     }
 
-    public boolean IsAddressValid(String address) {
+    private boolean IsAddressValid(String address) {
         // Implement check if address is in correct format: number streetName streetType
-        return !address.isEmpty();
+        return NotNullNotEmpty(address);
     }
-    public boolean IsPhoneNumberValid(String phoneNumber) {
+
+    private boolean IsPhoneNumberValid(String phoneNumber) {
         // Implement check if phone number is in correct format: ###-###-####
-        return !phoneNumber.isEmpty();
-    }
-
-    public void CreateUser() {
-
+        return NotNullNotEmpty(phoneNumber);
     }
 
     // Attempts to create a new user. Returns true if successful, false otherwise for GUI feedback.
@@ -70,6 +72,9 @@ public class SignUpHandler {
         ArrayList<String> invalidConditions = new ArrayList<>();
 
         if (!IsEmailValid(submittedEmail)) {
+            invalidConditions.add("InvalidEmail");
+        }
+        if (DoesEmailAlreadyExist(submittedEmail)) {
             invalidConditions.add("EmailAlreadyExists");
         }
         if (!IsPasswordValid(submittedPassword, submittedVerifyPassword)) {
@@ -85,11 +90,15 @@ public class SignUpHandler {
             invalidConditions.add("InvalidPhoneNumber");
         }
 
-        // If all conditions are valid nothing is returned otherwise an array list of invalid conditions are returned.
-        if (!invalidConditions.isEmpty()) {
-            return invalidConditions;
-        } else {
+        // If all sign up conditions are valid nothing is returned and ACCOUNT IS CREATED, otherwise an array list of invalid conditions are returned.
+        if (invalidConditions.isEmpty()) {
+            // Sign up successful
+            // May need to implement a return statement for if CreateAccount fails but that is unlikely so tbd
+            accountHandler.CreateAccount(submittedEmail, submittedPassword, submittedName, submittedAddress, submittedPhoneNumber);
             return null;
+        } else {
+            // Sign up failed
+            return invalidConditions;
         }
     }
 }
