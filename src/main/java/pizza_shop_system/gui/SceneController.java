@@ -45,4 +45,8 @@ public class SceneController {
     public void switchToCustomerMenuScene() throws IOException {
         SwitchToScene("/pizza_shop_system/CustomerMenuScene.fxml");
     }
+
+    public void switchToManageCustomerAccountScene() throws IOException {
+        SwitchToScene("/pizza_shop_system/ManageCustomerAccountScene.fxml");
+    }
 }

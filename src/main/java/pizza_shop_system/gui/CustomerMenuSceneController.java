@@ -11,4 +11,8 @@ public class CustomerMenuSceneController {
         ActiveUser.getInstance().setCurrentUser(null);
         sceneController.switchToLoginScene();
     }
+
+    public void handleManageAccountButtonClick() throws IOException {
+        sceneController.switchToManageCustomerAccountScene();
+    }
 }
