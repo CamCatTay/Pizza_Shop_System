@@ -13,6 +13,7 @@ public class SceneController {
     private Stage stage;
     private Scene scene;
 
+    // This method directly references the scene instead of getting it from ActionEvent (Useful if we aren't switching scenes using a GUI event).
     private void SwitchToScene(String sceneReference) throws IOException {
         Stage stage = (Stage) Stage.getWindows().stream().filter(window -> window instanceof Stage).findFirst().orElse(null);
 
@@ -41,7 +42,6 @@ public class SceneController {
         SwitchToScene("/pizza_shop_system/ReportGeneratorScene.fxml");
     }
 
-    // This method directly references the scene instead of getting it from ActionEvent (Useful if we aren't switching scenes using a GUI event).
     public void switchToCustomerMenuScene() throws IOException {
         SwitchToScene("/pizza_shop_system/CustomerMenuScene.fxml");
     }
