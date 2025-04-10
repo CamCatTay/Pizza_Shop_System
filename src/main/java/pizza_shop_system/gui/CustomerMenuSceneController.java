@@ -15,4 +15,8 @@ public class CustomerMenuSceneController {
     public void handleManageAccountButtonClick() throws IOException {
         sceneController.switchToManageCustomerAccountScene();
     }
+
+    public void handleOrderMenuButtonClick() throws IOException {
+        sceneController.switchToOrderMenuScene();
+    }
 }

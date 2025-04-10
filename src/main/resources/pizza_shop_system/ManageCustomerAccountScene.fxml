@@ -6,7 +6,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.ManageAccountSceneController">
    <children>
       <Label layoutX="255.0" layoutY="14.0" text="Manage Account" />
-      <Label layoutX="264.0" layoutY="56.0" text="WIP (Sprint 2)" />
+      <Label layoutX="202.0" layoutY="44.0" prefHeight="63.0" prefWidth="196.0" text="WIP (Working on higher priority first)" />
       <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#switchToCustomerMenuScene" text="Back" />
    </children>
 </AnchorPane>
