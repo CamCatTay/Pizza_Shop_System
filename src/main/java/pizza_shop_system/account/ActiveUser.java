@@ -2,7 +2,7 @@ package pizza_shop_system.account;
 
 public class ActiveUser {
     private static ActiveUser instance; // Ensures only one active user exists across entire system
-    private User currentUser;
+    private String currentUser;
 
     private ActiveUser() {}
 
@@ -13,11 +13,12 @@ public class ActiveUser {
         return instance;
     }
 
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
+    // Sets current user to userID. This can be changed later to use an actual user object if needed
+    public void setCurrentUser(String userID) {
+        this.currentUser = userID;
     }
 
-    public User getCurrentUser() {
+    public String getCurrentUser() {
         return currentUser;
     }
 

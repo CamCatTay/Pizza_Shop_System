@@ -1,2 +1,2 @@
-1,1,1,1,1,1
-1, CameronTaylor@example.com,Password123,Manager,Cameron Taylor,123 Pizza Street,555-555-5801
+1,Customer,1,1,1,1,1
+2,Customer,2,2,2,2,2
