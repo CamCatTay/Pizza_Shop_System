@@ -38,8 +38,8 @@ public class LoginSceneController {
         boolean loginSuccess = loginHandler.AttemptLogin(submittedEmail, submittedPassword);
         if (loginSuccess) {
             // Active user has been set in login handler. Use ActiveUser to retrieve it
-
             System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
+            System.out.println(ActiveUser.getInstance().getActiveUserData());
 
         } else {
             System.out.println("Login Failed. Invalid email or password.");
