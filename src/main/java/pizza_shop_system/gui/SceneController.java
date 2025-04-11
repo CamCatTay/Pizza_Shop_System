@@ -12,6 +12,7 @@ import java.util.Objects;
 public class SceneController {
     private Stage stage;
     private Scene scene;
+    private static String previousScene;
 
     // This method directly references the scene instead of getting it from ActionEvent (Useful if we aren't switching scenes using a GUI event).
     private void SwitchToScene(String sceneReference) throws IOException {
@@ -24,6 +25,12 @@ public class SceneController {
             stage.show();
         } else {
             System.err.println("Error: No active stage found.");
+        }
+    }
+
+    public void switchToPreviousScene() throws IOException {
+        if (previousScene != null) {
+            SwitchToScene(previousScene);
         }
     }
     public void switchToLoginScene() throws IOException {
@@ -50,7 +57,8 @@ public class SceneController {
         SwitchToScene("/pizza_shop_system/ManageCustomerAccountScene.fxml");
     }
 
-    public void switchToOrderMenuScene() throws IOException {
+    public void switchToOrderMenuScene(String previousScene) throws IOException {
+        SceneController.previousScene = previousScene;
         SwitchToScene("/pizza_shop_system/OrderMenuScene.fxml");
     }
 
