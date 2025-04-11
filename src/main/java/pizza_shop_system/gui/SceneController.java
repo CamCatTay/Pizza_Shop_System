@@ -34,11 +34,11 @@ public class SceneController {
         SwitchToScene("/pizza_shop_system/SignUpScene.fxml");
     }
 
-    public void switchToAccountScene(ActionEvent event) throws IOException{
+    public void switchToAccountScene() throws IOException{
         SwitchToScene("/pizza_shop_system/AccountScene.fxml");
     }
 
-    public void switchToReportGeneratorScene(ActionEvent event) throws IOException {
+    public void switchToReportGeneratorScene() throws IOException {
         SwitchToScene("/pizza_shop_system/ReportGeneratorScene.fxml");
     }
 
@@ -52,5 +52,9 @@ public class SceneController {
 
     public void switchToOrderMenuScene() throws IOException {
         SwitchToScene("/pizza_shop_system/OrderMenuScene.fxml");
+    }
+
+    public void switchToManagerMenuScene() throws IOException {
+        SwitchToScene("/pizza_shop_system/ManagerMenuScene.fxml");
     }
 }
