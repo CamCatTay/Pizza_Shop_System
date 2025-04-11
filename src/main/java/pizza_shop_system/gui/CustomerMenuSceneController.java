@@ -1,8 +1,6 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
 import pizza_shop_system.account.ActiveUser;
-
 import java.io.IOException;
 
 public class CustomerMenuSceneController {
@@ -17,6 +15,6 @@ public class CustomerMenuSceneController {
     }
 
     public void handleOrderMenuButtonClick() throws IOException {
-        sceneController.switchToOrderMenuScene();
+        sceneController.switchToOrderMenuScene("/pizza_shop_system/CustomerMenuScene.fxml");
     }
 }

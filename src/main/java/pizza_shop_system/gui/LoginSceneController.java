@@ -1,6 +1,5 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import pizza_shop_system.account.ActiveUser;
@@ -42,6 +41,7 @@ public class LoginSceneController {
             String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
             if (accountType.equals("Manager")) {
                 // Implement Manager GUI
+                sceneController.switchToManagerMenuScene();
             }
             else if (accountType.equals("Customer")) {
                 sceneController.switchToCustomerMenuScene();
