@@ -42,6 +42,7 @@ public class LoginSceneController {
             String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
             if (accountType.equals("Manager")) {
                 // Implement Manager GUI
+                sceneController.switchToManagerMenuScene();
             }
             else if (accountType.equals("Customer")) {
                 sceneController.switchToCustomerMenuScene();
