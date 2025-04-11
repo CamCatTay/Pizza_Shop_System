@@ -17,6 +17,6 @@ public class CustomerMenuSceneController {
     }
 
     public void handleOrderMenuButtonClick() throws IOException {
-        sceneController.switchToOrderMenuScene();
+        sceneController.switchToOrderMenuScene("/pizza_shop_system/CustomerMenuScene.fxml");
     }
 }
