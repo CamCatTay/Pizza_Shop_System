@@ -1,7 +1,5 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
-
 import java.io.IOException;
 
 public class OrderMenuSceneController {

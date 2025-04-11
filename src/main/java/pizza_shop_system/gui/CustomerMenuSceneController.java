@@ -1,8 +1,6 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
 import pizza_shop_system.account.ActiveUser;
-
 import java.io.IOException;
 
 public class CustomerMenuSceneController {

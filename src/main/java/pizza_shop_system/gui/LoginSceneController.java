@@ -1,6 +1,5 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import pizza_shop_system.account.ActiveUser;

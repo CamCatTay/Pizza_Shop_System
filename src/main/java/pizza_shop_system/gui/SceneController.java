@@ -1,17 +1,13 @@
 package pizza_shop_system.gui;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.util.Objects;
 
 public class SceneController {
-    private Stage stage;
-    private Scene scene;
     private static String previousScene;
 
     // This method directly references the scene instead of getting it from ActionEvent (Useful if we aren't switching scenes using a GUI event).
@@ -43,10 +39,6 @@ public class SceneController {
 
     public void switchToAccountScene() throws IOException{
         SwitchToScene("/pizza_shop_system/AccountScene.fxml");
-    }
-
-    public void switchToReportGeneratorScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/ReportGeneratorScene.fxml");
     }
 
     public void switchToCustomerMenuScene() throws IOException {
