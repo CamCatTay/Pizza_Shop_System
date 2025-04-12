@@ -31,15 +31,15 @@ public class SceneController {
     }
 
     public void switchScene(String name) {
-        if (scenes.containsKey(name) && !name.equals(currentSceneName)) {
+        if (scenes.containsKey(name)) {
+            if (!name.equals(currentSceneName)) {
+                // Set the previous scene name for back button
+                previousSceneName = currentSceneName;
+                currentSceneName = name;
 
-            // Set the previous scene name for back button
-            previousSceneName = currentSceneName;
-            currentSceneName = name;
-
-            // Update center of the BorderPane with selected scene
-            mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
-
+                // Update center of the BorderPane with selected scene
+                mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
+            }
         } else {
             System.out.println("Scene not found: " + name);
         }
