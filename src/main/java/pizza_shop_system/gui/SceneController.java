@@ -20,8 +20,15 @@ public class SceneController {
 
     public void addScene(String name, String fxmlFile) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
-            scenes.put(name, root); // Store scene content instead of full Scene object
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+            scenes.put(name, root);
+
+            // Pass SceneController reference to each controller
+            BaseController controller = loader.getController();
+            if (controller != null) {
+                controller.setSceneController(this);
+            }
         } catch (IOException e) {
             System.out.println("Failed to add scene -> " + name + ": " + e.getMessage());
         } catch (NullPointerException e) {
