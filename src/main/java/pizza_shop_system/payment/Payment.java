@@ -1,6 +1,6 @@
 package pizza_shop_system.payment;
 
-import pizza_shop_system.order.MenuItem;
+import pizza_shop_system.menu.MenuItem;
 import pizza_shop_system.order.Order;
 import pizza_shop_system.order.OrderStatus;
 import pizza_shop_system.account.User;
