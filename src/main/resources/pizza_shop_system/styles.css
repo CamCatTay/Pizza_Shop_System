@@ -1,0 +1,35 @@
+#navbar {
+    -fx-background-color: #333333;
+    -fx-padding: 10px;
+}
+
+Button {
+    -fx-background-color: #555555;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+}
+
+Button:hover {
+    -fx-background-color: #777777;
+}
+
+#buttonBack {
+    -fx-background-color: #ff5555;
+    -fx-text-fill: white;
+}
+
+#buttonBack:hover {
+    -fx-background-color: #ff7777;
+}
+
+#buttonSignIn {
+    -fx-background-color: #0066ff;
+}
+
+#buttonSignIn:hover {
+    -fx-background-color: #3388ff;
+}

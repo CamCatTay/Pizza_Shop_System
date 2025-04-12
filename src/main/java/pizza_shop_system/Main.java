@@ -37,7 +37,6 @@ public class Main extends Application {
 
         // Switch to default scene
         sceneController.switchScene("Home"); // Set the initial scene
-
     }
 
     public static void main(String[] args) {
