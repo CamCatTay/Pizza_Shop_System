@@ -6,9 +6,9 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.ManagerMenuSceneController">
    <children>
       <Button layoutX="244.0" layoutY="85.0" mnemonicParsing="false" text="Manage Accounts" />
-      <Button layoutX="246.0" layoutY="126.0" mnemonicParsing="false" onAction="#switchToReportGeneratorScene" text="Generate Reports" />
+      <Button layoutX="246.0" layoutY="126.0" mnemonicParsing="false"  text="Generate Reports" />
       <Label layoutX="259.0" layoutY="14.0" text="Manager Menu" />
-      <Button layoutX="246.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleTakeOrdersButtonClick" prefHeight="25.0" prefWidth="109.0" text="Take Orders" />
-      <Button layoutX="246.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleLogoutButtonClick" prefHeight="25.0" prefWidth="109.0" text="Log Out" />
+      <Button layoutX="246.0" layoutY="169.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="109.0" text="Take Orders" />
+      <Button layoutX="246.0" layoutY="211.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="109.0" text="Log Out" />
    </children>
 </AnchorPane>

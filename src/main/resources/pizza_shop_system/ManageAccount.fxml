@@ -7,6 +7,6 @@
    <children>
       <Label layoutX="255.0" layoutY="14.0" text="Manage Account" />
       <Label layoutX="202.0" layoutY="44.0" prefHeight="63.0" prefWidth="196.0" text="WIP (Working on higher priority first)" />
-      <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#switchToCustomerMenuScene" text="Back" />
+      <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false"  text="Back" />
    </children>
 </AnchorPane>
