@@ -2,6 +2,7 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
 public class NavigationBarController {
     @FXML private Button buttonHome;
     @FXML private Button buttonMenu;
