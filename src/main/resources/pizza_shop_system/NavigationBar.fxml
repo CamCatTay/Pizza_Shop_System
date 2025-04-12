@@ -8,4 +8,5 @@
     <Button fx:id="buttonHome" text="Home" />
     <Button fx:id="buttonMenu" text="Menu" />
     <Button fx:id="buttonCart" text="Cart" />
+    <Button fx:id="buttonSignIn" text="LOG IN" />
 </HBox>
