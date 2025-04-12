@@ -10,16 +10,12 @@ import java.io.IOException;
 public class LoginSceneController {
     private String submittedEmail;
     private String submittedPassword;
-    private final SceneController sceneController = new SceneController();
     private final LoginHandler loginHandler = new LoginHandler();
     @FXML
     private TextField emailField;
     @FXML
     private TextField passwordField;
 
-    public void switchToSignUpScene() throws IOException {
-        sceneController.switchToSignUpScene();
-    }
 
     @FXML
     public void handleEmailChanged() {
@@ -39,13 +35,6 @@ public class LoginSceneController {
             // Active user has been set in login handler. Use ActiveUser to retrieve it
             System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
             String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
-            if (accountType.equals("Manager")) {
-                // Implement Manager GUI
-                sceneController.switchToManagerMenuScene();
-            }
-            else if (accountType.equals("Customer")) {
-                sceneController.switchToCustomerMenuScene();
-            }
             System.out.println(accountType);
         } else {
             System.out.println("Login Failed. Invalid email or password.");
