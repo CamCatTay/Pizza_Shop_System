@@ -2,59 +2,37 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SceneController {
-    private static String previousScene;
+    private final BorderPane mainLayout;
+    private final HashMap<String, Parent> scenes = new HashMap<>();
 
-    // This method directly references the scene instead of getting it from ActionEvent (Useful if we aren't switching scenes using a GUI event).
-    private void SwitchToScene(String sceneReference) throws IOException {
-        Stage stage = (Stage) Stage.getWindows().stream().filter(window -> window instanceof Stage).findFirst().orElse(null);
+    public SceneController(BorderPane mainLayout) {
+        this.mainLayout = mainLayout;
+    }
 
-        if (stage != null) {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(SceneController.class.getResource(sceneReference)));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+    public void addScene(String name, String fxmlFile) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
+            scenes.put(name, root); // Store scene content instead of full Scene object
+        } catch (IOException e) {
+            System.out.println("Failed to add scene -> " + name + ": " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Warning: This FXML file was not loaded. Ensure " + fxmlFile + " exists and path is correct.");
+            System.out.println("If it exists and path is correct. Then ensure the controller for that scene is correctly referencing elements within it");
+        }
+    }
+
+    public void switchScene(String name) {
+        if (scenes.containsKey(name)) {
+            mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
         } else {
-            System.err.println("Error: No active stage found.");
+            System.out.println("Scene not found: " + name);
         }
-    }
-
-    public void switchToPreviousScene() throws IOException {
-        if (previousScene != null) {
-            SwitchToScene(previousScene);
-        }
-    }
-    public void switchToLoginScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/LoginScene.fxml");
-    }
-
-    public void switchToSignUpScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/SignUpScene.fxml");
-    }
-
-    public void switchToCustomerMenuScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/CustomerMenuScene.fxml");
-    }
-
-    public void switchToManageCustomerAccountScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/ManageCustomerAccountScene.fxml");
-    }
-
-    public void switchToOrderMenuScene(String previousScene) throws IOException {
-        SceneController.previousScene = previousScene;
-        SwitchToScene("/pizza_shop_system/OrderMenuScene.fxml");
-    }
-
-    public void switchToManagerMenuScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/ManagerMenuScene.fxml");
-    }
-
-    public void switchToReportGeneratorScene() throws IOException {
-        SwitchToScene("/pizza_shop_system/ReportGeneratorScene.fxml");
     }
 }
