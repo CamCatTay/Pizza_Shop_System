@@ -4,10 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import pizza_shop_system.gui.BaseController;
 
 import java.util.List;
 
-public class MenuController {
+public class MenuController extends BaseController {
     @FXML private VBox menuContainer;
     @FXML private Button buttonPizza;
     @FXML private Button buttonBeverages;

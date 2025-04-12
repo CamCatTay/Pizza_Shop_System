@@ -24,16 +24,18 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Load all scenes upfront to avoid reloading each time
+        // Load all scenes upfront to avoid reloading each time (Any scene not explicitly stated here CANNOT be switched to)
         SceneController sceneController = new SceneController(mainLayout);
         sceneController.addScene("Home", "/pizza_shop_system/Home.fxml");
         sceneController.addScene("Menu", "/pizza_shop_system/Menu.fxml");
         sceneController.addScene("Cart", "/pizza_shop_system/Cart.fxml");
+        sceneController.addScene("Checkout", "/pizza_shop_system/Checkout.fxml");
 
-        // Set scene controller of NavigationBarController and switch to default scene
+        // Set main SceneController
         NavigationBarController navigationBarController = navigationBarLoader.getController();
         navigationBarController.setSceneController(sceneController);
 
+        // Switch to default scene
         sceneController.switchScene("Home"); // Set the initial scene
 
     }

@@ -13,11 +13,10 @@ public class NavigationBarController {
 
     public void setSceneController(SceneController sceneController) {
         this.sceneController = sceneController;
-        initialize();
     }
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
         buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
