@@ -17,6 +17,9 @@ public class User {
         this.accountType = accountType;
     }
 
+    public User(String customerName, int customerID) {
+    }
+
     //Getters
     public String getName(){ return this.name;}
     public int getId(){ return this.id; }

@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import pizza_shop_system.order.Order;
+import pizza_shop_system.reports.ReportGenerator;
 
 
 import java.net.URL;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.io.IOException;
 import java.io.File;
 
-/*
+
 public class ReportGeneratorSceneController implements Initializable {
 
 
@@ -136,8 +138,7 @@ public class ReportGeneratorSceneController implements Initializable {
 
     @FXML
     public void handleAccountButton(ActionEvent event) throws IOException{
-        sceneController.switchToAccountScene(event);
+        sceneController.switchToManagerMenuScene();
     }
 }
 
- */
