@@ -6,6 +6,7 @@ public class NavigationBarController {
     @FXML private Button buttonHome;
     @FXML private Button buttonMenu;
     @FXML private Button buttonCart;
+    @FXML private Button buttonBack;
 
     private SceneController sceneController;
 
@@ -19,5 +20,6 @@ public class NavigationBarController {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
         buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
+        buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
     }
 }
