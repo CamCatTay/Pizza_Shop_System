@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="pizza_shop_system.gui.CheckoutController"
           styleClass="checkout-root"
-          alignment="CENTER" hgap="15" vgap="15" prefHeight="400.0" prefWidth="600.0">
+          alignment="CENTER" hgap="15" vgap="15" prefHeight="450.0" prefWidth="600.0">
 
     <!-- Title -->
     <Label text="Checkout" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
@@ -47,7 +48,20 @@
     <TextField fx:id="checkNumberField" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"
                promptText="Enter Check Number" styleClass="checkout-textfield"/>
 
+    <!-- Delivery or Pickup Option -->
+    <Label text="Order Type:" GridPane.columnIndex="0" GridPane.rowIndex="7" styleClass="checkout-label"/>
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="7" spacing="10">
+        <RadioButton fx:id="deliveryRadioButton" text="Delivery" styleClass="checkout-radio-button"/>
+        <RadioButton fx:id="pickupRadioButton" text="Pickup" styleClass="checkout-radio-button"/>
+    </HBox>
+
+    <!-- Address Input (Visible only if Delivery is selected) -->
+    <Label fx:id="addressLabel" text="Delivery Address:" GridPane.columnIndex="0"
+           GridPane.rowIndex="8" visible="false" styleClass="checkout-label"/>
+    <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="8" visible="false"
+               promptText="Enter Delivery Address" styleClass="checkout-textfield"/>
+
     <!-- Confirm Button -->
-    <Button text="Confirm Order" fx:id="confirmButton" GridPane.columnIndex="0" GridPane.rowIndex="7"
+    <Button text="Confirm Order" fx:id="confirmButton" GridPane.columnIndex="0" GridPane.rowIndex="9"
             GridPane.columnSpan="2" styleClass="checkout-button"/>
 </GridPane>

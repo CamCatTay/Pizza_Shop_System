@@ -3,125 +3,157 @@ package pizza_shop_system.gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class CheckoutController extends BaseController {
+public class CheckoutController extends BaseController{
 
     @FXML private Label totalLabel;
     @FXML private ComboBox<String> paymentMethodComboBox;
 
     @FXML private Label cardNumberLabel;
     @FXML private TextField cardNumberField;
-
     @FXML private Label cvvLabel;
     @FXML private TextField cvvField;
-
     @FXML private Label expirationLabel;
     @FXML private TextField expirationDateField;
 
     @FXML private Label checkNumberLabel;
     @FXML private TextField checkNumberField;
 
+    @FXML private RadioButton deliveryRadioButton;
+    @FXML private RadioButton pickupRadioButton;
+    @FXML private ToggleGroup orderTypeGroup;
+
+    @FXML private Label addressLabel;
+    @FXML private TextField addressField;
+
     @FXML private Button confirmButton;
 
     private double orderTotal = 0.0;
 
+    /**
+     * Initializes the controller after the FXML file has been loaded.
+     */
+    @FXML
+    private void initialize() {
+        // Create and assign ToggleGroup for delivery and pickup options
+        orderTypeGroup = new ToggleGroup();
+        deliveryRadioButton.setToggleGroup(orderTypeGroup);
+        pickupRadioButton.setToggleGroup(orderTypeGroup);
+
+        // Set the default selection to Pickup
+        pickupRadioButton.setSelected(true);
+
+        // Populate payment method options
+        paymentMethodComboBox.getItems().addAll("Credit Card", "Debit Card", "Check", "Cash");
+
+        // Hide all conditional fields initially
+        hideAllPaymentFields();
+        addressLabel.setVisible(false);
+        addressField.setVisible(false);
+
+        // Set up event listeners for Delivery and Pickup
+        deliveryRadioButton.setOnAction(e -> showDeliveryFields());
+        pickupRadioButton.setOnAction(e -> hideDeliveryFields());
+
+        // Set up event listener for Payment Method selection
+        paymentMethodComboBox.setOnAction(e -> handlePaymentMethodSelection());
+
+        // Confirm button processing
+        confirmButton.setOnAction(e -> processOrder());
+    }
+
+    /**
+     * Passes the total to the controller and updates the displayed total value.
+     */
     public void setTotal(double total) {
         this.orderTotal = total;
         totalLabel.setText("Total: $" + String.format("%.2f", total));
     }
 
-    @FXML
-    private void initialize() {
-        // Populate payment method options
-        paymentMethodComboBox.getItems().addAll("Credit Card", "Debit Card", "Check", "Cash");
-
-        // Hide all payment fields initially
-        hideAllPaymentFields();
-
-        // Add a listener to toggle visibility based on payment method
-        paymentMethodComboBox.setOnAction(e -> togglePaymentFields(paymentMethodComboBox.getValue()));
-
-        // Add functionality to the Confirm button
-        confirmButton.setOnAction(e -> processPayment());
-    }
-
+    /**
+     * Hides all payment fields initially.
+     */
     private void hideAllPaymentFields() {
+        // Hide credit card fields
         cardNumberLabel.setVisible(false);
         cardNumberField.setVisible(false);
         cvvLabel.setVisible(false);
         cvvField.setVisible(false);
         expirationLabel.setVisible(false);
         expirationDateField.setVisible(false);
+
+        // Hide check payment fields
         checkNumberLabel.setVisible(false);
         checkNumberField.setVisible(false);
     }
 
-    private void togglePaymentFields(String paymentMethod) {
-        hideAllPaymentFields(); // Reset visibility
+    /**
+     * Shows appropriate payment fields based on the selected payment method.
+     */
+    private void handlePaymentMethodSelection() {
+        String paymentMethod = paymentMethodComboBox.getValue();
+        hideAllPaymentFields(); // Hide all fields first
 
         if ("Credit Card".equals(paymentMethod) || "Debit Card".equals(paymentMethod)) {
-            // Show Credit/Debit card fields
+            // Show credit card fields
             cardNumberLabel.setVisible(true);
             cardNumberField.setVisible(true);
             cvvLabel.setVisible(true);
             cvvField.setVisible(true);
             expirationLabel.setVisible(true);
             expirationDateField.setVisible(true);
-
         } else if ("Check".equals(paymentMethod)) {
-            // Show Check Number field
+            // Show check payment fields
             checkNumberLabel.setVisible(true);
             checkNumberField.setVisible(true);
         }
+        // For Cash, no additional fields are necessary
     }
 
-    private void processPayment() {
-        // Ensure a payment method is selected
-        String selectedPayment = paymentMethodComboBox.getValue();
-        if (selectedPayment == null) {
+    /**
+     * Shows delivery-specific fields when Delivery is selected.
+     */
+    private void showDeliveryFields() {
+        addressLabel.setVisible(true); // Show delivery address fields
+        addressField.setVisible(true);
+    }
+
+    /**
+     * Hides delivery-specific fields when Pickup is selected.
+     */
+    private void hideDeliveryFields() {
+        addressLabel.setVisible(false); // Hide delivery address fields
+        addressField.setVisible(false);
+    }
+
+    /**
+     * Handles order processing when the Confirm button is clicked.
+     */
+    private void processOrder() {
+        String orderType = deliveryRadioButton.isSelected() ? "Delivery" : "Pickup";
+        String paymentMethod = paymentMethodComboBox.getValue();
+
+        // Validate inputs
+        if (paymentMethod == null || paymentMethod.isEmpty()) {
             System.out.println("Please select a payment method.");
             return;
         }
-
-        if ("Credit Card".equals(selectedPayment) || "Debit Card".equals(selectedPayment)) {
-            if (!validateCardInformation()) {
-                System.out.println("Invalid card information. Please try again.");
-                return;
-            }
-        } else if ("Check".equals(selectedPayment)) {
-            if (!validateCheckNumber()) {
-                System.out.println("Invalid check number. Please try again.");
-                return;
-            }
+        if ("Delivery".equals(orderType) && (addressField.getText().isEmpty() || addressField.getText().isBlank())) {
+            System.out.println("Please enter a valid delivery address.");
+            return;
+        }
+        if (("Credit Card".equals(paymentMethod) || "Debit Card".equals(paymentMethod))
+                && (cardNumberField.getText().isEmpty() || cvvField.getText().isEmpty() || expirationDateField.getText().isEmpty())) {
+            System.out.println("Please fill in all credit card details.");
+            return;
+        }
+        if ("Check".equals(paymentMethod) && checkNumberField.getText().isEmpty()) {
+            System.out.println("Please enter a valid check number.");
+            return;
         }
 
-        // Confirm payment
-        System.out.println("Payment confirmed via " + selectedPayment);
-        System.out.println("Order total: $" + String.format("%.2f", orderTotal));
-        sceneController.switchScene("OrderCompletion");
-    }
-
-    private boolean validateCardInformation() {
-        String cardNumber = cardNumberField.getText();
-        String cvv = cvvField.getText();
-        String expirationDate = expirationDateField.getText();
-
-        // Basic validation for card details
-        if (cardNumber.isEmpty() || cardNumber.length() < 16) {
-            return false;
-        }
-        if (cvv.isEmpty() || cvv.length() != 3) {
-            return false;
-        }
-        if (expirationDate.isEmpty() || !expirationDate.matches("(0[1-9]|1[0-2])\\/\\d{2}")) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateCheckNumber() {
-        String checkNumber = checkNumberField.getText();
-
-        // Basic validation for check number
-        return !checkNumber.isEmpty() && checkNumber.length() >= 5;
+        // Simulate order confirmation
+        System.out.println("Order Type: " + orderType);
+        System.out.println("Payment Method: " + paymentMethod);
+        System.out.println("Order confirmed. Total: $" + orderTotal);
     }
 }
