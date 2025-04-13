@@ -53,9 +53,12 @@ public class MenuController extends BaseController {
             itemLabel.setStyle("-fx-font-size: 16px; -fx-padding: 5px; -fx-text-fill: black;");
 
             Button addToOrderButton = new Button("Add to Order");
+            addToOrderButton.getStyleClass().add("button-add-to-order");
 
             if (category.equals("Pizza")) {
                 Button customizeButton = new Button("Customize");
+                customizeButton.getStyleClass().add("button-customize");
+
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);
             } else {
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton);

@@ -31,13 +31,15 @@ public class Main extends Application {
         sceneController.addScene("Cart", "/pizza_shop_system/Cart.fxml");
         sceneController.addScene("Checkout", "/pizza_shop_system/Checkout.fxml");
         sceneController.addScene("Login", "/pizza_shop_system/Login.fxml");
+        sceneController.addScene("SignUp", "/pizza_shop_system/SignUp.fxml");
+
 
         // Set main SceneController
         NavigationBarController navigationBarController = navigationBarLoader.getController();
         navigationBarController.setSceneController(sceneController);
 
         // Switch to default scene
-        sceneController.switchScene("Menu"); // Set the initial scene
+        sceneController.switchScene("Home"); // Set the initial scene
 
         // Attach CSS stylesheet
         scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/styles.css").toExternalForm());

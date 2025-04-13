@@ -3,40 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.MenuController">
-   <children>
-      <GridPane alignment="CENTER" prefHeight="509.0" prefWidth="1000.0">
-         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="NEVER" />
-            <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-         </rowConstraints>
-         <children>
-            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="164.0" styleClass="menu-bar" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-               <children>
-                  <Button fx:id="buttonPizza" mnemonicParsing="false" styleClass="menuButton" text="PIZZA" />
-                  <Button fx:id="buttonBeverage" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="BEVERAGE" />
-                  <Button fx:id="buttonDessert" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="DESSERT" />
-               </children>
+<StackPane prefHeight="600.0" prefWidth="800.0" styleClass="menu-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.MenuController">
+    <children>
+        <VBox spacing="10.0" alignment="TOP_CENTER" prefWidth="800.0" styleClass="menu-container">
+            <!-- Category Selection Buttons -->
+            <HBox spacing="20.0" alignment="CENTER" prefHeight="50.0" styleClass="menu-bar">
+                <Button fx:id="buttonPizza" text="Pizza" styleClass="menu-button" />
+                <Button fx:id="buttonBeverage" text="Beverage" styleClass="menu-button" />
+                <Button fx:id="buttonDessert" text="Dessert" styleClass="menu-button" />
             </HBox>
-            <ScrollPane prefHeight="0.0" prefWidth="500.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <content>
-                  <GridPane fx:id="menuContainer" alignment="CENTER">
-                    <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" valignment="CENTER" vgrow="ALWAYS" />
-                      <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" valignment="CENTER" vgrow="ALWAYS" />
-                      <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" valignment="CENTER" vgrow="ALWAYS" />
-                    </rowConstraints>
-                  </GridPane>
-               </content></ScrollPane>
-         </children>
-      </GridPane>
-   </children>
+
+            <!-- Scrollable Menu Items -->
+            <ScrollPane fitToWidth="true" fitToHeight="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER" styleClass="menu-scroll">
+                <GridPane fx:id="menuContainer" styleClass="menu-grid" alignment="CENTER">
+                    <!-- Dynamic content populated via MenuController.java -->
+                </GridPane>
+            </ScrollPane>
+        </VBox>
+    </children>
 </StackPane>

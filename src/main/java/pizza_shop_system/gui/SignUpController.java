@@ -8,7 +8,7 @@ import pizza_shop_system.account.SignUpHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SignUpSceneController {
+public class SignUpController extends BaseController {
     private String submittedEmail;
     private String submittedPassword;
     private String submittedVerifyPassword;
@@ -63,5 +63,9 @@ public class SignUpSceneController {
             // Implement display sign up warnings to user
             System.out.println(invalidConditions);
         }
+    }
+
+    public void handleBackToLoginClick() {
+        switchScene("Login");
     }
 }

@@ -2,30 +2,65 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.CartController">
-   <children>
-      <Button fx:id="buttonCheckout" layoutX="386.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Checkout" />
-      <ScrollPane layoutX="386.0" layoutY="14.0" prefHeight="261.0" prefWidth="200.0">
-         <content>
-            <VBox fx:id="orderItemContainer" prefHeight="248.0" prefWidth="184.0" />
-         </content>
-      </ScrollPane>
-      <Label alignment="CENTER_RIGHT" layoutX="386.0" layoutY="284.0" prefHeight="21.0" prefWidth="73.0" text="Sub Total:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="386.0" layoutY="305.0" prefHeight="21.0" prefWidth="73.0" text="Tax:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="386.0" layoutY="326.0" prefHeight="21.0" prefWidth="73.0" text="Total:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="checkout-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <!-- GridPane to Organize Content -->
+        <GridPane alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="checkout-grid">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="600.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <!-- Title Row -->
+                <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+                <!-- Cart Items ScrollPane -->
+                <RowConstraints minHeight="200.0" prefHeight="200.0" vgrow="ALWAYS" />
+                <!-- Cart Totals -->
+                <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="NEVER" />
+                <!-- Checkout Button Row -->
+                <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            </rowConstraints>
+
+            <children>
+                <!-- Title Label -->
+                <Label styleClass="checkout-title" text="Cart" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+                <!-- Scrollable Order Items -->
+                <ScrollPane prefHeight="200.0" prefWidth="580.0" styleClass="order-scroll" GridPane.rowIndex="1">
+                    <content>
+                        <VBox prefHeight="200.0" prefWidth="580.0" spacing="10.0" styleClass="order-container">
+                            <!-- Examples of items in the cart -->
+                            <HBox spacing="10.0" styleClass="cart-item">
+                                <Label styleClass="item-name" text="Pizza Margherita" />
+                                <Label styleClass="item-price" text="+$10.99" />
+                            </HBox>
+                            <HBox spacing="10.0" styleClass="cart-item">
+                                <Label styleClass="item-name" text="Chocolate Cake" />
+                                <Label styleClass="item-price" text="+$5.99" />
+                            </HBox>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <!-- Totals Section -->
+                <VBox prefWidth="580.0" spacing="10.0" styleClass="totals-container" GridPane.rowIndex="2">
+                    <HBox spacing="10.0" styleClass="totals-line">
+                        <Label styleClass="cart-label" text="Sub Total:" />
+                        <Label styleClass="cart-value" text="+$16.98" />
+                    </HBox>
+                    <HBox spacing="10.0" styleClass="totals-line">
+                        <Label styleClass="cart-label" text="Tax:" />
+                        <Label styleClass="cart-value" text="+1.70" />
+                    </HBox>
+                    <HBox spacing="10.0" styleClass="totals-line">
+                        <Label styleClass="cart-label" text="Total:" />
+                        <Label styleClass="cart-total-value" text="+$18.68" />
+                    </HBox>
+                </VBox>
+
+                <!-- Checkout Button -->
+                <Button prefHeight="40.0" prefWidth="200.0" styleClass="checkout-button" text="CHECKOUT" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            </children>
+        </GridPane>
+    </children>
+</StackPane>

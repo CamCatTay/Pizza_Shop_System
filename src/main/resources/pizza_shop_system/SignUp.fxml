@@ -3,15 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.SignUpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="500.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pizza_shop_system.gui.SignUpController"
+            styleClass="signup-root">
    <children>
-      <Label layoutX="286.0" layoutY="14.0" text="Sign Up" />
-      <TextField fx:id="nameField" alignment="CENTER" layoutX="234.0" layoutY="47.0" onKeyTyped="#handleNameChanged" promptText="Name" />
-      <TextField fx:id="emailField" alignment="CENTER" layoutX="234.0" layoutY="78.0" onKeyTyped="#handleEmailChanged" promptText="Email" />
-      <TextField fx:id="passwordField" alignment="CENTER" layoutX="234.0" layoutY="192.0" onKeyTyped="#handlePasswordChanged" promptText="Password" />
-      <TextField fx:id="verifyPasswordField" alignment="CENTER" layoutX="234.0" layoutY="225.0" onKeyTyped="#handleVerifyPasswordChanged" promptText="Re-enter Password" />
-      <TextField fx:id="phoneNumberField" alignment="CENTER" layoutX="234.0" layoutY="109.0" onKeyTyped="#handlePhoneNumberChanged" promptText="Phone Number" />
-      <TextField fx:id="addressField" alignment="CENTER" layoutX="234.0" layoutY="141.0" onKeyTyped="#handleAddressChanged" promptText="Address" />
-      <Button layoutX="242.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleSignUpClick" prefHeight="33.0" prefWidth="132.0" text="Sign Up" />
+      <Label layoutX="0" layoutY="30.0" prefHeight="40.0" prefWidth="600.0" text="Sign Up"
+             styleClass="title-label" alignment="CENTER" />
+
+      <TextField alignment="CENTER" layoutX="175.0" layoutY="100.0" prefWidth="250.0"
+                 promptText="Full Name" fx:id="nameField"
+                 styleClass="input-field" />
+
+      <TextField alignment="CENTER" layoutX="175.0" layoutY="160.0" prefWidth="250.0"
+                 promptText="Email" fx:id="emailField"
+                 styleClass="input-field" />
+
+      <PasswordField alignment="CENTER" layoutX="175.0" layoutY="220.0" prefWidth="250.0"
+                     promptText="Password" fx:id="passwordField"
+                     styleClass="input-field" />
+
+      <PasswordField alignment="CENTER" layoutX="175.0" layoutY="280.0" prefWidth="250.0"
+                     promptText="Confirm Password" fx:id="confirmPasswordField"
+                     styleClass="input-field" />
+
+      <Button layoutX="175.0" layoutY="350.0" prefHeight="35.0" prefWidth="250.0"
+              text="Sign Up" onAction="#handleSignUpClick"
+              styleClass="primary-button" />
+
+      <Button layoutX="175.0" layoutY="410.0" prefHeight="35.0" prefWidth="250.0"
+              text="Already have an account? Log in here!"
+              textAlignment="CENTER" wrapText="true"
+              onAction="#handleBackToLoginClick"
+              styleClass="secondary-button" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import pizza_shop_system.account.ActiveUser;
 import pizza_shop_system.account.LoginHandler;
@@ -8,6 +9,7 @@ import pizza_shop_system.account.LoginHandler;
 import java.io.IOException;
 
 public class LoginController extends BaseController {
+    public Button buttonSignUp;
     private String submittedEmail;
     private String submittedPassword;
     private final LoginHandler loginHandler = new LoginHandler();
@@ -41,6 +43,6 @@ public class LoginController extends BaseController {
     }
 
     public void initialize() {
-
+        buttonSignUp.setOnAction(e -> sceneController.switchScene("SignUp"));
     }
 }
