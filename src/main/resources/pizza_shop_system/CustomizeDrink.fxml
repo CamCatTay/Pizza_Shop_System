@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pizza_shop_system.gui.CustomizeDrinkController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label prefHeight="35.0" prefWidth="137.0" text="CUSTOMIZE YOUR DRINK" />
+            <Label text="Size" />
+            <HBox prefHeight="37.0" prefWidth="600.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Small" />
+                  <Button mnemonicParsing="false" text="Medium" />
+                  <Button mnemonicParsing="false" text="Large" />
+               </children>
+            </HBox>
+            <Label text="Ice" />
+            <HBox prefHeight="39.0" prefWidth="600.0">
+               <children>
+                  <Button mnemonicParsing="false" text="None" />
+                  <Button mnemonicParsing="false" text="Light" />
+                  <Button mnemonicParsing="false" text="Regular" />
+                  <Button mnemonicParsing="false" text="Extra" />
+               </children>
+            </HBox>
+            <HBox prefHeight="47.0" prefWidth="600.0">
+               <children>
+                  <Label text="[PRICE]" />
+                  <ChoiceBox prefHeight="25.0" prefWidth="69.0" />
+                  <Button mnemonicParsing="false" text="ADD TO ORDER" />
+               </children></HBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

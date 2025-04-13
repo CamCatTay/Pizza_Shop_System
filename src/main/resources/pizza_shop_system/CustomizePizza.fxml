@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pizza_shop_system.gui.CustomizePizzaController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane>
+         <content>
+            <VBox prefHeight="420.0" prefWidth="590.0">
+               <children>
+                  <Label prefHeight="39.0" prefWidth="134.0" text="CUSTOMIZE YOUR PIZZA" />
+                  <Label text="Size" />
+                  <HBox prefHeight="44.0" prefWidth="491.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Medium" />
+                        <Button mnemonicParsing="false" text="Large" />
+                     </children>
+                  </HBox>
+                  <Label text="Topping (5 Included)" />
+                  <HBox prefHeight="20.0" prefWidth="590.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="266.0" text="Label" />
+                        <CheckBox mnemonicParsing="false" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="590.0">
+                     <children>
+                        <Label text="[PRICE]" />
+                        <ChoiceBox prefHeight="25.0" prefWidth="74.0" />
+                        <Button mnemonicParsing="false" text="ADD TO ORDER" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</StackPane>
