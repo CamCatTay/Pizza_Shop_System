@@ -545,3 +545,62 @@
     -fx-padding: 10;
 }
 
+/* ManagerHome */
+/* Root */
+.manager-home-root {
+    -fx-background-color: white; /* Clean white background */
+}
+
+/* Header Bar */
+.manager-header-bar {
+    -fx-background-color: black; /* Black header bar */
+    -fx-padding: 20;
+}
+
+.manager-header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* White text to contrast black background */
+}
+
+/* Main Container for Buttons */
+.manager-main-container {
+    -fx-padding: 50;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+/* Buttons */
+.manager-button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: white; /* White button */
+    -fx-border-color: black; /* Black border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand; /* Change cursor to pointer */
+    -fx-min-width: 200; /* Ensures consistent button size */
+}
+
+.manager-button:hover {
+    -fx-background-color: #f0f0f0; /* Light gray when hovered */
+}
+
+.manager-button:pressed {
+    -fx-background-color: #d9d9d9; /* Slightly darker gray when pressed */
+}
+
+/* Footer */
+.manager-footer-bar {
+    -fx-background-color: black; /* Same background as header for consistency */
+    -fx-padding: 10;
+}
+
+.footer-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: white; /* White footer text */
+}
+

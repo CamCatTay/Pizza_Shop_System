@@ -18,4 +18,7 @@
 
     <!-- Login Button -->
     <Button fx:id="buttonLogin" text="LOG IN" styleClass="navButton" />
+
+    <!-- Account Button -->
+    <Button fx:id="buttonAccount" text="ACCOUNT" styleClass="navButton" />
 </HBox>

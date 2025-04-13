@@ -37,6 +37,18 @@ public class LoginController extends BaseController {
             System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
             String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
             System.out.println(accountType);
+            switch (accountType) {
+                case "Customer":
+                    sceneController.switchScene("Menu");
+                    break;
+                case "Employee":
+                    // Implement employeeHome
+                    // sceneController.switchScene("EmployeeHome");
+                    break;
+                case "Manager":
+                    sceneController.switchScene("ManagerHome");
+            }
+
         } else {
             System.out.println("Login Failed. Invalid email or password.");
         }
