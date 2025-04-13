@@ -9,6 +9,6 @@
       <TextField alignment="CENTER" layoutX="227.0" layoutY="108.0" promptText="Email" fx:id = "emailField" onKeyTyped="#handleEmailChanged" />
       <TextField alignment="CENTER" layoutX="227.0" layoutY="140.0" promptText="Password" fx:id = "passwordField" onKeyTyped= "#handlePasswordChanged" />
       <Button layoutX="227.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Login" onAction= "#handleLoginClick" />
-      <Button layoutX="223.0" layoutY="55.0" mnemonicParsing="false" onAction="#switchToSignUpScene" prefHeight="43.0" prefWidth="157.0" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="223.0" layoutY="55.0" mnemonicParsing="false"  prefHeight="43.0" prefWidth="157.0" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -1,5 +1,7 @@
 package pizza_shop_system.order;
 
+import pizza_shop_system.menu.MenuItem;
+
 import java.util.List;
 
 public class Receipt {

@@ -28,11 +28,6 @@ public class SignUpSceneController {
     private TextField addressField;
     @FXML
     private TextField phoneNumberField;
-    private final SceneController sceneController = new SceneController();
-
-    public void switchToLoginScene() throws IOException {
-        sceneController.switchToLoginScene();
-    }
 
     @FXML
     public void handleEmailChanged() {
@@ -64,7 +59,6 @@ public class SignUpSceneController {
         if (invalidConditions == null) {
             // Sign up successful
             System.out.println("Signed up!");
-            sceneController.switchToLoginScene();
         } else {
             // Implement display sign up warnings to user
             System.out.println(invalidConditions);

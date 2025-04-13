@@ -1,0 +1,9 @@
+1,Pizza,10.99,Cheese Pizza,Classic cheese pizza.
+2,Pizza,12.99,Pepperoni Pizza,Delicious pepperoni with melted cheese.
+3,Pizza,14.99,Supreme Pizza,A mix of meats and veggies for a full flavor experience.
+4,Beverage,2.99,Coca-Cola,Refreshing carbonated soda.
+5,Beverage,3.49,Lemonade,Zesty homemade lemonade with real lemons.
+6,Beverage,3.99,Milkshake,Rich and creamy vanilla milkshake.
+7,Dessert,5.99,Chocolate Cake,Decadent chocolate cake with fudge frosting.
+8,Dessert,4.99,Ice Cream,Smooth vanilla ice cream with toppings available.
+9,Dessert,6.49,Apple Pie,Classic apple pie with cinnamon and flaky crust.
