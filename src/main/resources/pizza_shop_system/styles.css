@@ -773,3 +773,71 @@
     -fx-alignment: top-left;
     -fx-wrap-text: true;
 }
+
+/* Checkout */
+/* Root */
+.checkout-root {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+}
+
+/* Title */
+.checkout-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+/* Labels */
+.checkout-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Text Values */
+.checkout-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+
+/* ComboBox */
+.checkout-combo-box {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+}
+
+/* Text Fields */
+.checkout-textfield {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+}
+
+/* Buttons */
+.checkout-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.checkout-button:hover {
+    -fx-background-color: #333333;
+}
+
+.checkout-button:pressed {
+    -fx-background-color: #1a1a1a;
+}

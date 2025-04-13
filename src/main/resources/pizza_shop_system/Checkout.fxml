@@ -5,29 +5,49 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
+
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="pizza_shop_system.gui.CheckoutController"
-          alignment="CENTER" hgap="10" vgap="10">
+          styleClass="checkout-root"
+          alignment="CENTER" hgap="15" vgap="15" prefHeight="400.0" prefWidth="600.0">
 
-    <Label text="Checkout" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 20px;"/>
-    <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <Label fx:id="totalLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <!-- Title -->
+    <Label text="Checkout" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
+           styleClass="checkout-title"/>
 
-    <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <ComboBox fx:id="paymentMethodComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <!-- Total Amount -->
+    <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="checkout-label"/>
+    <Label fx:id="totalLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="checkout-value"/>
 
-    <Label fx:id="cardNumberLabel" text="Card Number:" GridPane.columnIndex="0" GridPane.rowIndex="3" visible="false"/>
-    <TextField fx:id="cardNumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"/>
+    <!-- Payment Method -->
+    <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="checkout-label"/>
+    <ComboBox fx:id="paymentMethodComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"
+              promptText="Select Payment Method" styleClass="checkout-combo-box"/>
 
-    <Label fx:id="cvvLabel" text="CVV:" GridPane.columnIndex="0" GridPane.rowIndex="4" visible="false"/>
-    <TextField fx:id="cvvField" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"/>
+    <!-- Card Credentials -->
+    <Label fx:id="cardNumberLabel" text="Card Number:" GridPane.columnIndex="0" GridPane.rowIndex="3" visible="false"
+           styleClass="checkout-label"/>
+    <TextField fx:id="cardNumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"
+               promptText="Enter Card Number" styleClass="checkout-textfield"/>
 
-    <Label fx:id="expirationLabel" text="Expiration Date (MM/YY):" GridPane.columnIndex="0" GridPane.rowIndex="5" visible="false"/>
-    <TextField fx:id="expirationDateField" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"/>
+    <Label fx:id="cvvLabel" text="CVV:" GridPane.columnIndex="0" GridPane.rowIndex="4" visible="false"
+           styleClass="checkout-label"/>
+    <TextField fx:id="cvvField" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"
+               promptText="Enter CVV" styleClass="checkout-textfield"/>
 
-    <Label fx:id="checkNumberLabel" text="Check Number:" GridPane.columnIndex="0" GridPane.rowIndex="6" visible="false"/>
-    <TextField fx:id="checkNumberField" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"/>
+    <Label fx:id="expirationLabel" text="Expiration Date (MM/YY):" GridPane.columnIndex="0" GridPane.rowIndex="5" visible="false"
+           styleClass="checkout-label"/>
+    <TextField fx:id="expirationDateField" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"
+               promptText="MM/YY" styleClass="checkout-textfield"/>
 
-    <Button text="Confirm Order" fx:id="confirmButton" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2"/>
+    <!-- Check Payment -->
+    <Label fx:id="checkNumberLabel" text="Check Number:" GridPane.columnIndex="0" GridPane.rowIndex="6" visible="false"
+           styleClass="checkout-label"/>
+    <TextField fx:id="checkNumberField" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"
+               promptText="Enter Check Number" styleClass="checkout-textfield"/>
+
+    <!-- Confirm Button -->
+    <Button text="Confirm Order" fx:id="confirmButton" GridPane.columnIndex="0" GridPane.rowIndex="7"
+            GridPane.columnSpan="2" styleClass="checkout-button"/>
 </GridPane>
