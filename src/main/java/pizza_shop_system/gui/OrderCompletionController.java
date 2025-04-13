@@ -2,32 +2,33 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import pizza_shop_system.order.Receipt;
 
 public class OrderCompletionController extends BaseController {
 
-    @FXML private Label orderNumberLabel;
-    @FXML private Label orderTotalLabel;
-    @FXML private Label deliveryTimeLabel;
-
+    @FXML private TextArea receiptTextArea;
     @FXML private Button orderAgainButton;
     @FXML private Button exitButton;
 
-    // Dynamically set order details
-    public void setOrderDetails(String orderNumber, double total, String estimatedDeliveryTime) {
-        orderNumberLabel.setText("Order Number: #" + orderNumber);
-        orderTotalLabel.setText("Total: $" + String.format("%.2f", total));
-        deliveryTimeLabel.setText("Estimated Delivery Time: " + estimatedDeliveryTime);
-    }
-
     @FXML
     private void initialize() {
-        orderAgainButton.setOnAction(e -> sceneController.switchScene("Menu"));
+        orderAgainButton.setOnAction(e -> orderAgain());
+
         exitButton.setOnAction(e -> exitApplication());
+    }
+
+    public void displayReceipt(Receipt receipt) {
+        String receiptContent = receipt.generateReceipt();
+        receiptTextArea.setText(receiptContent);
+    }
+
+    private void orderAgain() {
+        System.out.println("Redirecting to the order page...");
+        sceneController.switchScene("Menu");
     }
 
     private void exitApplication() {
         System.out.println("Exiting application...");
-        // Add logic to close the current scene or exit the application
     }
 }
