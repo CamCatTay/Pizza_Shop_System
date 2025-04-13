@@ -7,7 +7,7 @@ import pizza_shop_system.account.LoginHandler;
 
 import java.io.IOException;
 
-public class LoginSceneController {
+public class LoginController extends BaseController {
     private String submittedEmail;
     private String submittedPassword;
     private final LoginHandler loginHandler = new LoginHandler();
@@ -15,7 +15,6 @@ public class LoginSceneController {
     private TextField emailField;
     @FXML
     private TextField passwordField;
-
 
     @FXML
     public void handleEmailChanged() {
@@ -41,4 +40,7 @@ public class LoginSceneController {
         }
     }
 
+    public void initialize() {
+
+    }
 }
