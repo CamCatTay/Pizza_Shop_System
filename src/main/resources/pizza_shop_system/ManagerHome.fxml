@@ -21,13 +21,13 @@
     <center>
         <VBox alignment="CENTER" spacing="30" styleClass="manager-main-container">
             <!-- Report Generation Button -->
-            <Button text="Generate Reports" fx:id="generateReportButton" styleClass="manager-button" />
+            <Button text="Generate Reports" fx:id="buttonGenerateReports" styleClass="manager-button" />
 
             <!-- Manage All Accounts Button -->
-            <Button text="Manage All Accounts" fx:id="manageAccountsButton" styleClass="manager-button" />
+            <Button text="Manage All Accounts" fx:id="buttonManageAccounts" styleClass="manager-button" />
 
             <!-- Start Taking Orders Button -->
-            <Button text="Start Taking Orders" fx:id="startOrdersButton" styleClass="manager-button" />
+            <Button text="Start Taking Orders" fx:id="buttonTakeOrders" styleClass="manager-button" />
         </VBox>
     </center>
 

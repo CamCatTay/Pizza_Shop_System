@@ -604,3 +604,83 @@
     -fx-text-fill: white; /* White footer text */
 }
 
+/* Manage Accounts */
+/* Root Component */
+.manage-accounts-root {
+    -fx-background-color: white; /* Clean white background */
+    -fx-padding: 20;
+}
+
+/* Title */
+.manage-accounts-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* ScrollPane Styling */
+.accounts-scroll-pane {
+    -fx-padding: 10;
+    -fx-background: transparent;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+/* VBox for Accounts */
+.accounts-container {
+    -fx-padding: 10;
+    -fx-spacing: 15;
+}
+
+/* HBox (Row Styling) */
+.account-row {
+    -fx-padding: 10;
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-color: #f9f9f9; /* Slightly gray background for row */
+}
+
+.account-row:hover {
+    -fx-background-color: #f0f0f0; /* Lighter gray when hovered */
+}
+
+/* Labels in Each Row */
+.account-info-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Action Buttons in Each Row */
+.account-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+}
+
+.account-button:hover {
+    -fx-background-color: #333333; /* Slightly lighter black on hover */
+}
+
+.account-button:pressed {
+    -fx-background-color: #000000; /* Darker black when pressed */
+}
+
+/* Footer */
+.manage-footer {
+    -fx-background-color: black;
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+.footer-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
