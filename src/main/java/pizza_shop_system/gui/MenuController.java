@@ -25,10 +25,14 @@ public class MenuController extends BaseController {
     private static final int MAX_COLUMNS = 3;
     private static final int MAX_ROWS = 4;
     private static final int CELL_SIZE = 150;
+    private static final int CELL_SPACING = 5;
 
     public void loadCategory(String category) {
         menuContainer.getChildren().clear(); // Clear previous items
         List<MenuItem> items = menuLoader.getItemsByCategory(category);
+
+        menuContainer.setHgap(CELL_SPACING);
+        menuContainer.setVgap(CELL_SPACING);
 
         int totalItems = items.size();
         int columns = Math.min(MAX_COLUMNS, totalItems);

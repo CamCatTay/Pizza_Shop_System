@@ -16,14 +16,14 @@
          <children>
             <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="164.0" styleClass="menu-bar" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <children>
-                  <Button fx:id="buttonPizza" mnemonicParsing="false" styleClass="menuButton" text="Pizza" />
-                  <Button fx:id="buttonBeverage" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="Beverage" />
-                  <Button fx:id="buttonDessert" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="Dessert" />
+                  <Button fx:id="buttonPizza" mnemonicParsing="false" styleClass="menuButton" text="PIZZA" />
+                  <Button fx:id="buttonBeverage" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="BEVERAGE" />
+                  <Button fx:id="buttonDessert" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="DESSERT" />
                </children>
             </HBox>
             <ScrollPane prefHeight="0.0" prefWidth="500.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <content>
-                  <GridPane fx:id="menuContainer" alignment="CENTER" gridLinesVisible="true">
+                  <GridPane fx:id="menuContainer" alignment="CENTER">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
