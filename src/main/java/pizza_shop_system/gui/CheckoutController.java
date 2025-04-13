@@ -97,6 +97,7 @@ public class CheckoutController extends BaseController {
         // Confirm payment
         System.out.println("Payment confirmed via " + selectedPayment);
         System.out.println("Order total: $" + String.format("%.2f", orderTotal));
+        sceneController.switchScene("OrderCompletion");
     }
 
     private boolean validateCardInformation() {

@@ -841,3 +841,71 @@
 .checkout-button:pressed {
     -fx-background-color: #1a1a1a;
 }
+
+/* Order Completion */
+/* Root */
+.order-completion-root {
+    -fx-background-color: white;
+    -fx-padding: 20;
+}
+
+/* Title */
+.order-completion-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Confirmation Message */
+.order-completion-message {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Order Details */
+.order-details-container {
+    -fx-padding: 10;
+}
+
+.order-detail-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+
+/* Buttons */
+.action-button, .action-button-secondary {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.action-button {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+.action-button:hover {
+    -fx-background-color: #333333; /* Slightly lighter black */
+}
+
+.action-button:pressed {
+    -fx-background-color: #000000;
+}
+
+.action-button-secondary {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-color: black;
+}
+
+.action-button-secondary:hover {
+    -fx-background-color: #f0f0f0; /* Lighter gray background */
+}
+
+.action-button-secondary:pressed {
+    -fx-background-color: #d9d9d9; /* Darker gray background */
+}

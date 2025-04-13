@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="order-completion-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.OrderCompletionController">
+
+    <children>
+        <!-- Title -->
+        <Label layoutX="248.0" layoutY="14.0" styleClass="order-completion-title" text="Order Confirmation" />
+
+        <!-- Confirmation Message -->
+        <Label layoutX="50.0" layoutY="78.0" styleClass="order-completion-message" text="Your order has been placed successfully!" />
+
+        <!-- Order Details for Review -->
+        <VBox layoutX="50.0" layoutY="120.0" spacing="10" styleClass="order-details-container">
+            <Label fx:id="orderNumberLabel" styleClass="order-detail-label" text="Order Number: #12345" />
+            <Label fx:id="orderTotalLabel" styleClass="order-detail-label" text="Total: $49.99" />
+            <Label fx:id="deliveryTimeLabel" styleClass="order-detail-label" text="Estimated Delivery Time: 30 minutes" />
+        </VBox>
+
+        <!-- Action Buttons -->
+        <HBox alignment="CENTER" layoutX="150.0" layoutY="300.0" spacing="20">
+            <Button fx:id="orderAgainButton" styleClass="action-button" text="Order Again" />
+            <Button fx:id="exitButton" styleClass="action-button-secondary" text="Exit" />
+        </HBox>
+    </children>
+</AnchorPane>
