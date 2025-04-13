@@ -25,10 +25,15 @@ public class SceneController {
             scenes.put(name, root);
 
             // Pass SceneController reference to each controller
-            BaseController controller = loader.getController();
-            if (controller != null) {
-                controller.setSceneController(this);
+            try {
+                BaseController controller = loader.getController();
+                if (controller != null) {
+                    controller.setSceneController(this);
+                }
+            } catch (ClassCastException e) {
+                System.out.println("Controller does not extend BaseController: " + name);
             }
+
         } catch (IOException e) {
             System.out.println("Failed to add scene -> " + name + ": " + e.getMessage());
         } catch (NullPointerException e) {

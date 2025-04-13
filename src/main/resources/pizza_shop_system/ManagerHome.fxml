@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pizza_shop_system.gui.ManagerHomeController"
+            prefHeight="600.0"
+            prefWidth="800.0"
+            styleClass="manager-home-root">
+
+    <!-- Top Section: Title -->
+    <top>
+        <HBox alignment="CENTER" spacing="20" styleClass="manager-header-bar">
+            <Label text="MANAGER DASHBOARD" styleClass="manager-header-title" />
+        </HBox>
+    </top>
+
+    <!-- Center Section: Buttons -->
+    <center>
+        <VBox alignment="CENTER" spacing="30" styleClass="manager-main-container">
+            <!-- Report Generation Button -->
+            <Button text="Generate Reports" fx:id="buttonGenerateReports" styleClass="manager-button" />
+
+            <!-- Manage All Accounts Button -->
+            <Button text="Manage All Accounts" fx:id="buttonManageAccounts" styleClass="manager-button" />
+
+            <!-- Start Taking Orders Button -->
+            <Button text="Start Taking Orders" fx:id="buttonTakeOrders" styleClass="manager-button" />
+        </VBox>
+    </center>
+
+    <!-- Bottom Footer Section -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" styleClass="manager-footer-bar">
+            <Label text="© 2025 Pizza Shop System" styleClass="footer-text" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

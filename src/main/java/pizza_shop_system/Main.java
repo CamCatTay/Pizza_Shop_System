@@ -30,13 +30,22 @@ public class Main extends Application {
         sceneController.addScene("Menu", "/pizza_shop_system/Menu.fxml");
         sceneController.addScene("Cart", "/pizza_shop_system/Cart.fxml");
         sceneController.addScene("Checkout", "/pizza_shop_system/Checkout.fxml");
+        sceneController.addScene("Login", "/pizza_shop_system/Login.fxml");
+        sceneController.addScene("SignUp", "/pizza_shop_system/SignUp.fxml");
+        sceneController.addScene("CustomizePizza", "/pizza_shop_system/CustomizePizza.fxml");
+        sceneController.addScene("CustomizeBeverage", "/pizza_shop_system/CustomizeBeverage.fxml");
+        sceneController.addScene("ManagerHome", "/pizza_shop_system/ManagerHome.fxml");
+        sceneController.addScene("Reports", "/pizza_shop_system/Reports.fxml");
+        sceneController.addScene("ManageAccounts", "/pizza_shop_system/ManageAccounts.fxml");
+        sceneController.addScene("OrderCompletion", "/pizza_shop_system/OrderCompletion.fxml");
+
 
         // Set main SceneController
         NavigationBarController navigationBarController = navigationBarLoader.getController();
         navigationBarController.setSceneController(sceneController);
 
         // Switch to default scene
-        sceneController.switchScene("Menu"); // Set the initial scene
+        sceneController.switchScene("Home"); // Set the initial scene
 
         // Attach CSS stylesheet
         scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/styles.css").toExternalForm());

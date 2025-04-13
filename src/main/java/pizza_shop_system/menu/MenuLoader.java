@@ -23,7 +23,6 @@ public class MenuLoader {
     }
 
     public List<MenuItem> getItemsByCategory(String category) {
-        System.out.println(category);
         return categorizedItems.getOrDefault(category, new ArrayList<>());
     }
 }

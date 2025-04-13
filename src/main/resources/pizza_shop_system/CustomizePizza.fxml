@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane maxHeight="-Infinity"
+           maxWidth="-Infinity"
+           minHeight="-Infinity"
+           minWidth="-Infinity"
+           prefHeight="400.0"
+           prefWidth="600.0"
+           xmlns="http://javafx.com/javafx/17.0.12"
+           xmlns:fx="http://javafx.com/fxml/1"
+           styleClass="customize-root">
+   <children>
+      <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="customize-scroll-pane">
+         <content>
+            <VBox spacing="15" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="590.0" styleClass="customize-container">
+               <!-- Header -->
+               <Label text="CUSTOMIZE YOUR PIZZA" styleClass="customize-header" />
+
+               <!-- Size Section -->
+               <Label text="Size" styleClass="customize-label" />
+               <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
+                  <Button text="Medium" styleClass="choice-button" />
+                  <Button text="Large" styleClass="choice-button" />
+               </HBox>
+
+               <!-- Toppings Section -->
+               <Label text="Topping (5 Included)" styleClass="customize-label" />
+               <HBox spacing="10" alignment="CENTER_LEFT">
+                  <Label text="Extra Cheese" styleClass="topping-label" />
+                  <CheckBox mnemonicParsing="false" />
+               </HBox>
+               <HBox spacing="10" alignment="CENTER_LEFT">
+                  <Label text="Pepperoni" styleClass="topping-label" />
+                  <CheckBox mnemonicParsing="false" />
+               </HBox>
+
+               <!-- Quantity and Add to Order Section -->
+               <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
+                  <Label text="[PRICE]" styleClass="customize-price" />
+                  <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
+                  <Button text="ADD TO ORDER" styleClass="add-to-order-button" />
+               </HBox>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</StackPane>

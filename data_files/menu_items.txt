@@ -1,9 +1,18 @@
 1,Pizza,10.99,Cheese Pizza,Classic cheese pizza.
 2,Pizza,12.99,Pepperoni Pizza,Delicious pepperoni with melted cheese.
 3,Pizza,14.99,Supreme Pizza,A mix of meats and veggies for a full flavor experience.
-4,Beverage,2.99,Coca-Cola,Refreshing carbonated soda.
-5,Beverage,3.49,Lemonade,Zesty homemade lemonade with real lemons.
-6,Beverage,3.99,Milkshake,Rich and creamy vanilla milkshake.
-7,Dessert,5.99,Chocolate Cake,Decadent chocolate cake with fudge frosting.
-8,Dessert,4.99,Ice Cream,Smooth vanilla ice cream with toppings available.
-9,Dessert,6.49,Apple Pie,Classic apple pie with cinnamon and flaky crust.
+4,Pizza,13.99,BBQ Chicken Pizza,Smoky BBQ sauce with grilled chicken and onions.
+5,Pizza,11.99,Veggie Pizza,Bell peppers, mushrooms, onions, and black olives.
+6,Pizza,12.49,Hawaiian Pizza,Ham and pineapple on a crispy crust.
+7,Beverage,2.99,Coca-Cola,Refreshing carbonated soda.
+8,Beverage,3.49,Lemonade,Zesty homemade lemonade with real lemons.
+9,Beverage,3.99,Milkshake,Rich and creamy vanilla milkshake.
+10,Beverage,4.49,Iced Coffee,Cold brew coffee with a splash of cream.
+11,Beverage,2.99,Green Tea,Soothing, antioxidant-rich green tea.
+12,Beverage,3.79,Fruit Punch,A tropical mix of fruity flavors.
+13,Dessert,5.99,Chocolate Cake,Decadent chocolate cake with fudge frosting.
+14,Dessert,4.99,Ice Cream,Smooth vanilla ice cream with toppings available.
+15,Dessert,6.49,Apple Pie,Classic apple pie with cinnamon and flaky crust.
+16,Dessert,6.99,Cheesecake,Creamy cheesecake with a graham cracker crust.
+17,Dessert,6.49,Brownie Sundae,Warm chocolate brownie topped with ice cream.
+18,Dessert,5.99,Strawberry Shortcake,Fluffy cake with fresh strawberries and whipped cream.
