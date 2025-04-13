@@ -32,7 +32,8 @@ public class Main extends Application {
         sceneController.addScene("Checkout", "/pizza_shop_system/Checkout.fxml");
         sceneController.addScene("Login", "/pizza_shop_system/Login.fxml");
         sceneController.addScene("SignUp", "/pizza_shop_system/SignUp.fxml");
-
+        sceneController.addScene("CustomizePizza", "/pizza_shop_system/CustomizePizza.fxml");
+        sceneController.addScene("CustomizeBeverage", "/pizza_shop_system/CustomizeBeverage.fxml");
 
         // Set main SceneController
         NavigationBarController navigationBarController = navigationBarLoader.getController();

@@ -57,11 +57,13 @@ public class MenuController extends BaseController {
 
             if (category.equals("Pizza")) {
                 Button customizeButton = new Button("Customize");
+                customizeButton.setOnAction(e -> sceneController.switchScene("CustomizePizza"));
                 customizeButton.getStyleClass().add("button-customize");
 
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);
-            } else {
+            } else if (category.equals("Beverage")) {
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton);
+                addToOrderButton.setOnAction(e -> sceneController.switchScene("CustomizeBeverage"));
             }
 
             // Add itemBox to GridPane

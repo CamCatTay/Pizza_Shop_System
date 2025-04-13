@@ -439,3 +439,109 @@
     -fx-text-fill: gray;
 }
 
+/* Customize Menu Options */
+/* Root Styling */
+.customize-root {
+    -fx-background-color: white; /* Clean white background */
+}
+
+/* ScrollPane Styling */
+.customize-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Containers */
+.customize-container {
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+
+/* Header */
+.customize-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-padding: 10;
+    -fx-text-alignment: center;
+}
+
+/* Section Labels */
+.customize-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-padding: 5 0;
+}
+
+/* Topping Labels */
+.topping-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+
+/* Choice Buttons */
+.choice-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: white; /* White button */
+    -fx-border-color: black; /* Black border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand; /* Pointer cursor for interactivity */
+}
+
+.choice-button:hover {
+    -fx-background-color: #f0f0f0; /* Light gray hover */
+}
+
+.choice-button:pressed {
+    -fx-background-color: #d9d9d9; /* Slightly darker gray when pressed */
+}
+
+/* Price Label */
+.customize-price {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Quantity ChoiceBox */
+.quantity-choice {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-padding: 5;
+}
+
+/* Add to Order Button */
+.add-to-order-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* White text */
+    -fx-background-color: black; /* Black background */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.add-to-order-button:hover {
+    -fx-background-color: #333333; /* Darker black hover */
+}
+
+.add-to-order-button:pressed {
+    -fx-background-color: #1a1a1a; /* Even darker black when pressed */
+}
+
+/* Bottom Section Styling */
+.bottom-section {
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+
