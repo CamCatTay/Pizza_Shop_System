@@ -11,8 +11,8 @@ import java.util.List;
 public class MenuController extends BaseController {
     @FXML private VBox menuContainer;
     @FXML private Button buttonPizza;
-    @FXML private Button buttonBeverages;
-    @FXML private Button buttonDesserts;
+    @FXML private Button buttonBeverage;
+    @FXML private Button buttonDessert;
 
     private final MenuLoader menuLoader = new MenuLoader();
 
@@ -58,7 +58,7 @@ public class MenuController extends BaseController {
     @FXML
     private void initialize() {
         buttonPizza.setOnAction(e -> loadCategory("Pizza"));
-        buttonBeverages.setOnAction(e -> loadCategory("Beverage"));
-        buttonDesserts.setOnAction(e -> loadCategory("Dessert"));
+        buttonBeverage.setOnAction(e -> loadCategory("Beverage"));
+        buttonDessert.setOnAction(e -> loadCategory("Dessert"));
     }
 }

@@ -1,35 +1,58 @@
-#navbar {
-    -fx-background-color: #333333;
-    -fx-padding: 10px;
+.navigation-bar {
+    -fx-background-color: #993131;
+    -fx-spacing: 0px;
+    -fx-padding: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);
 }
 
-Button {
-    -fx-background-color: #555555;
+.menu-bar {
+    -fx-background-color: #993131;
+    -fx-spacing: 0px;
+    -fx-padding: 0px;
+}
+
+.menuButton {
+    -fx-background-color: #993131;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-text-transform: uppercase;
+    -fx-font-family: "Impact";
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-color: transparent;
+    -fx-pref-height: 100%;
+}
+
+.menuButton:hover {
+    -fx-background-color: #662121;
+}
+
+.navButton {
+    -fx-background-color: #993131;
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-padding: 8px 15px;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
+    -fx-text-transform: uppercase;
+    -fx-font-family: "Impact";
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
     -fx-border-color: transparent;
+    -fx-pref-height: 100%;
 }
 
-Button:hover {
-    -fx-background-color: #777777;
+.navButton:hover {
+    -fx-background-color: #662121;
 }
 
-#buttonBack {
-    -fx-background-color: #ff5555;
-    -fx-text-fill: white;
+StackPane {
+    -fx-pref-width: 100%;
+    -fx-pref-height: 100%;
+    -fx-background-color: #333333;
 }
 
-#buttonBack:hover {
-    -fx-background-color: #ff7777;
+AnchorPane {
+    -fx-top-anchor: 0;
+    -fx-bottom-anchor: 0;
+    -fx-left-anchor: 0;
+    -fx-right-anchor: 0;
 }
 
-#buttonSignIn {
-    -fx-background-color: #0066ff;
-}
-
-#buttonSignIn:hover {
-    -fx-background-color: #3388ff;
-}

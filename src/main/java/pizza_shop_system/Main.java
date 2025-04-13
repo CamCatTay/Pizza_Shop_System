@@ -36,7 +36,11 @@ public class Main extends Application {
         navigationBarController.setSceneController(sceneController);
 
         // Switch to default scene
-        sceneController.switchScene("Home"); // Set the initial scene
+        sceneController.switchScene("Menu"); // Set the initial scene
+
+        // Attach CSS stylesheet
+        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/styles.css").toExternalForm());
+
     }
 
     public static void main(String[] args) {

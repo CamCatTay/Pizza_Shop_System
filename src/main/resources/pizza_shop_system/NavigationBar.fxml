@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:id="navigationBar" fx:controller="pizza_shop_system.gui.NavigationBarController">
-    <Button fx:id="buttonBack" text="Back" />
-    <Button fx:id="buttonHome" text="Home" />
-    <Button fx:id="buttonMenu" text="Menu" />
-    <Button fx:id="buttonCart" text="Cart" />
-    <Button fx:id="buttonSignIn" text="LOG IN" />
+<HBox fx:id="navigationBar" alignment="CENTER" spacing="10" styleClass="navigation-bar" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.NavigationBarController">
+    <Button fx:id="buttonBack" styleClass="navButton" text="BACK" />
+    <Button fx:id="buttonHome" styleClass="navButton" text="HOME" />
+    <Button fx:id="buttonMenu" styleClass="navButton" text="MENU" />
+    <Button fx:id="buttonCart" styleClass="navButton" text="CART" />
+    <Button fx:id="buttonSignIn" styleClass="navButton" text="LOG IN" />
 </HBox>

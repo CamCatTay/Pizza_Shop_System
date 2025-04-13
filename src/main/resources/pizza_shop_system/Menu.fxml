@@ -3,15 +3,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.menu.MenuController">
-      <HBox fx:id="categoryBar" alignment="CENTER" layoutX="200.0" layoutY="14.0" prefHeight="24.0" prefWidth="200.0" spacing="10">
-          <Button fx:id="buttonPizza" mnemonicParsing="false" text="Pizza" />
-          <Button fx:id="buttonBeverages" layoutX="89.0" layoutY="10.0" mnemonicParsing="false" text="Beverages" />
-          <Button fx:id="buttonDesserts" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" text="Desserts" />
-      </HBox>
-   <ScrollPane layoutX="20.0" layoutY="52.0" prefHeight="329.0" prefWidth="561.0">
-      <content>
-         <VBox fx:id="menuContainer" prefHeight="317.0" prefWidth="546.0" />
-      </content>
-   </ScrollPane>
-</AnchorPane>
+<StackPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.menu.MenuController">
+   <children>
+      <GridPane alignment="CENTER" prefHeight="509.0" prefWidth="1000.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="164.0" styleClass="menu-bar" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <children>
+                  <Button fx:id="buttonPizza" mnemonicParsing="false" styleClass="menuButton" text="Pizza" />
+                  <Button fx:id="buttonBeverage" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="Beverage" />
+                  <Button fx:id="buttonDessert" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" styleClass="menuButton" text="Dessert" />
+               </children>
+            </HBox>
+            <ScrollPane prefHeight="451.0" prefWidth="980.0" GridPane.rowIndex="1">
+               <content>
+                  <VBox fx:id="menuContainer" prefHeight="480.0" prefWidth="961.0" />
+               </content></ScrollPane>
+         </children>
+      </GridPane>
+   </children>
+</StackPane>
