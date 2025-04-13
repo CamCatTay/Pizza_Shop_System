@@ -39,7 +39,7 @@ public class OrderCompletionController extends BaseController {
                 123 Main Street, Pizzatown
                 Phone: 555-123-4567
                 Order Number: A2345
-                Date/Time: 2023-10-25 18:30
+                Date/Time: 4-20-2025 18:30
                 Customer: John Doe
                 -----------------------------
                 Margherita Pizza x1 - $15.99
@@ -50,7 +50,7 @@ public class OrderCompletionController extends BaseController {
                 Tax: $1.48
                 Tip: $2.00
                 Total Amount: $24.48
-                Payment Method: Credit Card
+                Payment Method: Cash
                 *****************************
                 """;
 
