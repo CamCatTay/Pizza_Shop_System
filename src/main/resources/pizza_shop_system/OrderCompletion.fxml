@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -19,29 +20,7 @@
         <!-- Receipt Display -->
         <TextArea fx:id="receiptTextArea"
                   layoutX="50.0" layoutY="100.0" prefWidth="500.0" prefHeight="300.0"
-                  editable="false" wrapText="true" styleClass="receipt-display">
-            <!-- Example Receipt -->
-            <text>
-                ******** Receipt **********
-                Pizza Palace
-                123 Main Street, Pizzatown
-                Phone: 555-123-4567
-                Order Number: A2345
-                Date/Time: 2023-10-25 18:30
-                Customer: John Doe
-                -----------------------------
-                Margherita Pizza x1 - $15.99
-                Garlic Breadsticks x1 - $5.99
-                Soft Drink x1 - $2.50
-                -----------------------------
-                Subtotal: $20.00
-                Tax: $1.48
-                Tip: $2.00
-                Total Amount: $24.48
-                Payment Method: Credit Card
-                *****************************
-            </text>
-        </TextArea>
+                  editable="false" wrapText="true" styleClass="receipt-display"/>
 
         <!-- Action Buttons -->
         <HBox layoutX="150.0" layoutY="420.0" spacing="20" alignment="CENTER">
