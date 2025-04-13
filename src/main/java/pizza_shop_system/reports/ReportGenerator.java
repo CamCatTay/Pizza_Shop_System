@@ -1,6 +1,16 @@
 package pizza_shop_system.reports;
-
 /*
+import pizza_shop_system.order.*;
+import pizza_shop_system.account.*;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReportGenerator {
 
     private LocalDate date;
@@ -103,7 +113,7 @@ public class ReportGenerator {
                 String phoneNumber = fields[6].trim();
 
                 if(userID == customerID && name.equalsIgnoreCase(customerName)){
-                    user = new User(name, userID, email, address, phoneNumber, password, accountType);
+                    user = new User(userID, name, email, address, phoneNumber, password, accountType);
                     break;
                 }
             }
@@ -299,7 +309,5 @@ public class ReportGenerator {
 
 
     }
-
 }
-
  */
