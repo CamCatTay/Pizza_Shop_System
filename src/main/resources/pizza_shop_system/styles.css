@@ -684,3 +684,92 @@
     -fx-text-fill: white;
 }
 
+/* Reports */
+/* Root */
+.reports-root {
+    -fx-background-color: white;
+    -fx-padding: 20;
+}
+
+/* Header Section */
+.header-container {
+    -fx-padding: 10 0;
+}
+
+.header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-padding: 10;
+    -fx-text-alignment: center;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0;
+}
+
+/* ChoiceBox */
+.choice-box {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-padding: 5;
+}
+
+/* Buttons (Primary and Secondary) */
+.button-primary {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #333333; /* Slightly lighter black */
+}
+
+.button-primary:pressed {
+    -fx-background-color: #000000; /* Default black */
+}
+
+.button-secondary {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #f0f0f0; /* Light gray hover */
+}
+
+.button-secondary:pressed {
+    -fx-background-color: #d9d9d9; /* Darker gray when pressed */
+}
+
+/* TextArea for Report Display */
+.report-display {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 10;
+    -fx-alignment: top-left;
+    -fx-wrap-text: true;
+}
