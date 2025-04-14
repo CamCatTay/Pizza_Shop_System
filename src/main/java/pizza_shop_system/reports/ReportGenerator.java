@@ -1,7 +1,8 @@
 package pizza_shop_system.reports;
-/*
+
 import pizza_shop_system.order.*;
 import pizza_shop_system.account.*;
+import pizza_shop_system.menu.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,6 +11,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class ReportGenerator {
 
@@ -67,17 +70,27 @@ public class ReportGenerator {
 
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                String name = fields[1].trim();
-                double price = Double.parseDouble(fields[2]);
-                int amount = Integer.parseInt(fields[3]);
-                String category = fields[4].trim();
-                ArrayList<String> toppings = new ArrayList<>();
-                for(int i = 4; i < fields.length; i++){
-                    toppings.add(fields[i]);
-                }
 
-                MenuItem menuItem = new MenuItem(name, price, amount, category, toppings);
+                String itemID = fields[0].trim();
+                String category = fields[1].trim();
+                Double price = Double.parseDouble(fields[2].trim());
+                String name = fields[3].trim();
+                String description = fields[4].trim();
+
+                MenuItem menuItem = new MenuItem(itemID, category, price, name, description);
                 items.add(menuItem);
+
+                // OLD CODE
+                //String name = fields[1].trim();
+                //double price = Double.parseDouble(fields[2]);
+                //int amount = Integer.parseInt(fields[3]);
+                //String category = fields[4].trim();
+                //ArrayList<String> toppings = new ArrayList<>();
+                //for(int i = 4; i < fields.length; i++){
+                //    toppings.add(fields[i]);
+                //}
+                //MenuItem menuItem = new MenuItem(name, price, amount, category, toppings);
+                //items.add(menuItem);
             }
         } catch (IOException e) {
             System.err.println("IOException: Unable to read file " + e.getMessage());
@@ -133,20 +146,14 @@ public class ReportGenerator {
     public static List<String> countItems(List<MenuItem> order){
 
         List<String> uniqueItems = new ArrayList<>();
-        List<Integer> itemCounts = new ArrayList<>();
 
         for(MenuItem item: order){
             String name = item.getName();
             uniqueItems.add(name);
-
-            int amount = item.getAmount();
-            itemCounts.add(amount);
         }
 
         List<String> result = new ArrayList<>();
-        for(int i = 0; i < uniqueItems.size(); i++){
-            result.add(uniqueItems.get(i) + ": " + itemCounts.get(i));
-        }
+        result.addAll(uniqueItems);
 
         return result;
 
@@ -177,11 +184,6 @@ public class ReportGenerator {
                 for (MenuItem item : orderItems) {
                     report.append(item.getName()).append("\t\t\t$").append(String.format("%.2f", item.getPrice())).append("\n");
 
-                    if (item.toppings != null && !item.toppings.isEmpty()) {
-                        for (String topping : item.toppings) {
-                            report.append("\t~").append(topping).append("\n");
-                        }
-                    }
                     subtotal += item.getPrice();
                 }
 
@@ -220,8 +222,12 @@ public class ReportGenerator {
     }
 
 
-    public static String generateWeeklyReport(List<Order> orders, LocalDate startDate, LocalDate endDate) throws IOException {
+    public static String generateWeeklyReport(LocalDate startDate, LocalDate endDate) throws IOException {
         StringBuilder report = new StringBuilder();
+        List<Order> orders = new ArrayList<>();
+        for (Order order : readOrders(startDate, endDate)) {
+            orders.add(order);
+        }
 
         try {
             if (orders == null || orders.isEmpty()) {
@@ -249,19 +255,17 @@ public class ReportGenerator {
 
                         for (MenuItem item : orderItems) {
                             String itemName = item.getName();
-                            int amount = item.getAmount();
                             double price = item.getPrice();
                             int index = itemNames.indexOf(itemName);
 
                             if (index >= 0) {
-                                itemQuantities.set(index, itemQuantities.get(index) + amount);
+                                itemQuantities.set(index, itemQuantities.get(index));
                             } else {
                                 itemNames.add(itemName);
-                                itemQuantities.add(amount);
                                 itemPrices.add(price);
                             }
 
-                            subtotal += price * amount;
+                            subtotal += price;
                         }
                     }
                 }
@@ -310,4 +314,4 @@ public class ReportGenerator {
 
     }
 }
- */
+

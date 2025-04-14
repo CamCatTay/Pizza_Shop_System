@@ -2,10 +2,12 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import pizza_shop_system.reports.ReportGenerator;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
-// Need to implement Tylers report generator handler into this later
+// Need to implement Tyler's report generator handler into this later
 
 public class ReportsController extends BaseController {
 
@@ -41,7 +43,13 @@ public class ReportsController extends BaseController {
         generateButton.setDisable(true);
 
         // Add listener for Generate Button
-        generateButton.setOnAction(e -> generateReport());
+        generateButton.setOnAction(e -> {
+            try {
+                generateReport();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         // Add listener for Back Button
         backButton.setOnAction(e -> goBack());
@@ -68,17 +76,34 @@ public class ReportsController extends BaseController {
         }
     }
 
-    private void generateReport() {
+    private void generateReport() throws IOException {
         String reportType = timeSelectionChoiceBox.getValue();
-        String reportContent = "Generating " + reportType + "..."; // Placeholder for actual logic
+        String reportContent = null;
+        LocalDate endDate = datePicker.getValue().plusDays(6);
+        //String reportContent = "Generating " + reportType + "..."; // Placeholder for actual logic
 
-        if ("Weekly Report".equals(reportType) && datePicker.getValue() != null) {
-            reportContent += "\nStart Date: " + datePicker.getValue();
+        try {
+
+
+            if ("Daily Report".equals(reportType) && datePicker.getValue() != null) {
+                reportContent = ReportGenerator.generateDailyReport(datePicker.getValue());
+            }
+
+            if ("Weekly Report".equals(reportType) && datePicker.getValue() != null) {
+                System.out.println("Generating Weekly Report for days: " + datePicker.getValue().toString() + " - " + endDate.toString());
+                reportContent = ReportGenerator.generateWeeklyReport(datePicker.getValue(), endDate);
+            }
+
+            // Show report in TextArea
+            reportTextArea.setText(reportContent);
+            reportTextArea.setVisible(true);
+        } catch (IOException e){
+            System.err.println("IOException: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e){
+            System.err.println("Exception: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        // Show report in TextArea
-        reportTextArea.setText(reportContent);
-        reportTextArea.setVisible(true);
     }
 
     private void goBack() {
