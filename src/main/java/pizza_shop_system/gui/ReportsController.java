@@ -3,6 +3,8 @@ package pizza_shop_system.gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDate;
+
 // Need to implement Tylers report generator handler into this later
 
 public class ReportsController extends BaseController {
@@ -28,7 +30,7 @@ public class ReportsController extends BaseController {
     @FXML
     private void initialize() {
         // Populate the ChoiceBox with report types
-        timeSelectionChoiceBox.getItems().addAll("Daily Report", "Weekly Report", "Monthly Report");
+        timeSelectionChoiceBox.getItems().addAll("Daily Report", "Weekly Report");
 
         // Add a listener for the ChoiceBox selection
         timeSelectionChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -51,12 +53,16 @@ public class ReportsController extends BaseController {
                 // Show Weekly Report fields
                 weeklyStartDateLabel.setVisible(true);
                 datePicker.setVisible(true);
+                datePicker.setValue(LocalDate.now());
             } else {
                 // Hide Weekly Report fields for other types
                 weeklyStartDateLabel.setVisible(false);
                 datePicker.setVisible(false);
             }
-            generateButton.setDisable(false); // Enable the button
+            generateButton.setDisable(false);
+            datePicker.setVisible(true);
+            datePicker.setValue(LocalDate.now());
+            // Enable the button
         } else {
             generateButton.setDisable(true);
         }
