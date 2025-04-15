@@ -480,6 +480,16 @@
     -fx-text-fill: black;
 }
 
+.topping-category {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+}
+
 /* Choice Buttons */
 .choice-button {
     -fx-font-size: 14px;
