@@ -2,7 +2,12 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
+import java.util.Objects;
 
 public class NavigationBarController extends BaseController {
     public HBox navigationBar;
@@ -11,6 +16,31 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonCart;
     @FXML private Button buttonBack;
     @FXML private Button buttonLogin;
+    @FXML private ImageView logoView;
+
+    private void setHomeButtonImage() {
+        ImageView imageView = new ImageView();
+        imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(40);
+        buttonHome.setGraphic(imageView);
+    }
+
+    private void setBackButtonImage() {
+        ImageView imageView = new ImageView();
+        imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/left-arrow.png"))));
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(30);
+        imageView.setFitHeight(25);
+
+        // Make arrow white
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(1);
+        imageView.setEffect(colorAdjust);
+
+        buttonBack.setGraphic(imageView);
+    }
 
     @FXML
     public void initialize() {
@@ -19,5 +49,8 @@ public class NavigationBarController extends BaseController {
         buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
         buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
+
+        setHomeButtonImage();
+        setBackButtonImage();
     }
 }
