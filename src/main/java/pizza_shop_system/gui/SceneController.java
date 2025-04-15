@@ -31,7 +31,7 @@ public class SceneController {
                     controller.setSceneController(this);
                 }
             } catch (ClassCastException e) {
-                System.out.println("Controller does not extend BaseController: " + name);
+                System.out.println("WARNING: Controller does not extend BaseController: " + name);
             }
 
         } catch (IOException e) {

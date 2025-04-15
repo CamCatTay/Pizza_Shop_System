@@ -51,6 +51,8 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/stylesheets/menu.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/stylesheets/cart.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/stylesheets/navigationbar.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/stylesheets/customize.css").toExternalForm());
+
     }
 
     public static void main(String[] args) {
