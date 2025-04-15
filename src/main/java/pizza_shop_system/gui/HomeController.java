@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class HomeController extends BaseController {
+    public Button buttonLogin;
     @FXML
     private Button orderButton;
     @FXML
@@ -17,5 +18,6 @@ public class HomeController extends BaseController {
     private void initialize() {
         logoView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
         orderButton.setOnAction(e -> sceneController.switchScene("Menu"));
+        buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
     }
 }
