@@ -1,0 +1,90 @@
+/* Menu Scene Root */
+.menu-root {
+    -fx-background-color: white; /* Clean white background */
+}
+
+/* Menu Bar Buttons */
+.menu-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #e0e0e0; /* Light gray on hover */
+}
+
+/* Menu ScrollPane Styling */
+.menu-scroll {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+
+/* Grid for Menu Items */
+.menu-grid {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-padding: 20;
+}
+
+/* Individual Menu Item Styling */
+.menu-item {
+    -fx-background-color: white;
+    -fx-border-color: #bdbdbd;
+    -fx-border-width: 1px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+    -fx-spacing: 5;
+    -fx-alignment: CENTER;
+}
+
+.menu-item .item-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+.menu-item .item-price {
+    -fx-font-size: 14px;
+    -fx-text-fill: gray;
+    -fx-font-style: italic;
+}
+
+/* Add to Order Button */
+.button-add-to-order {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button-add-to-order:hover {
+    -fx-background-color: #424242; /* Darker gray on hover */
+}
+
+/* Customize Button */
+.button-customize {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-color: #bdbdbd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button-customize:hover {
+    -fx-background-color: #e0e0e0;
+}

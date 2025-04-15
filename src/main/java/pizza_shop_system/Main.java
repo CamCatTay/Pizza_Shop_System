@@ -47,8 +47,11 @@ public class Main extends Application {
         // Switch to default scene
         sceneController.switchScene("Home"); // Set the initial scene
 
-        // Attach CSS stylesheet
-        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/styles.css").toExternalForm());
+        // Attach ALL CSS stylesheets
+        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/menu.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/cart.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/pizza_shop_system/navigationbar.css").toExternalForm());
+
 
     }
 
