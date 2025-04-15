@@ -919,3 +919,9 @@
 .action-button-secondary:pressed {
     -fx-background-color: #d9d9d9; /* Darker gray background */
 }
+
+.toggle-button:selected {
+    -fx-background-color: #ffcc66;
+    -fx-border-color: #cc9933;
+    -fx-text-fill: black;
+}
