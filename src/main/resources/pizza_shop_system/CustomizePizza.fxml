@@ -25,10 +25,10 @@
                   <Label text="Size" />
                </VBox>
                <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-                  <ToggleButton fx:id="personalSizeBtn" text="Personal" toggleGroup="$sizeGroup" styleClass="choice-button"/>
-                  <ToggleButton fx:id="smallSizeBtn" text="Small" toggleGroup="$sizeGroup" styleClass="choice-button"/>
-                  <ToggleButton fx:id="mediumSizeBtn" text="Medium" toggleGroup="$sizeGroup" styleClass="choice-button"/>
-                  <ToggleButton fx:id="largeSizeBtn" text="Large" toggleGroup="$sizeGroup" styleClass="choice-button"/>
+                  <ToggleButton fx:id="personalSizeBtn" text="Personal" styleClass="choice-button"/>
+                  <ToggleButton fx:id="smallSizeBtn" text="Small" styleClass="choice-button"/>
+                  <ToggleButton fx:id="mediumSizeBtn" text="Medium" styleClass="choice-button"/>
+                  <ToggleButton fx:id="largeSizeBtn" text="Large" styleClass="choice-button"/>
                </HBox>
 
                <!-- Crust Options -->
@@ -36,15 +36,9 @@
                   <Label text="Crusts" />
                </VBox>
                <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-                  <ToggleButton fx:id="regularCrustBtn" text="Regular" toggleGroup="$crustGroup" styleClass="choice-button"/>
-                  <ToggleButton fx:id="thinCrustBtn" text="Thin" toggleGroup="$crustGroup" styleClass="choice-button"/>
-                  <ToggleButton fx:id="stuffedCrustBtn" text="Stuffed Crust (+$2.00)" toggleGroup="$crustGroup" styleClass="choice-button"/>
-
-                  <!--
-                  <Button text="Regular" styleClass="choice-button" />
-                  <Button text="Thin" styleClass="choice-button" />
-                  <Button text="Stuffed Crust (+$2.00)" styleClass="choice-button" />
-                  -->
+                  <ToggleButton fx:id="regularCrustBtn" text="Regular" styleClass="choice-button"/>
+                  <ToggleButton fx:id="thinCrustBtn" text="Thin" styleClass="choice-button"/>
+                  <ToggleButton fx:id="stuffedCrustBtn" text="Stuffed Crust (+$2.00)" styleClass="choice-button"/>
                </HBox>
 
                <!-- Toppings Section -->
@@ -119,7 +113,7 @@
 
                <!-- Quantity and Add to Order Section -->
                <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
-                  <Label text="[PRICE]" styleClass="customize-price" />
+                  <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
                   <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
                   <Button text="ADD TO ORDER" styleClass="add-to-order-button" />
                </HBox>

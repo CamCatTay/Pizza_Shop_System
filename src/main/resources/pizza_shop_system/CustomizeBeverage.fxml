@@ -17,23 +17,23 @@
          <!-- Size Section -->
          <Label text="Size" styleClass="customize-label" />
          <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <ToggleButton fx:id="smallSizeBtn" text="Small" toggleGroup="$sizeGroup" styleClass="choice-button" />
-            <ToggleButton fx:id="mediumSizeBtn" text="Medium" toggleGroup="$sizeGroup" styleClass="choice-button" />
-            <ToggleButton fx:id="largeSizeBtn" text="Large" toggleGroup="$sizeGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="smallSizeBtn" text="Small" styleClass="choice-button" />
+            <ToggleButton fx:id="mediumSizeBtn" text="Medium" styleClass="choice-button" />
+            <ToggleButton fx:id="largeSizeBtn" text="Large" styleClass="choice-button" />
          </HBox>
 
          <!-- Ice Section -->
          <Label text="Ice" styleClass="customize-label" />
          <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <ToggleButton fx:id="iceNoneBtn" text="None" toggleGroup="$iceGroup" styleClass="choice-button" />
-            <ToggleButton fx:id="iceLightBtn" text="Light" toggleGroup="$iceGroup" styleClass="choice-button" />
-            <ToggleButton fx:id="iceRegularBtn" text="Regular" toggleGroup="$iceGroup" styleClass="choice-button" />
-            <ToggleButton fx:id="iceExtraBtn" text="Extra" toggleGroup="$iceGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="iceNoneBtn" text="None" styleClass="choice-button" />
+            <ToggleButton fx:id="iceLightBtn" text="Light" styleClass="choice-button" />
+            <ToggleButton fx:id="iceRegularBtn" text="Regular" styleClass="choice-button" />
+            <ToggleButton fx:id="iceExtraBtn" text="Extra" styleClass="choice-button" />
          </HBox>
 
          <!-- Quantity and Add to Order Section -->
          <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
-            <Label text="[PRICE]" styleClass="customize-price" />
+            <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
             <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
             <Button fx:id="addToOrderButton" text="ADD TO ORDER" styleClass="add-to-order-button" />
          </HBox>

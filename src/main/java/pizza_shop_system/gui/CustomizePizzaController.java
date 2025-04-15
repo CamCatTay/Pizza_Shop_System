@@ -1,10 +1,7 @@
 package pizza_shop_system.gui;
 
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +34,9 @@ public class CustomizePizzaController {
 
     @FXML private ChoiceBox<Integer> quantityChoiceBox;
 
+    @FXML private Label priceLabel;
+    private final double basePizzaPrice = 10.00;
+
     private List<CheckBox> toppingsCheck;
 
     @FXML
@@ -66,6 +66,16 @@ public class CustomizePizzaController {
         for(CheckBox check : toppingsCheck) {
             check.setOnAction(event -> handleToppingSelection());
         }
+
+        updatePriceLabel(basePizzaPrice * quantityChoiceBox.getValue());
+
+        quantityChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            updateTotalPrice();
+        });
+
+        sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            updateTotalPrice();
+        });
     }
 
     private void handleToppingSelection() {
@@ -79,6 +89,31 @@ public class CustomizePizzaController {
             if (!checkBox.isSelected()) {
                 checkBox.setDisable(disableExtras);
             }
+        }
+
+    }
+
+    private void updatePriceLabel(double total){
+        priceLabel.setText("$" + String.format("%.2f", total));
+    }
+
+    private void updateTotalPrice() {
+        int quantity = quantityChoiceBox.getValue();
+        double pricePerDrink = getSizePriceMultiplier();
+        double total = pricePerDrink * quantity;
+        updatePriceLabel(total);
+    }
+
+    private double getSizePriceMultiplier(){
+        ToggleButton selected = (ToggleButton) sizeGroup.getSelectedToggle();
+        if(selected == null) return basePizzaPrice;
+
+        switch(selected.getText()){
+            case "Personal": return 6.00;
+            case "Small": return 8.00;
+            case "Medium": return 10.00;
+            case "Large": return 12.50;
+            default: return basePizzaPrice;
         }
 
     }
