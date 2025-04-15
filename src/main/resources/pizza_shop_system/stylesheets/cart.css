@@ -1,0 +1,81 @@
+/* Checkout Scene Root */
+.checkout-root {
+    -fx-background-color: white; /* White background for the checkout scene */
+}
+
+/* GridPane for the Main Layout */
+.checkout-grid {
+    -fx-padding: 20; /* Add padding around the content */
+    -fx-hgap: 10; /* Horizontal spacing */
+    -fx-vgap: 15; /* Vertical spacing */
+}
+
+/* Title Label Styling */
+.checkout-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Scroll Pane for Cart Items */
+.order-scroll {
+    -fx-border-color: #e0e0e0; /* Light border */
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+
+.order-container {
+    -fx-padding: 10;
+}
+
+/* Individual Cart Items */
+.cart-item {
+    -fx-padding: 10;
+    -fx-border-color: #e0e0e0; /* Light gray lines between items */
+    -fx-border-width: 0 0 1px 0; /* Border only at the bottom */
+}
+
+.item-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-weight: normal;
+}
+
+.item-price {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+/* Totals Section */
+.totals-container {
+    -fx-padding: 10;
+    -fx-border-color: #bdbdbd; /* Light gray */
+    -fx-border-width: 1px;
+    -fx-background-color: #f5f5f5; /* Light gray background for totals */
+    -fx-border-radius: 5;
+    -fx-spacing: 10;
+}
+
+.totals-line {
+    -fx-spacing: 20;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.cart-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+
+.cart-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.cart-total-value {
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
