@@ -22,20 +22,84 @@
                <!-- Size Section -->
                <Label text="Size" styleClass="customize-label" />
                <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
+                  <Button text="Personal" styleClass="choice-button" />
+                  <Button text="Small" styleClass="choice-button" />
                   <Button text="Medium" styleClass="choice-button" />
                   <Button text="Large" styleClass="choice-button" />
                </HBox>
 
+               <!-- Crust Options -->
+               <Label text="Crusts" styleClass="customize-label"/>
+               <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
+                  <Button text="Regular" styleClass="choice-button" />
+                  <Button text="Thin" styleClass="choice-button" />
+                  <Button text="Stuffed Crust (+$2.00)" styleClass="choice-button" />
+               </HBox>
+
                <!-- Toppings Section -->
-               <Label text="Topping (5 Included)" styleClass="customize-label" />
-               <HBox spacing="10" alignment="CENTER_LEFT">
-                  <Label text="Extra Cheese" styleClass="topping-label" />
-                  <CheckBox mnemonicParsing="false" />
-               </HBox>
-               <HBox spacing="10" alignment="CENTER_LEFT">
-                  <Label text="Pepperoni" styleClass="topping-label" />
-                  <CheckBox mnemonicParsing="false" />
-               </HBox>
+               <Label text="UP to four toppings included!" styleClass="customize-label" />
+
+               <Label text="Meats" styleClass="customize-label" />
+               <GridPane hgap="20" vgap="10" alignment="CENTER">
+                  <!-- Row 0 -->
+                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                     <Label text="Pepperoni" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                     <Label text="Chicken" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
+                     <Label text="Sausage" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+
+                  <!-- Row 1 -->
+                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                     <Label text="Ham" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                     <Label text="Bacon" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                     <Label text="Anchovies" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+               </GridPane>
+
+               <Label text="Veggies" styleClass="customize-label"/>
+               <GridPane hgap="20" vgap="10" alignment="CENTER">
+                  <!-- Row 0 -->
+                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                     <Label text="Onion" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                     <Label text="Jalapeno" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
+                     <Label text="Garlic" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+
+                  <!-- Row 1 -->
+                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                     <Label text="Bell Peppers" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                     <Label text="Fire Roasted Tomato" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                     <Label text="Artichoke" styleClass="topping-label" />
+                     <CheckBox mnemonicParsing="false" />
+                  </HBox>
+               </GridPane>
 
                <!-- Quantity and Add to Order Section -->
                <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
