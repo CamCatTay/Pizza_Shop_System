@@ -3,42 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane maxHeight="-Infinity"
-           maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity"
-           prefHeight="400.0"
-           prefWidth="600.0"
+<StackPane prefHeight="400.0" prefWidth="600.0"
            xmlns="http://javafx.com/javafx/17.0.12"
            xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="pizza_shop_system.gui.CustomizeBeverageController"
            styleClass="customize-root">
    <children>
-      <VBox spacing="20" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="customize-container">
+      <VBox spacing="20" alignment="TOP_CENTER" styleClass="customize-container">
+
          <!-- Header -->
          <Label text="CUSTOMIZE YOUR DRINK" styleClass="customize-header" />
 
          <!-- Size Section -->
          <Label text="Size" styleClass="customize-label" />
          <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <Button text="Small" styleClass="choice-button" />
-            <Button text="Medium" styleClass="choice-button" />
-            <Button text="Large" styleClass="choice-button" />
+            <ToggleButton fx:id="smallSizeBtn" text="Small" toggleGroup="$sizeGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="mediumSizeBtn" text="Medium" toggleGroup="$sizeGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="largeSizeBtn" text="Large" toggleGroup="$sizeGroup" styleClass="choice-button" />
          </HBox>
 
          <!-- Ice Section -->
          <Label text="Ice" styleClass="customize-label" />
          <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <Button text="None" styleClass="choice-button" />
-            <Button text="Light" styleClass="choice-button" />
-            <Button text="Regular" styleClass="choice-button" />
-            <Button text="Extra" styleClass="choice-button" />
+            <ToggleButton fx:id="iceNoneBtn" text="None" toggleGroup="$iceGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="iceLightBtn" text="Light" toggleGroup="$iceGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="iceRegularBtn" text="Regular" toggleGroup="$iceGroup" styleClass="choice-button" />
+            <ToggleButton fx:id="iceExtraBtn" text="Extra" toggleGroup="$iceGroup" styleClass="choice-button" />
          </HBox>
 
          <!-- Quantity and Add to Order Section -->
          <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
             <Label text="[PRICE]" styleClass="customize-price" />
             <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-            <Button text="ADD TO ORDER" styleClass="add-to-order-button" />
+            <Button fx:id="addToOrderButton" text="ADD TO ORDER" styleClass="add-to-order-button" />
          </HBox>
       </VBox>
    </children>
