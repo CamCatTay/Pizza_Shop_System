@@ -6,12 +6,12 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.Stack;
 
 public class SceneController {
     private final BorderPane mainLayout;
     private final HashMap<String, Parent> scenes = new HashMap<>();
-    private String previousSceneName;
+    private final Stack<String> sceneHistory = new Stack<>();
     private String currentSceneName;
 
     public SceneController(BorderPane mainLayout) {
@@ -44,24 +44,28 @@ public class SceneController {
 
     public void switchScene(String name) {
         if (scenes.containsKey(name)) {
-            if (!name.equals(currentSceneName)) {
-                // Set the previous scene name for back button
-                previousSceneName = currentSceneName;
-                currentSceneName = name;
-
-                // Update center of the BorderPane with selected scene
-                mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
+            if(currentSceneName != null && !currentSceneName.equals(name)) {
+                sceneHistory.push(currentSceneName);
             }
+            currentSceneName = name;
+            mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
         } else {
             System.out.println("Scene not found: " + name);
         }
     }
 
-    // For back button. Note: Could use a stack which would allow the back button to trace a users scene switches all the way back to the initial home (Like a website)
     public void switchToPreviousScene() {
-        if (previousSceneName != null) {
-            mainLayout.setCenter(scenes.get(previousSceneName));
+        if(!sceneHistory.isEmpty()) {
+            String previousSceneName = sceneHistory.pop();
             currentSceneName = previousSceneName;
+            mainLayout.setCenter(scenes.get(previousSceneName));
+        } else {
+            System.out.println("Previous scene not found");
         }
+    }
+
+    //IF we want to nav back to home page
+    public void clearSceneHistory() {
+        sceneHistory.clear();
     }
 }
