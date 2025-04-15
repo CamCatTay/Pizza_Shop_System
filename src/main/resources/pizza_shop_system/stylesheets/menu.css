@@ -3,21 +3,21 @@
     -fx-background-color: white; /* Clean white background */
 }
 
-/* Menu Bar Buttons */
-.menu-button {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: black;
-    -fx-background-color: #f5f5f5;
-    -fx-border-color: black;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 5 15;
-    -fx-cursor: hand;
+/* Menu Categories Bar */
+.menu-bar {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);
 }
 
-.menu-button:hover {
-    -fx-background-color: #e0e0e0; /* Light gray on hover */
+/* Menu Bar Buttons */
+.menu-button {
+    -fx-font-size: 13px;
+    -fx-font-family: "Impact";
+    -fx-text-fill: #993131;
+    -fx-background-color: white;
+    -fx-padding: 10 8;
+    -fx-cursor: hand;
+    -fx-pref-height: 50;
 }
 
 /* Menu ScrollPane Styling */
@@ -60,7 +60,7 @@
 
 /* Add to Order Button */
 .button-add-to-order {
-    -fx-background-color: black;
+    -fx-background-color: #993131;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
