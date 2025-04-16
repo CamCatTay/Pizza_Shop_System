@@ -3,30 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pizza_shop_system.gui.LoginController"
-            styleClass="login-root">
+<StackPane prefHeight="448.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.LoginController">
    <children>
-      <Label layoutX="0" layoutY="30.0" prefHeight="40.0" prefWidth="600.0" text="Login"
-             styleClass="title-label" alignment="CENTER" />
-
-      <TextField alignment="CENTER" layoutX="175.0" layoutY="120.0" prefWidth="250.0"
-                 promptText="Email" fx:id="emailField"
-                 onKeyTyped="#handleEmailChanged" styleClass="input-field" />
-
-      <TextField alignment="CENTER" layoutX="175.0" layoutY="170.0" prefWidth="250.0"
-                 promptText="Password" fx:id="passwordField"
-                 onKeyTyped="#handlePasswordChanged" styleClass="input-field" />
-
-      <Button layoutX="175.0" layoutY="230.0" prefHeight="35.0" prefWidth="250.0"
-              text="Login" onAction="#handleLoginClick"
-              styleClass="primary-button" />
-
-      <Button fx:id="buttonSignUp" layoutX="175.0" layoutY="290.0" prefHeight="35.0" prefWidth="250.0"
-              text="Don't have an account? Click here!"
-              textAlignment="CENTER" wrapText="true"
-              styleClass="secondary-button" />
+      <VBox>
+         <children>
+            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="101.0" prefWidth="411.0" />
+            <HBox alignment="CENTER">
+               <children>
+            
+                        <TextField fx:id="emailField" alignment="CENTER" prefWidth="250.0" promptText="Email" styleClass="input-field" />
+               </children>
+            </HBox>
+            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+            <HBox alignment="CENTER">
+               <children>
+                  <PasswordField fx:id="passwordField" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Password" />
+               </children>
+            </HBox>
+            <Region layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+            <HBox alignment="CENTER">
+               <children>
+            
+                        <Button fx:id="loginButton" prefHeight="35.0" prefWidth="250.0" styleClass="primary-button" text="Login" />
+               </children>
+            </HBox>
+            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+            <HBox alignment="CENTER">
+               <children>
+            
+                        <Button fx:id="signupButton" prefHeight="35.0" prefWidth="250.0" styleClass="secondary-button" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </HBox>
+            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+         </children>
+      </VBox>
    </children>
-</AnchorPane>
+</StackPane>
