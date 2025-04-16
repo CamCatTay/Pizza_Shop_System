@@ -50,33 +50,26 @@
                <GridPane hgap="20" vgap="10" alignment="CENTER">
                   <!-- Row 0 -->
                   <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                     <Label text="Pepperoni" styleClass="topping-label" />
-                     <CheckBox fx:id="pepperoniCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="pepperoniCheck"  text="Pepperoni" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                     <Label text="Chicken" styleClass="topping-label" />
-                     <CheckBox fx:id="chickenCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="chickenCheck" text="Chicken" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
-                     <Label text="Sausage" styleClass="topping-label" />
-                     <CheckBox fx:id="sausageCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="sausageCheck" text="Sausage" mnemonicParsing="false" />
                   </HBox>
 
                   <!-- Row 1 -->
                   <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
-                     <Label text="Ham" styleClass="topping-label" />
-                     <CheckBox fx:id="hamCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="hamCheck" text="Ham" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                     <Label text="Bacon" styleClass="topping-label" />
-                     <CheckBox fx:id="baconCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="baconCheck" text="Bacon" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
-                     <Label text="Anchovies" styleClass="topping-label" />
-                     <CheckBox fx:id="anchoviesCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="anchoviesCheck" text="Anchovies" mnemonicParsing="false" />
                   </HBox>
                </GridPane>
-
 
                <VBox styleClass="topping-category" alignment="CENTER" maxWidth="150">
                   <Label text="Veggies" />
@@ -84,30 +77,24 @@
                <GridPane hgap="20" vgap="10" alignment="CENTER">
                   <!-- Row 0 -->
                   <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                     <Label text="Onion" styleClass="topping-label" />
-                     <CheckBox fx:id="onionCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="onionCheck" text="Onion" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                     <Label text="Jalapeno" styleClass="topping-label" />
-                     <CheckBox fx:id="jalapenoCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="jalapenoCheck" text="Jalapeno" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
-                     <Label text="Garlic" styleClass="topping-label" />
-                     <CheckBox fx:id="garlicCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="garlicCheck" text="Garlic" mnemonicParsing="false" />
                   </HBox>
 
                   <!-- Row 1 -->
                   <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
-                     <Label text="Bell Peppers" styleClass="topping-label" />
-                     <CheckBox fx:id="bellPepperCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="bellPepperCheck" text="Bell Pepper" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                     <Label text="Fire Roasted Tomato" styleClass="topping-label" />
-                     <CheckBox fx:id="tomatoCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="tomatoCheck" text="Tomato" mnemonicParsing="false" />
                   </HBox>
                   <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
-                     <Label text="Artichoke" styleClass="topping-label" />
-                     <CheckBox fx:id="artichokeCheck" mnemonicParsing="false" />
+                     <CheckBox fx:id="artichokeCheck" text="Artichoke" mnemonicParsing="false" />
                   </HBox>
                </GridPane>
 
@@ -115,7 +102,7 @@
                <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
                   <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
                   <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-                  <Button text="ADD TO ORDER" styleClass="add-to-order-button" />
+                  <Button text="ADD TO ORDER" styleClass="add-to-order-button" onAction="#handleAddToOrder"/>
                </HBox>
             </VBox>
          </content>

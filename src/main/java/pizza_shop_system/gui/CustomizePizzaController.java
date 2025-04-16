@@ -1,8 +1,13 @@
 package pizza_shop_system.gui;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import pizza_shop_system.order.Order;
+import pizza_shop_system.menu.MenuItem;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,8 +44,17 @@ public class CustomizePizzaController {
 
     private List<CheckBox> toppingsCheck;
 
+    private Order currentOrder = new Order();
+
     @FXML
     public void initialize() {
+
+        //DEBUG
+        System.out.println("Initializing controller...");
+        System.out.println("pepperoniCheck: " + (pepperoniCheck != null));
+        System.out.println("chickenCheck: " + (chickenCheck != null));
+        System.out.println("onionCheck: " + (onionCheck != null));
+        //
 
         quantityChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
         quantityChoiceBox.setValue(1);
@@ -76,6 +90,28 @@ public class CustomizePizzaController {
         sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             updateTotalPrice();
         });
+    }
+
+    @FXML
+    private void handleAddToOrder(ActionEvent event) throws IOException {
+        MenuItem pizza = createCustomPizzaItem();
+        int quantity = quantityChoiceBox.getValue();
+
+        System.out.println("DEBUG: Checking which toppings are selected...");
+        for (CheckBox checkBox : toppingsCheck) {
+            if (checkBox.isSelected()) {
+                System.out.println("Selected: " + checkBox.getText());
+            }
+        }
+        currentOrder.addItem(pizza);
+
+        // Save order to JSON file (e.g., order ID is timestamp)
+        currentOrder.saveToFile();
+
+        /* Uncomment for debug
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Pizza added to order!"); //For Testing to confirm function
+        alert.showAndWait();
+         */
     }
 
     private void handleToppingSelection() {
@@ -117,4 +153,33 @@ public class CustomizePizzaController {
         }
 
     }
+
+    private MenuItem createCustomPizzaItem() {
+        String size = ((ToggleButton) sizeGroup.getSelectedToggle()).getText();
+        String crust = ((ToggleButton) crustGroup.getSelectedToggle()).getText();
+
+        String itemName = size + " Pizza with " + crust + " Crust";
+
+        int quantity = quantityChoiceBox.getValue();
+
+        List<String> selectedToppings = toppingsCheck.stream()
+                .filter(CheckBox::isSelected)
+                .map(CheckBox::getText)
+                .filter(t -> t != null && !t.trim().isEmpty()) // filter out blanks
+                .toList();
+
+        System.out.println("Toppings: " + String.join(", ", selectedToppings));
+
+
+        //In case no toppings selected will default
+        String description = selectedToppings.isEmpty() ? "No toppings" : String.join(", ", selectedToppings);
+
+        double basePrice = getSizePriceMultiplier();
+        if (crust.contains("Stuffed")) basePrice += 2.00;
+
+        String itemID = "custom-" + java.util.UUID.randomUUID(); //Random ID for now, not sure what to do for custom pizzas ID
+
+        return new MenuItem(itemID, "Pizza", basePrice, quantity, itemName, description, new ArrayList<>(selectedToppings));
+    }
+
 }
