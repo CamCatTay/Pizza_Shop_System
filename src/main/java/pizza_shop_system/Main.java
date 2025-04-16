@@ -20,7 +20,7 @@ public class Main extends Application {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setTop(navigationBar); // Keeps navigation bar fixed at the top
 
-        Scene scene = new Scene(mainLayout, 800, 600);
+        Scene scene = new Scene(mainLayout, 1000, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
