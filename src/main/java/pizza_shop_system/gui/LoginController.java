@@ -2,59 +2,44 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import pizza_shop_system.account.ActiveUser;
-import pizza_shop_system.account.LoginHandler;
-
+import pizza_shop_system.account.AccountService;
 import java.io.IOException;
 
 public class LoginController extends BaseController {
-    public Button buttonSignUp;
-    private String submittedEmail;
-    private String submittedPassword;
-    private final LoginHandler loginHandler = new LoginHandler();
+    private final AccountService accountService = new AccountService();
+
     @FXML
     private TextField emailField;
     @FXML
-    private TextField passwordField;
-
+    private PasswordField passwordField;
     @FXML
-    public void handleEmailChanged() {
-        this.submittedEmail = emailField.getText();
+    private Button loginButton, signupButton;
+
+    private void switchToSignUpScreen() {
+        sceneController.switchScene("SignUp");
     }
 
-    @FXML
-    public void handlePasswordChanged() {
-        this.submittedPassword = passwordField.getText();
-    }
+    private void login() throws IOException {
+        String result = accountService.login(emailField.getText(), passwordField.getText());
 
-    public void handleLoginClick() throws IOException {
-        //Look in users.txt file for specified email and password. If either field is invalid alert user and return
-        //If fields are valid get userID and switch to appropriate screen for customer, employee, or manager depending on account type. Pass userID to appropriate methods as well
-        boolean loginSuccess = loginHandler.AttemptLogin(submittedEmail, submittedPassword);
-        if (loginSuccess) {
-            // Active user has been set in login handler. Use ActiveUser to retrieve it
-            System.out.println("Login Success, Hello user: " + ActiveUser.getInstance().getCurrentUser());
-            String accountType = ActiveUser.getInstance().getActiveUserData().split(",")[1].trim();
-            System.out.println(accountType);
-            switch (accountType) {
-                case "Customer":
-                    sceneController.switchScene("Menu");
-                    break;
-                case "Employee":
-                    // Implement employeeHome
-                    // sceneController.switchScene("EmployeeHome");
-                    break;
-                case "Manager":
-                    sceneController.switchScene("ManagerHome");
-            }
-
-        } else {
-            System.out.println("Login Failed. Invalid email or password.");
+        // All possible results when attempting to log in
+        switch (result) {
+            case "Success" -> System.out.println("Log in Success");
+            case "EmailDoesNotExist" -> System.out.println("Email Does Not Exist");
+            case "IncorrectPassword" -> System.out.println("Incorrect Password");
+            default -> System.out.println("Unknown Error");
         }
     }
-
     public void initialize() {
-        buttonSignUp.setOnAction(e -> sceneController.switchScene("SignUp"));
+        loginButton.setOnAction(e -> {
+            try {
+                login();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        signupButton.setOnAction(e -> switchToSignUpScreen());
     }
 }

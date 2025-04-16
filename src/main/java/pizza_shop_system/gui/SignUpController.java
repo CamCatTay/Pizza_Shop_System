@@ -1,71 +1,47 @@
 package pizza_shop_system.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import pizza_shop_system.account.SignUpHandler;
+import pizza_shop_system.account.AccountService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SignUpController extends BaseController {
-    private String submittedEmail;
-    private String submittedPassword;
-    private String submittedVerifyPassword;
-    private String submittedName;
-    private String submittedAddress;
-    private String submittedPhoneNumber;
-    private final SignUpHandler signUpHandler = new SignUpHandler();
-    @FXML
-    private TextField emailField;
-    @FXML
-    private TextField passwordField;
-    @FXML
-    private TextField verifyPasswordField;
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField addressField;
-    @FXML
-    private TextField phoneNumberField;
+    private final AccountService accountService = new AccountService();
 
     @FXML
-    public void handleEmailChanged() {
-        this.submittedEmail = emailField.getText();
-    }
+    private TextField emailField, nameField, addressField, phoneNumberField;
     @FXML
-    public void handlePasswordChanged() {
-        this.submittedPassword = passwordField.getText();
-    }
+    private PasswordField passwordField, verifyPasswordField;
     @FXML
-    public void handleVerifyPasswordChanged() {
-        this.submittedVerifyPassword = verifyPasswordField.getText();
-    }
-    @FXML
-    public void handleNameChanged() {
-        this.submittedName = nameField.getText();
-    }
-    @FXML
-    public void handleAddressChanged() {
-        this.submittedAddress = addressField.getText();
-    }
-    @FXML
-    public void handlePhoneNumberChanged() {
-        this.submittedPhoneNumber = phoneNumberField.getText();
-    }
+    private Button signupButton, loginButton;
 
-    public void handleSignUpClick() throws IOException {
-        ArrayList<String> invalidConditions = signUpHandler.AttemptSignUp(submittedEmail, submittedPassword, submittedVerifyPassword, submittedName, submittedAddress, submittedPhoneNumber);
-        if (invalidConditions == null) {
-            // Sign up successful
-            System.out.println("Signed up!");
-        } else {
-            // Implement display sign up warnings to user
-            System.out.println(invalidConditions);
+    private void signUp() throws IOException {
+        String result = accountService.signUp(emailField.getText(), passwordField.getText(), verifyPasswordField.getText(), nameField.getText(), addressField.getText(), phoneNumberField.getText());
+
+        // All possible results when attempting to sign up
+        switch (result) {
+            case "Success" -> System.out.println("Sign Up Success");
+            case "DuplicateEmail" -> System.out.println("Duplicate Email");
+            case "PasswordsDoNotMatch" -> System.out.println("Passwords Do Not Match");
+            default -> System.out.println("Unknown Error");
         }
     }
 
-    public void handleBackToLoginClick() {
-        switchScene("Login");
+    private void switchToLoginScreen() {
+        sceneController.switchScene("Login");
+    }
+
+    public void initialize() {
+        signupButton.setOnAction(e -> {
+            try {
+                signUp();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        loginButton.setOnAction(e -> switchToLoginScreen());
     }
 }
