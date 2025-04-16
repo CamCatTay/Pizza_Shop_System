@@ -187,8 +187,8 @@ public class ReportGenerator {
                     subtotal += item.getPrice();
                 }
 
-                double tax = order.calcTax(order, 0.08);
-                double tip = order.calcTip(order, 0.1);
+                double tax = order.calcTax(0.08);
+                double tip = order.calcTip(0.1);
                 double total = subtotal + tip + tax;
 
                 report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
@@ -249,7 +249,7 @@ public class ReportGenerator {
                 List<Double> itemPrices = new ArrayList<>();
 
                 for (Order order : orders) {
-                    LocalDate orderDate = order.getDatePlaced();
+                    LocalDate orderDate = LocalDate.from(order.getDatePlaced());
                     if (orderDate.equals(currentDate)) {
                         List<MenuItem> orderItems = readOrderItems(order.getOrderID());
 
