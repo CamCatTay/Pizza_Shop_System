@@ -87,6 +87,11 @@ public class CustomizePizzaController extends BaseController{
             updateTotalPrice();
         });
 
+        crustGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            updateTotalPrice();
+        });
+
+
         sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             updateTotalPrice();
         });
@@ -135,10 +140,17 @@ public class CustomizePizzaController extends BaseController{
 
     private void updateTotalPrice() {
         int quantity = quantityChoiceBox.getValue();
-        double pricePerDrink = getSizePriceMultiplier();
-        double total = pricePerDrink * quantity;
+        double pricePerPizza = getSizePriceMultiplier();
+
+        ToggleButton selectedCrust = (ToggleButton) crustGroup.getSelectedToggle();
+        if (selectedCrust != null && selectedCrust.getText().toLowerCase().contains("stuffed")) {
+            pricePerPizza += 2.00;
+        }
+
+        double total = pricePerPizza * quantity;
         updatePriceLabel(total);
     }
+
 
     private double getSizePriceMultiplier(){
         ToggleButton selected = (ToggleButton) sizeGroup.getSelectedToggle();
