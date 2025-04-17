@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CustomizePizzaController {
+public class CustomizePizzaController extends BaseController{
 
     @FXML private ToggleButton personalSizeBtn;
     @FXML private ToggleButton smallSizeBtn;
@@ -169,7 +169,6 @@ public class CustomizePizzaController {
                 .toList();
 
         System.out.println("Toppings: " + String.join(", ", selectedToppings));
-
 
         //In case no toppings selected will default
         String description = selectedToppings.isEmpty() ? "No toppings" : String.join(", ", selectedToppings);
