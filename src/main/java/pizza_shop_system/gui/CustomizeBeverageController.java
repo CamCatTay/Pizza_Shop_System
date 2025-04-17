@@ -3,8 +3,15 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.awt.event.ActionEvent;
 
-public class CustomizeBeverageController {
+import pizza_shop_system.order.Order;
+import pizza_shop_system.menu.MenuItem;
+
+import java.io.IOException;
+
+
+public class CustomizeBeverageController extends BaseController{
 
     @FXML private ToggleButton smallSizeBtn;
     @FXML private ToggleButton mediumSizeBtn;
@@ -20,8 +27,11 @@ public class CustomizeBeverageController {
     // Quantity and order
     @FXML private ChoiceBox<Integer> quantityChoiceBox;
 
+    @FXML private Button addToOrderButton;
     @FXML private Label priceLabel;
     private final double baseDrinkPrice = 1.5;
+
+    private Order currentOrder = new Order();
 
 
     @FXML
@@ -55,6 +65,7 @@ public class CustomizeBeverageController {
         sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             updateTotalPrice();
         });
+
     }
 
     private void updatePriceLabel(double total){
@@ -79,6 +90,27 @@ public class CustomizeBeverageController {
         }
 
     }
+
+    @FXML
+    private void handleAddToOrder() throws IOException {
+        String size = ((ToggleButton) sizeGroup.getSelectedToggle()).getText();
+        String ice = ((ToggleButton) iceGroup.getSelectedToggle()).getText();
+        int quantity = quantityChoiceBox.getValue();
+        double price = getSizePriceMultiplier();
+
+        String name = size + " Beverage";
+        String description = "Ice: " + ice;
+        String itemID = "1";
+        String category = "Beverage";
+
+        MenuItem drink = new MenuItem(itemID, category, price, quantity, name, description, null);
+
+        System.out.println("Beverage added: " + name + ", Qty: " + quantity + ", Ice: " + ice);
+
+        currentOrder.addItem(drink);
+        currentOrder.saveToFile();
+    }
+
 
 }
 

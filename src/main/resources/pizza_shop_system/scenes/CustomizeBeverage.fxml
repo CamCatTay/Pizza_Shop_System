@@ -35,7 +35,7 @@
          <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
             <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
             <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-            <Button fx:id="addToOrderButton" text="ADD TO ORDER" styleClass="add-to-order-button" />
+            <Button fx:id="addToOrderButton" text="ADD TO ORDER" styleClass="add-to-order-button" onAction="#handleAddToOrder"/>
          </HBox>
       </VBox>
    </children>
