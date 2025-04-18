@@ -64,6 +64,34 @@ public class SceneController {
         }
     }
 
+    //For Cart Nav
+    public void switchSceneWithData(String name, java.util.function.Consumer<Object> controllerConsumer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/" + name + ".fxml"));
+            Parent root = loader.load();
+            Object controller = loader.getController();
+
+            if (controller instanceof BaseController) {
+                ((BaseController) controller).setSceneController(this);
+            }
+
+            if (controllerConsumer != null) {
+                controllerConsumer.accept(controller);
+            }
+
+            if (currentSceneName != null && !currentSceneName.equals(name)) {
+                sceneHistory.push(currentSceneName);
+            }
+
+            currentSceneName = name;
+            mainLayout.setCenter(root);
+        } catch (IOException e) {
+            System.out.println("Failed to switch scene with data: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("FXML file not found for: " + name + ". Check the path and file name.");
+        }
+    }
+
     //IF we want to nav back to home page
     public void clearSceneHistory() {
         sceneHistory.clear();
