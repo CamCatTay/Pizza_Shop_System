@@ -47,7 +47,10 @@ public class AccountService {
     public String signUp(String email, String password, String verifyPassword, String name, String address, String phoneNumber) throws IOException {
         JSONArray users = loadUsers();
 
-        // I don't feel like adding it right now but implement method that makes sure all of these fields are not empty. Empty fields are invalid
+        // Implement validation for empty fields
+        if (email.isEmpty() || password.isEmpty() || verifyPassword.isEmpty() || name.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
+            return "InvalidInput";
+        }
 
         // Check if email already exists
         for (int i = 0; i < users.length(); i++) {
@@ -57,15 +60,22 @@ public class AccountService {
             }
         }
 
-        // Check if passwords are the same
+        // Check if passwords match
         if (!password.equals(verifyPassword)) {
             return "PasswordsDoNotMatch";
         }
 
-        // Create a new user
-        int newUserId = users.length() + 1; // Generate the next user ID
+        // Retrieve nextUserId from users.json or initialize it
+        int nextUserId;
+        if (users.isEmpty()) {
+            nextUserId = 1;
+        } else {
+            nextUserId = users.getJSONObject(0).optInt("nextUserId", users.length() + 1);
+        }
+
+        // Create a new user with the unique ID
         JSONObject newUser = new JSONObject();
-        newUser.put("user_id", newUserId);
+        newUser.put("user_id", nextUserId);
         newUser.put("email", email);
         newUser.put("password", password);
         newUser.put("account_type", determineAccountType(email));
@@ -73,8 +83,18 @@ public class AccountService {
         newUser.put("address", address);
         newUser.put("phone_number", phoneNumber);
 
-        // Add to users array and save
+        // Update and store nextUserId for future sign-ups
+        nextUserId++;
+        if (!users.isEmpty()) {
+            users.getJSONObject(0).put("nextUserId", nextUserId);
+        } else {
+            newUser.put("nextUserId", nextUserId);
+        }
+
+        // Add the new user to the users array
         users.put(newUser);
+
+        // Save back to file
         saveUsers(users);
 
         return "Success";
