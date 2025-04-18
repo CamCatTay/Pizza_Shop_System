@@ -28,8 +28,8 @@
                 <!-- Scrollable Order Items -->
                 <ScrollPane prefHeight="200.0" prefWidth="580.0" styleClass="order-scroll" GridPane.rowIndex="1">
                     <content>
-                        <VBox prefHeight="200.0" prefWidth="580.0" spacing="10.0" styleClass="order-container">
-                            <!-- Examples of items in the cart -->
+                        <VBox fx:id="cartItemsVBox" prefHeight="200.0" prefWidth="580.0" spacing="10.0" styleClass="order-container">
+                            <!-- Examples of items in the cart
                             <HBox spacing="10.0" styleClass="cart-item">
                                 <Label styleClass="item-name" text="Pizza Margherita" />
                                 <Label styleClass="item-price" text="+$10.99" />
@@ -38,6 +38,7 @@
                                 <Label styleClass="item-name" text="Chocolate Cake" />
                                 <Label styleClass="item-price" text="+$5.99" />
                             </HBox>
+                            -->
                         </VBox>
                     </content>
                 </ScrollPane>
@@ -46,15 +47,15 @@
                 <VBox prefWidth="580.0" spacing="10.0" styleClass="totals-container" GridPane.rowIndex="2">
                     <HBox spacing="10.0" styleClass="totals-line">
                         <Label styleClass="cart-label" text="Sub Total:" />
-                        <Label styleClass="cart-value" text="+$16.98" />
+                        <Label fx:id="subTotalLabel" styleClass="cart-value" text="+$16.98" />
                     </HBox>
                     <HBox spacing="10.0" styleClass="totals-line">
                         <Label styleClass="cart-label" text="Tax:" />
-                        <Label styleClass="cart-value" text="+1.70" />
+                        <Label fx:id="taxLabel" styleClass="cart-value" text="+1.70" />
                     </HBox>
                     <HBox spacing="10.0" styleClass="totals-line">
                         <Label styleClass="cart-label" text="Total:" />
-                        <Label styleClass="cart-total-value" text="+$18.68" />
+                        <Label fx:id="totalLabel" styleClass="cart-total-value" text="+$18.68" />
                     </HBox>
                 </VBox>
 
