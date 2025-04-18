@@ -15,13 +15,21 @@ public class AccountService {
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
         File file = new File(DATA_FILE);
+        JSONArray users;
+
         if (!file.exists()) {
-            return new JSONArray();
+            users = new JSONArray();
+            JSONObject metaData = new JSONObject();
+            metaData.put("nextUserId", 1);
+            users.put(metaData);
+
+            saveUsers(users);
+        } else {
+            String content = new String(Files.readAllBytes(file.toPath()));
+            users = new JSONArray(content);
         }
 
-        // Read file content
-        String content = Files.readString(file.toPath());
-        return new JSONObject(content).getJSONArray("users");
+        return users;
     }
 
     // Save users back to file
@@ -65,17 +73,8 @@ public class AccountService {
             return "PasswordsDoNotMatch";
         }
 
-        // Retrieve nextUserId from users.json or initialize it
-        int nextUserId;
-        if (users.isEmpty()) {
-            nextUserId = 1;
-        } else {
-            nextUserId = users.getJSONObject(0).optInt("nextUserId", users.length() + 1);
-        }
-
         // Create a new user with the unique ID
         JSONObject newUser = new JSONObject();
-        newUser.put("user_id", nextUserId);
         newUser.put("email", email);
         newUser.put("password", password);
         newUser.put("account_type", determineAccountType(email));
@@ -83,18 +82,14 @@ public class AccountService {
         newUser.put("address", address);
         newUser.put("phone_number", phoneNumber);
 
-        // Update and store nextUserId for future sign-ups
-        nextUserId++;
-        if (!users.isEmpty()) {
-            users.getJSONObject(0).put("nextUserId", nextUserId);
-        } else {
-            newUser.put("nextUserId", nextUserId);
-        }
+        int userId = users.getJSONObject(0).getInt("nextOrderId");
+        int nextUserId = userId + 1;
+        newUser.put("user_id", nextUserId);
+        newUser.put("orderId", userId);
+        users.getJSONObject(0).put("nextOrderId", nextUserId); // Update nextOrderId in orders.json to be increased by 1
 
-        // Add the new user to the users array
         users.put(newUser);
 
-        // Save back to file
         saveUsers(users);
 
         return "Success";
