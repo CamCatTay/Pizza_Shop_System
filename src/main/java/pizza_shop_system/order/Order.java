@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import pizza_shop_system.account.User;
 import pizza_shop_system.menu.MenuItem;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 
@@ -48,6 +50,7 @@ public class Order {
     }
 
     // Getters
+    public String getPaymentMethod() { return this.paymentMethod; }
     public int getOrderID() { return this.orderID; }
     public ArrayList<MenuItem> getOrderedItems() { return this.orderedItems; }
     public String getOrderType() { return this.orderType; }
@@ -143,25 +146,32 @@ public class Order {
 
     public void saveToFile() throws IOException {
         JSONObject currentOrder = this.toJson();
-        String path = "data_files/orders.json";
-
         JSONArray ordersArray;
 
-        // Read existing orders if file exists
-        if (Files.exists(Paths.get(path))) {
-            String content = new String(Files.readAllBytes(Paths.get(path)));
+        Path path = Paths.get(DATA_FILE);
+        if (Files.exists(path)) {
+            String content = new String(Files.readAllBytes(path));
             ordersArray = new JSONArray(content);
+
+            // Remove existing entries with same orderID
+            for (int i = 0; i < ordersArray.length(); i++) {
+                JSONObject obj = ordersArray.getJSONObject(i);
+                if (obj.getInt("orderID") == this.orderID) {
+                    ordersArray.remove(i);
+                    i--; // Step back after removal
+                }
+            }
         } else {
             ordersArray = new JSONArray();
         }
 
         ordersArray.put(currentOrder);
 
-        // Save the updated array back to file
-        try (FileWriter writer = new FileWriter(path)) {
+        try (FileWriter writer = new FileWriter(DATA_FILE)) {
             writer.write(ordersArray.toString(4));
         }
     }
+
 
     //For removal if needed
     public static void removeOrderById(int targetOrderID) throws IOException {
@@ -211,11 +221,35 @@ public class Order {
         }
     }
 
+    public static void updateOrder(Order updatedOrder) throws IOException {
+        File file = new File(DATA_FILE);
+        JSONArray ordersArray = file.exists()
+                ? new JSONArray(new String(Files.readAllBytes(file.toPath())))
+                : new JSONArray();
+
+        // Remove all existing orders with same orderID
+        JSONArray updatedArray = new JSONArray();
+        for (int i = 0; i < ordersArray.length(); i++) {
+            JSONObject orderJson = ordersArray.getJSONObject(i);
+            if (orderJson.getInt("orderID") != updatedOrder.getOrderID()) {
+                updatedArray.put(orderJson);
+            }
+        }
+
+        // Only add the updated order back if it still has items
+        if (!updatedOrder.getOrderedItems().isEmpty()) {
+            updatedArray.put(updatedOrder.toJson());
+        }
+
+        Files.write(file.toPath(), updatedArray.toString(4).getBytes());
+    }
+
     //For just one order
-// For just one order
-    public static Order fromJsonByOrderID(int targetOrderID) throws IOException {
+    public static List<Order> fromJsonByOrderID(int targetOrderID) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(DATA_FILE)));
         JSONArray ordersArray = new JSONArray(content);
+
+        List<Order> matchingOrders = new ArrayList<>();
 
         for (int i = 0; i < ordersArray.length(); i++) {
             JSONObject json = ordersArray.getJSONObject(i);
@@ -258,7 +292,7 @@ public class Order {
                             userJson.getInt("id"),
                             userJson.getString("accountType"),
                             userJson.getString("email"),
-                            "", // password optional
+                            "", // password not needed here
                             userJson.getString("name"),
                             userJson.getString("address"),
                             userJson.getString("phoneNumber")
@@ -267,12 +301,14 @@ public class Order {
 
                 Order order = new Order(paymentMethod, orderID, items, orderType, status, user);
                 order.setDatePlaced(datePlaced);
-                return order;
+
+                matchingOrders.add(order);
             }
         }
 
-        throw new IllegalArgumentException("Order with ID " + targetOrderID + " not found.");
+        return matchingOrders;
     }
+
 
     public static ArrayList<Order> loadAllOrders() throws IOException {
         ArrayList<Order> orders = new ArrayList<>();

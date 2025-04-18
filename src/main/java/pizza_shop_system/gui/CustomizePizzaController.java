@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CustomizePizzaController extends BaseController{
+public class CustomizePizzaController extends BaseController {
 
     @FXML private ToggleButton personalSizeBtn;
     @FXML private ToggleButton smallSizeBtn;
@@ -38,92 +38,72 @@ public class CustomizePizzaController extends BaseController{
     @FXML private CheckBox artichokeCheck;
 
     @FXML private ChoiceBox<Integer> quantityChoiceBox;
-
     @FXML private Label priceLabel;
-    private final double basePizzaPrice = 10.00;
 
+    private final double basePizzaPrice = 10.00;
     private List<CheckBox> toppingsCheck;
 
-    private Order currentOrder = new Order();
+    private Order currentOrder;
+
+    public void setOrder(Order order) {
+        this.currentOrder = order;
+    }
 
     @FXML
     public void initialize() {
-
-        //DEBUG
-        System.out.println("Initializing controller...");
-        System.out.println("pepperoniCheck: " + (pepperoniCheck != null));
-        System.out.println("chickenCheck: " + (chickenCheck != null));
-        System.out.println("onionCheck: " + (onionCheck != null));
-        //
-
         quantityChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
         quantityChoiceBox.setValue(1);
 
-        //Defaults
+        // Default Selections
         mediumSizeBtn.setSelected(true);
         regularCrustBtn.setSelected(true);
 
-        //Size Buttons
+        // Toggle Group Assignments
         personalSizeBtn.setToggleGroup(sizeGroup);
         smallSizeBtn.setToggleGroup(sizeGroup);
         mediumSizeBtn.setToggleGroup(sizeGroup);
         largeSizeBtn.setToggleGroup(sizeGroup);
 
-        //Crust Buttons
         regularCrustBtn.setToggleGroup(crustGroup);
         thinCrustBtn.setToggleGroup(crustGroup);
         stuffedCrustBtn.setToggleGroup(crustGroup);
 
-        toppingsCheck = Arrays.asList(pepperoniCheck, chickenCheck, sausageCheck, hamCheck, baconCheck, anchoviesCheck,
-                onionCheck, jalapenoCheck, garlicCheck, bellPepperCheck, tomatoCheck, artichokeCheck);
+        // Toppings List
+        toppingsCheck = Arrays.asList(
+                pepperoniCheck, chickenCheck, sausageCheck, hamCheck, baconCheck, anchoviesCheck,
+                onionCheck, jalapenoCheck, garlicCheck, bellPepperCheck, tomatoCheck, artichokeCheck
+        );
 
-        for(CheckBox check : toppingsCheck) {
+        for (CheckBox check : toppingsCheck) {
             check.setOnAction(event -> handleToppingSelection());
         }
 
         updatePriceLabel(basePizzaPrice * quantityChoiceBox.getValue());
 
-        quantityChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            updateTotalPrice();
-        });
-
-        crustGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            updateTotalPrice();
-        });
-
-
-        sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            updateTotalPrice();
-        });
+        quantityChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
+        crustGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
+        sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
     }
 
     @FXML
     private void handleAddToOrder(ActionEvent event) throws IOException {
-        MenuItem pizza = createCustomPizzaItem();
-        int quantity = quantityChoiceBox.getValue();
-
-        System.out.println("DEBUG: Checking which toppings are selected...");
-        for (CheckBox checkBox : toppingsCheck) {
-            if (checkBox.isSelected()) {
-                System.out.println("Selected: " + checkBox.getText());
-            }
+        if (currentOrder == null) {
+            currentOrder = new Order(); // Fallback (should not usually happen)
         }
-        currentOrder.addItem(pizza);
 
-        // Save order to JSON file (e.g., order ID is timestamp)
+        MenuItem pizza = createCustomPizzaItem();
+        currentOrder.addItem(pizza);
         currentOrder.saveToFile();
 
-        /* Uncomment for debug
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Pizza added to order!"); //For Testing to confirm function
+        // Optional feedback:
+        /*
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Pizza added to order!");
         alert.showAndWait();
-         */
+        */
     }
 
     private void handleToppingSelection() {
-        int selectedCount = (int) toppingsCheck.stream()
-                .filter(CheckBox::isSelected)
-                .count(); //Normally use long for count but casting to int to maybe save some space, most likely negligible
-
+        int selectedCount = (int) toppingsCheck.stream().filter(CheckBox::isSelected).count();
         boolean disableExtras = selectedCount >= 4;
 
         for (CheckBox checkBox : toppingsCheck) {
@@ -131,10 +111,9 @@ public class CustomizePizzaController extends BaseController{
                 checkBox.setDisable(disableExtras);
             }
         }
-
     }
 
-    private void updatePriceLabel(double total){
+    private void updatePriceLabel(double total) {
         priceLabel.setText("$" + String.format("%.2f", total));
     }
 
@@ -151,19 +130,17 @@ public class CustomizePizzaController extends BaseController{
         updatePriceLabel(total);
     }
 
-
-    private double getSizePriceMultiplier(){
+    private double getSizePriceMultiplier() {
         ToggleButton selected = (ToggleButton) sizeGroup.getSelectedToggle();
-        if(selected == null) return basePizzaPrice;
+        if (selected == null) return basePizzaPrice;
 
-        switch(selected.getText()){
+        switch (selected.getText()) {
             case "Personal": return 6.00;
             case "Small": return 8.00;
             case "Medium": return 10.00;
             case "Large": return 12.50;
             default: return basePizzaPrice;
         }
-
     }
 
     private MenuItem createCustomPizzaItem() {
@@ -171,26 +148,21 @@ public class CustomizePizzaController extends BaseController{
         String crust = ((ToggleButton) crustGroup.getSelectedToggle()).getText();
 
         String itemName = size + " Pizza with " + crust + " Crust";
-
         int quantity = quantityChoiceBox.getValue();
 
         List<String> selectedToppings = toppingsCheck.stream()
                 .filter(CheckBox::isSelected)
                 .map(CheckBox::getText)
-                .filter(t -> t != null && !t.trim().isEmpty()) // filter out blanks
+                .filter(t -> t != null && !t.trim().isEmpty())
                 .toList();
 
-        System.out.println("Toppings: " + String.join(", ", selectedToppings));
-
-        //In case no toppings selected will default
         String description = selectedToppings.isEmpty() ? "No toppings" : String.join(", ", selectedToppings);
-
         double basePrice = getSizePriceMultiplier();
+
         if (crust.contains("Stuffed")) basePrice += 2.00;
 
-        String itemID = "custom-" + java.util.UUID.randomUUID(); //Random ID for now, not sure what to do for custom pizzas ID
+        String itemID = "custom-" + java.util.UUID.randomUUID();
 
         return new MenuItem(itemID, "Pizza", basePrice, quantity, itemName, description, new ArrayList<>(selectedToppings));
     }
-
 }

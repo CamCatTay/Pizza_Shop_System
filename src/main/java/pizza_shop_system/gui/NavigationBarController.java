@@ -6,7 +6,11 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import pizza_shop_system.order.Order;
+import pizza_shop_system.order.OrderStatus;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NavigationBarController extends BaseController {
@@ -42,11 +46,49 @@ public class NavigationBarController extends BaseController {
         buttonBack.setGraphic(imageView);
     }
 
+    private void switchToCartWithOrder() {
+        try {
+            ArrayList<Order> allOrders = Order.loadAllOrders();
+
+            if (allOrders.isEmpty()) {
+                System.out.println("No orders exist. Showing empty cart.");
+                showEmptyCart();
+                return;
+            }
+
+            Order matchedOrder = allOrders.stream().filter(order -> order.getStatus() == OrderStatus.INCOMPLETE).findFirst().orElse(null);
+
+            if (matchedOrder == null) {
+                System.out.println("No active cart found. Showing empty cart.");
+                showEmptyCart();
+                return;
+            }
+
+            // Pass the matched order to the cart view
+            sceneController.switchSceneWithData("Cart", controller -> {
+                if (controller instanceof CartController) {
+                    ((CartController) controller).setOrder(matchedOrder);
+                }
+            });
+
+        } catch (Exception e) {
+            System.out.println("Error switching to cart: " + e.getMessage());
+        }
+    }
+
+    private void showEmptyCart() {
+        sceneController.switchSceneWithData("Cart", controller -> {
+            if (controller instanceof CartController) {
+                ((CartController) controller).setOrder(new Order()); // Empty/default order
+            }
+        });
+    }
+
     @FXML
     public void initialize() {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
+        buttonCart.setOnAction(e -> switchToCartWithOrder());
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
         buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
 
