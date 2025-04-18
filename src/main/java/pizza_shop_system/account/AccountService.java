@@ -32,13 +32,11 @@ public class AccountService {
         return users;
     }
 
+
     // Save users back to file
     public void saveUsers(JSONArray users) throws IOException {
-        JSONObject data = new JSONObject();
-        data.put("users", users);
-
-        try (FileWriter writer = new FileWriter(DATA_FILE)) {
-            writer.write(data.toString(4));
+        try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
+            fileWriter.write(users.toString(4)); // Indent JSON for readability
         }
     }
 
@@ -63,7 +61,7 @@ public class AccountService {
         // Check if email already exists
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
-            if (user.getString("email").equalsIgnoreCase(email)) {
+            if (user.optString("email").equalsIgnoreCase(email)) {
                 return "DuplicateEmail";
             }
         }
@@ -82,11 +80,10 @@ public class AccountService {
         newUser.put("address", address);
         newUser.put("phone_number", phoneNumber);
 
-        int userId = users.getJSONObject(0).getInt("nextOrderId");
+        int userId = users.getJSONObject(0).getInt("nextUserId");
         int nextUserId = userId + 1;
-        newUser.put("user_id", nextUserId);
-        newUser.put("orderId", userId);
-        users.getJSONObject(0).put("nextOrderId", nextUserId); // Update nextOrderId in orders.json to be increased by 1
+        newUser.put("userId", nextUserId);
+        users.getJSONObject(0).put("nextUserId", nextUserId);
 
         users.put(newUser);
 
@@ -101,9 +98,9 @@ public class AccountService {
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
-            if (user.getString("email").equalsIgnoreCase(email)) {
-                if (user.getString("password").equals(password)) {
-                    activeUserId = user.getInt("user_id");
+            if (user.optString("email").equalsIgnoreCase(email)) {
+                if (user.optString("password").equals(password)) {
+                    activeUserId = user.getInt("userId");
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -132,7 +129,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 // Update the given field
                 if (user.has(field)) {
                     user.put(field, newValue);
@@ -157,9 +154,9 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 // Check the old password
-                if (!user.getString("password").equals(oldPassword)) {
+                if (!user.optString("password").equals(oldPassword)) {
                     return "Incorrect old password.";
                 }
 
@@ -183,7 +180,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 users.remove(i);
 
                 // Save updated users

@@ -2,6 +2,7 @@ package pizza_shop_system.order;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pizza_shop_system.account.AccountService;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class OrderService {
     private static final String DATA_FILE = "data_files/orders.json";
+    private final AccountService accountService = new AccountService();
 
     // Load orders from the file and ensure it exists
     public JSONArray loadOrders() throws IOException {
@@ -35,7 +37,6 @@ public class OrderService {
         return orders;
     }
 
-
     // Save orders back to the file
     public void saveOrders(JSONArray orders) throws IOException {
         try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
@@ -44,19 +45,25 @@ public class OrderService {
     }
 
     // Add a new order, including an array of orderItemIds
-    public String addOrder(JSONObject newOrder) throws IOException {
+    public int addOrder(JSONObject newOrder) throws IOException {
+        if (accountService.getActiveUserId() == 0) {
+            System.out.println("An account must be logged in to place an order.");
+            return 0;
+        } // An account must be logged in to place an order (0 is essentially null)
+
         JSONArray orders = loadOrders();
 
         int orderId = orders.getJSONObject(0).getInt("nextOrderId");
         int nextOrderId = orderId + 1;
-        newOrder.put("orderId", orderId);
-        orders.getJSONObject(0).put("nextOrderId", nextOrderId); // Update nextOrderId in orders.json to be increased by 1
+        orders.getJSONObject(0).put("nextOrderId", nextOrderId);
 
+        newOrder.put("orderId", orderId);
+        newOrder.put("accountId", accountService.getActiveUserId());
         orders.put(newOrder);
 
         saveOrders(orders); // Save orders.json so it includes the new order and updated nextOrderId
 
-        return "Order added successfully with ID: " + newOrder.getInt("orderId");
+        return newOrder.getInt("orderId"); // Return order's ID
     }
 
     // Delete an order by ID
@@ -137,5 +144,13 @@ public class OrderService {
         }
 
         return orders;
+    }
+
+    // Example main method for testing
+    public static void main(String[] args) throws IOException {
+        OrderService orderService = new OrderService();
+        AccountService accountService = new AccountService();
+        int order1 = orderService.addOrder(new JSONObject().put("orderItemIds", new JSONArray().put(1).put(2).put(3)));
+
     }
 }
