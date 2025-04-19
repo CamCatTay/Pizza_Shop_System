@@ -15,22 +15,28 @@ public class AccountService {
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
         File file = new File(DATA_FILE);
+        JSONArray users;
+
         if (!file.exists()) {
-            return new JSONArray();
+            users = new JSONArray();
+            JSONObject metaData = new JSONObject();
+            metaData.put("nextUserId", 1);
+            users.put(metaData);
+
+            saveUsers(users);
+        } else {
+            String content = new String(Files.readAllBytes(file.toPath()));
+            users = new JSONArray(content);
         }
 
-        // Read file content
-        String content = Files.readString(file.toPath());
-        return new JSONObject(content).getJSONArray("users");
+        return users;
     }
+
 
     // Save users back to file
     public void saveUsers(JSONArray users) throws IOException {
-        JSONObject data = new JSONObject();
-        data.put("users", users);
-
-        try (FileWriter writer = new FileWriter(DATA_FILE)) {
-            writer.write(data.toString(4));
+        try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
+            fileWriter.write(users.toString(4)); // Indent JSON for readability
         }
     }
 
@@ -47,25 +53,26 @@ public class AccountService {
     public String signUp(String email, String password, String verifyPassword, String name, String address, String phoneNumber) throws IOException {
         JSONArray users = loadUsers();
 
-        // I don't feel like adding it right now but implement method that makes sure all of these fields are not empty. Empty fields are invalid
+        // Implement validation for empty fields
+        if (email.isEmpty() || password.isEmpty() || verifyPassword.isEmpty() || name.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
+            return "InvalidInput";
+        }
 
         // Check if email already exists
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
-            if (user.getString("email").equalsIgnoreCase(email)) {
+            if (user.optString("email").equalsIgnoreCase(email)) {
                 return "DuplicateEmail";
             }
         }
 
-        // Check if passwords are the same
+        // Check if passwords match
         if (!password.equals(verifyPassword)) {
             return "PasswordsDoNotMatch";
         }
 
-        // Create a new user
-        int newUserId = users.length() + 1; // Generate the next user ID
+        // Create a new user with the unique ID
         JSONObject newUser = new JSONObject();
-        newUser.put("user_id", newUserId);
         newUser.put("email", email);
         newUser.put("password", password);
         newUser.put("account_type", determineAccountType(email));
@@ -73,8 +80,13 @@ public class AccountService {
         newUser.put("address", address);
         newUser.put("phone_number", phoneNumber);
 
-        // Add to users array and save
+        int userId = users.getJSONObject(0).getInt("nextUserId");
+        int nextUserId = userId + 1;
+        newUser.put("userId", nextUserId);
+        users.getJSONObject(0).put("nextUserId", nextUserId);
+
         users.put(newUser);
+
         saveUsers(users);
 
         return "Success";
@@ -86,9 +98,9 @@ public class AccountService {
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
-            if (user.getString("email").equalsIgnoreCase(email)) {
-                if (user.getString("password").equals(password)) {
-                    activeUserId = user.getInt("user_id");
+            if (user.optString("email").equalsIgnoreCase(email)) {
+                if (user.optString("password").equals(password)) {
+                    activeUserId = user.getInt("userId");
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -117,7 +129,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 // Update the given field
                 if (user.has(field)) {
                     user.put(field, newValue);
@@ -142,9 +154,9 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 // Check the old password
-                if (!user.getString("password").equals(oldPassword)) {
+                if (!user.optString("password").equals(oldPassword)) {
                     return "Incorrect old password.";
                 }
 
@@ -168,7 +180,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("user_id") == userId) {
+            if (user.getInt("userId") == userId) {
                 users.remove(i);
 
                 // Save updated users
