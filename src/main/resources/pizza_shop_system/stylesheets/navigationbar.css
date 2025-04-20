@@ -20,6 +20,14 @@
     -fx-pref-height: 100;
 }
 
+#buttonForward {
+    -fx-background-color: #993131;
+    -fx-text-fill: white;
+}
+
+#buttonForward:hover {
+    -fx-background-color: #662121;
+}
 .navButton:hover {
     -fx-background-color: #662121;
 }
