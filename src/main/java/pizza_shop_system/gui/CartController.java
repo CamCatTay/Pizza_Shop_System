@@ -29,22 +29,25 @@ public class CartController extends BaseController {
         buttonCheckout.setOnAction(e -> sceneController.switchScene("Checkout"));
     }
 
-    public void setOrder(Order order) {
+    // Called from another controller to pass the current order into the cart view
+    public void setCurrentOrder(Order order) {
         try {
             List<Order> matchingOrders = Order.fromJsonByOrderID(order.getOrderID());
 
             if (matchingOrders.isEmpty()) {
                 this.currentOrder = order;
             } else {
+                Order baseOrder = matchingOrders.get(0);
+
                 this.currentOrder = new Order(
-                        matchingOrders.get(0).getPaymentMethod(),
+                        baseOrder.getPaymentMethod(),
                         order.getOrderID(),
                         new ArrayList<>(),
-                        matchingOrders.get(0).getOrderType(),
-                        matchingOrders.get(0).getStatus(),
-                        matchingOrders.get(0).getAccount()
+                        baseOrder.getOrderType(),
+                        baseOrder.getStatus(),
+                        baseOrder.getAccount()
                 );
-                this.currentOrder.setDatePlaced(matchingOrders.get(0).getDatePlaced());
+                this.currentOrder.setDatePlaced(baseOrder.getDatePlaced());
 
                 for (Order o : matchingOrders) {
                     this.currentOrder.getOrderedItems().addAll(o.getOrderedItems());
@@ -55,6 +58,7 @@ public class CartController extends BaseController {
             e.printStackTrace();
             this.currentOrder = order;
         }
+
         displayCartItems();
     }
 
@@ -117,19 +121,23 @@ public class CartController extends BaseController {
 
             try {
                 if (currentOrder.getOrderedItems().isEmpty()) {
-                    // Order is now empty — remove from storage and create a new order
+                    // Remove the order file if it's empty
                     Order.removeOrderById(currentOrder.getOrderID());
-                    currentOrder = new Order(); // Reset to a new empty order
+                    currentOrder = new Order(); // Start fresh
                 } else {
-                    // Just update the modified order
+                    // Save updated order
                     Order.updateOrder(currentOrder);
                 }
 
-                displayCartItems(); // Refresh the UI
+                displayCartItems();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Order getCurrentOrder() {
+        return currentOrder;
     }
 }

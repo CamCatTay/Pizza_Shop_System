@@ -57,7 +57,26 @@ public class MenuController extends BaseController {
 
             if (category.equals("Pizza")) {
                 Button customizeButton = new Button("Customize");
-                customizeButton.setOnAction(e -> sceneController.switchScene("CustomizePizza"));
+                customizeButton.setOnAction(e -> {
+                    try {
+                        // Load all orders (or create new if none exist)
+                        var allOrders = pizza_shop_system.order.Order.loadAllOrders();
+                        var matchedOrder = allOrders.stream()
+                                .filter(o -> o.getStatus() == pizza_shop_system.order.OrderStatus.INCOMPLETE)
+                                .findFirst()
+                                .orElse(new pizza_shop_system.order.Order());
+
+                        // Switch to CustomizePizza scene and pass the order
+                        sceneController.switchSceneWithData("CustomizePizza", controller -> {
+                            if (controller instanceof CustomizePizzaController) {
+                                ((CustomizePizzaController) controller).setCurrentOrder(matchedOrder);
+                            }
+                        });
+                    } catch (Exception ex) {
+                        System.out.println("Error navigating to CustomizePizza: " + ex.getMessage());
+                    }
+                });
+
                 customizeButton.getStyleClass().add("button-customize");
 
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);

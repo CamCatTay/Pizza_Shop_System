@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import pizza_shop_system.order.Order;
 import pizza_shop_system.order.OrderStatus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -56,7 +55,10 @@ public class NavigationBarController extends BaseController {
                 return;
             }
 
-            Order matchedOrder = allOrders.stream().filter(order -> order.getStatus() == OrderStatus.INCOMPLETE).findFirst().orElse(null);
+            Order matchedOrder = allOrders.stream()
+                    .filter(order -> order.getStatus() == OrderStatus.INCOMPLETE)
+                    .findFirst()
+                    .orElse(null);
 
             if (matchedOrder == null) {
                 System.out.println("No active cart found. Showing empty cart.");
@@ -64,10 +66,9 @@ public class NavigationBarController extends BaseController {
                 return;
             }
 
-            // Pass the matched order to the cart view
             sceneController.switchSceneWithData("Cart", controller -> {
                 if (controller instanceof CartController) {
-                    ((CartController) controller).setOrder(matchedOrder);
+                    ((CartController) controller).setCurrentOrder(matchedOrder);
                 }
             });
 
@@ -79,7 +80,7 @@ public class NavigationBarController extends BaseController {
     private void showEmptyCart() {
         sceneController.switchSceneWithData("Cart", controller -> {
             if (controller instanceof CartController) {
-                ((CartController) controller).setOrder(new Order()); // Empty/default order
+                ((CartController) controller).setCurrentOrder(new Order());
             }
         });
     }

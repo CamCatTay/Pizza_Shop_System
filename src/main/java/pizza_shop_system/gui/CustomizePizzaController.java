@@ -45,7 +45,7 @@ public class CustomizePizzaController extends BaseController {
 
     private Order currentOrder;
 
-    public void setOrder(Order order) {
+    public void setCurrentOrder(Order order) {
         this.currentOrder = order;
     }
 
