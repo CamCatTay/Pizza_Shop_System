@@ -19,6 +19,7 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonMenu;
     @FXML private Button buttonCart;
     @FXML private Button buttonBack;
+    @FXML private Button buttonForward;
     @FXML private Button buttonLogin;
     @FXML private ImageView logoView;
 
@@ -91,7 +92,7 @@ public class NavigationBarController extends BaseController {
         buttonCart.setOnAction(e -> switchToCartWithOrder());
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
         buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
-
+        buttonBack.setOnAction(e -> sceneController.switchToForwardScene());
         setHomeButtonImage();
         setBackButtonImage();
     }
