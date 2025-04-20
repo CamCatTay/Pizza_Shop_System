@@ -11,8 +11,11 @@ import java.util.Stack;
 public class SceneController {
     private final BorderPane mainLayout;
     private final HashMap<String, Parent> scenes = new HashMap<>();
-    private final Stack<String> sceneHistory = new Stack<>();
     private String currentSceneName;
+    private String previousSceneName;
+    
+    // Stack to maintain the history of scenes for forward navigation
+    private final Stack<String> sceneHistory = new Stack<>();
 
     public SceneController(BorderPane mainLayout) {
         this.mainLayout = mainLayout;
@@ -31,69 +34,51 @@ public class SceneController {
                     controller.setSceneController(this);
                 }
             } catch (ClassCastException e) {
-                System.out.println("WARNING: Controller does not extend BaseController: " + name);
+                System.out.println("Controller does not extend BaseController: " + name);
             }
 
         } catch (IOException e) {
             System.out.println("Failed to add scene -> " + name + ": " + e.getMessage());
         } catch (NullPointerException e) {
             System.out.println("Warning: This FXML file was not loaded. Ensure " + fxmlFile + " exists and path is correct.");
-            System.out.println("If it exists and path is correct. Then ensure the controller for that scene is correctly referencing elements within it");
         }
     }
 
     public void switchScene(String name) {
         if (scenes.containsKey(name)) {
-            if(currentSceneName != null && !currentSceneName.equals(name)) {
-                sceneHistory.push(currentSceneName);
+            if (!name.equals(currentSceneName)) {
+                // Push the current scene onto the history stack before switching
+                if (currentSceneName != null) {
+                    sceneHistory.push(currentSceneName);
+                }
+                previousSceneName = currentSceneName;
+                currentSceneName = name;
+
+                // Update center of the BorderPane with selected scene
+                mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
             }
-            currentSceneName = name;
-            mainLayout.setCenter(scenes.get(name)); // Only update center so navigation bar stays
         } else {
             System.out.println("Scene not found: " + name);
         }
     }
 
     public void switchToPreviousScene() {
-        if(!sceneHistory.isEmpty()) {
-            String previousSceneName = sceneHistory.pop();
-            currentSceneName = previousSceneName;
+        if (previousSceneName != null) {
             mainLayout.setCenter(scenes.get(previousSceneName));
-        } else {
-            System.out.println("Previous scene not found");
+            currentSceneName = previousSceneName;
+            previousSceneName = sceneHistory.isEmpty() ? null : sceneHistory.pop(); // Get the last scene from history
         }
     }
 
-    //For Cart Nav
-    public void switchSceneWithData(String name, java.util.function.Consumer<Object> controllerConsumer) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/" + name + ".fxml"));
-            Parent root = loader.load();
-            Object controller = loader.getController();
-
-            if (controller instanceof BaseController) {
-                ((BaseController) controller).setSceneController(this);
+    public void switchToForwardScene() {
+        if (!sceneHistory.isEmpty()) {
+            String forwardSceneName = sceneHistory.peek(); // Peek at the next scene
+            if (forwardSceneName != null) {
+                mainLayout.setCenter(scenes.get(forwardSceneName));
+                previousSceneName = currentSceneName;
+                currentSceneName = forwardSceneName;
+                sceneHistory.pop(); // Remove the scene from stack once visited
             }
-
-            if (controllerConsumer != null) {
-                controllerConsumer.accept(controller);
-            }
-
-            if (currentSceneName != null && !currentSceneName.equals(name)) {
-                sceneHistory.push(currentSceneName);
-            }
-
-            currentSceneName = name;
-            mainLayout.setCenter(root);
-        } catch (IOException e) {
-            System.out.println("Failed to switch scene with data: " + e.getMessage());
-        } catch (NullPointerException e) {
-            System.out.println("FXML file not found for: " + name + ". Check the path and file name.");
         }
-    }
-
-    //IF we want to nav back to home page
-    public void clearSceneHistory() {
-        sceneHistory.clear();
     }
 }
