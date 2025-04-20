@@ -43,4 +43,20 @@ public class MenuItem {
     public void setToppings(ArrayList<String> toppings) {
         this.toppings = (toppings != null) ? toppings : new ArrayList<>();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        MenuItem other = (MenuItem) obj;
+
+        return itemID != null && itemID.equals(other.itemID);
+    }
+
+    @Override
+    public int hashCode() {
+        return itemID != null ? itemID.hashCode() : 0;
+    }
+
 }

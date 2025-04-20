@@ -1,6 +1,7 @@
 package pizza_shop_system.gui;
 
 import pizza_shop_system.menu.MenuItem;
+import pizza_shop_system.order.CurrentOrder;
 import pizza_shop_system.order.Order;
 
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CartController extends BaseController {
@@ -22,43 +22,33 @@ public class CartController extends BaseController {
     @FXML private Label taxLabel;
     @FXML private Label totalLabel;
 
-    private Order currentOrder;
+    private CurrentOrder currentOrder;
 
     @FXML
     public void initialize() {
-        buttonCheckout.setOnAction(e -> sceneController.switchScene("Checkout"));
+        currentOrder = CurrentOrder.getInstance();
+
+        buttonCheckout.setOnAction(e -> {
+            double subtotal = currentOrder.getItems().stream()
+                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                    .sum();
+            double tax = subtotal * 0.10;
+            double total = subtotal + tax;
+
+            sceneController.switchSceneWithData("Checkout", controller -> {
+                if (controller instanceof CheckoutController checkoutController) {
+                    checkoutController.setTotal(total);
+                }
+            });
+        });
     }
 
-    // Called from another controller to pass the current order into the cart view
-    public void setCurrentOrder(Order order) {
-        try {
-            List<Order> matchingOrders = Order.fromJsonByOrderID(order.getOrderID());
+    public void loadCurrentOrder() {
+        displayCartItems();
+    }
 
-            if (matchingOrders.isEmpty()) {
-                this.currentOrder = order;
-            } else {
-                Order baseOrder = matchingOrders.get(0);
-
-                this.currentOrder = new Order(
-                        baseOrder.getPaymentMethod(),
-                        order.getOrderID(),
-                        new ArrayList<>(),
-                        baseOrder.getOrderType(),
-                        baseOrder.getStatus(),
-                        baseOrder.getAccount()
-                );
-                this.currentOrder.setDatePlaced(baseOrder.getDatePlaced());
-
-                for (Order o : matchingOrders) {
-                    this.currentOrder.getOrderedItems().addAll(o.getOrderedItems());
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.currentOrder = order;
-        }
-
+    public void clearCart() {
+        currentOrder.reset();
         displayCartItems();
     }
 
@@ -66,7 +56,9 @@ public class CartController extends BaseController {
         cartItemsVBox.getChildren().clear();
         double subtotal = 0.0;
 
-        for (MenuItem item : currentOrder.getOrderedItems()) {
+        List<MenuItem> items = currentOrder.getItems();
+
+        for (MenuItem item : items) {
             double itemTotal = item.getPrice() * item.getQuantity();
             subtotal += itemTotal;
 
@@ -81,7 +73,7 @@ public class CartController extends BaseController {
         taxLabel.setText(String.format("$%.2f", tax));
         totalLabel.setText(String.format("$%.2f", total));
 
-        buttonCheckout.setDisable(currentOrder.getOrderedItems().isEmpty());
+        buttonCheckout.setDisable(items.isEmpty());
     }
 
     private HBox createItemRow(MenuItem item, double itemTotal) {
@@ -116,28 +108,20 @@ public class CartController extends BaseController {
     }
 
     private void removeItemFromCart(MenuItem itemToRemove) {
-        if (currentOrder != null) {
-            currentOrder.getOrderedItems().remove(itemToRemove);
+        currentOrder.removeItem(itemToRemove);
 
-            try {
-                if (currentOrder.getOrderedItems().isEmpty()) {
-                    // Remove the order file if it's empty
-                    Order.removeOrderById(currentOrder.getOrderID());
-                    currentOrder = new Order(); // Start fresh
-                } else {
-                    // Save updated order
-                    Order.updateOrder(currentOrder);
-                }
-
-                displayCartItems();
-
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            if (currentOrder.getItems().isEmpty()) {
+                Order.removeOrderById(currentOrder.getOrderID());
+                currentOrder.reset(); // Start fresh
+            } else {
+                Order.updateOrder(currentOrder.toOrder());
             }
-        }
-    }
 
-    public Order getCurrentOrder() {
-        return currentOrder;
+            displayCartItems();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

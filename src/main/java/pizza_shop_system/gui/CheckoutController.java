@@ -2,6 +2,11 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import pizza_shop_system.order.CurrentOrder;
+import pizza_shop_system.order.Order;
+import pizza_shop_system.order.OrderStatus;
+
+import java.io.IOException;
 
 public class CheckoutController extends BaseController{
 
@@ -27,7 +32,7 @@ public class CheckoutController extends BaseController{
 
     @FXML private Button confirmButton;
 
-    private double orderTotal = 0.0;
+    private double orderTotal;
 
     /**
      * Initializes the controller after the FXML file has been loaded.
@@ -132,12 +137,13 @@ public class CheckoutController extends BaseController{
         String orderType = deliveryRadioButton.isSelected() ? "Delivery" : "Pickup";
         String paymentMethod = paymentMethodComboBox.getValue();
 
-        // Validate inputs
+        // Basic validations
         if (paymentMethod == null || paymentMethod.isEmpty()) {
             System.out.println("Please select a payment method.");
             return;
         }
-        if ("Delivery".equals(orderType) && (addressField.getText().isEmpty() || addressField.getText().isBlank())) {
+        if ("Delivery".equals(orderType) &&
+                (addressField.getText().isEmpty() || addressField.getText().isBlank())) {
             System.out.println("Please enter a valid delivery address.");
             return;
         }
@@ -151,9 +157,26 @@ public class CheckoutController extends BaseController{
             return;
         }
 
-        // Simulate order confirmation
+        // Convert CurrentOrder to an actual Order instance
+        CurrentOrder cart = CurrentOrder.getInstance();
+        Order finalizedOrder = cart.toOrder();
+
+        try {
+            finalizedOrder.setStatus(OrderStatus.IN_PROGRESS);
+            Order.updateOrder(finalizedOrder);
+            System.out.println("Order saved successfully.");
+            System.out.println("Your order #" + finalizedOrder.getOrderID() + " has been confirmed!");
+            CurrentOrder.reset();
+            sceneController.switchScene("Home");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Order Type: " + orderType);
         System.out.println("Payment Method: " + paymentMethod);
         System.out.println("Order confirmed. Total: $" + orderTotal);
+
+
     }
+
 }

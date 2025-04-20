@@ -6,6 +6,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import pizza_shop_system.order.CurrentOrder;
 import pizza_shop_system.order.Order;
 import pizza_shop_system.order.OrderStatus;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class NavigationBarController extends BaseController {
+
     public HBox navigationBar;
     @FXML private Button buttonHome;
     @FXML private Button buttonMenu;
@@ -49,26 +51,22 @@ public class NavigationBarController extends BaseController {
         try {
             ArrayList<Order> allOrders = Order.loadAllOrders();
 
-            if (allOrders.isEmpty()) {
-                System.out.println("No orders exist. Showing empty cart.");
-                showEmptyCart();
-                return;
-            }
-
+            // Check for an INCOMPLETE order only if CurrentOrder isn't already empty
             Order matchedOrder = allOrders.stream()
                     .filter(order -> order.getStatus() == OrderStatus.INCOMPLETE)
                     .findFirst()
                     .orElse(null);
 
-            if (matchedOrder == null) {
-                System.out.println("No active cart found. Showing empty cart.");
-                showEmptyCart();
-                return;
+            CurrentOrder currentOrder = CurrentOrder.getInstance();
+
+            // Only load from disk if CurrentOrder is actually empty
+            if (currentOrder.isEmpty() && matchedOrder != null) {
+                currentOrder.loadFrom(matchedOrder);
             }
 
             sceneController.switchSceneWithData("Cart", controller -> {
-                if (controller instanceof CartController) {
-                    ((CartController) controller).setCurrentOrder(matchedOrder);
+                if (controller instanceof CartController cartController) {
+                    cartController.loadCurrentOrder(); // refresh UI
                 }
             });
 
@@ -77,13 +75,6 @@ public class NavigationBarController extends BaseController {
         }
     }
 
-    private void showEmptyCart() {
-        sceneController.switchSceneWithData("Cart", controller -> {
-            if (controller instanceof CartController) {
-                ((CartController) controller).setCurrentOrder(new Order());
-            }
-        });
-    }
 
     @FXML
     public void initialize() {
