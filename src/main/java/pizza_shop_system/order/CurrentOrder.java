@@ -44,7 +44,7 @@ public class CurrentOrder {
     }
 
     public ArrayList<MenuItem> getItems() {
-        return new ArrayList<>(items);
+        return items;
     }
 
     public boolean isEmpty() {
@@ -67,6 +67,8 @@ public class CurrentOrder {
         this.paymentMethod = order.getPaymentMethod();
         this.status = order.getStatus();
         this.datePlaced = order.getDatePlaced();
+        System.out.println("Loading order with " + order.getOrderedItems().size() + " items into CurrentOrder.");
+
     }
 
 

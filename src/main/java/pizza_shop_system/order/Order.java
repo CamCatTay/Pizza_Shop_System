@@ -372,6 +372,8 @@ public class Order {
                 );
             }
 
+            System.out.println("Order " + orderID + " has " + items.size() + " items.");
+
             Order order = new Order(paymentMethod, orderID, items, orderType, status, user);
             order.setDatePlaced(datePlaced);
             orders.add(order);

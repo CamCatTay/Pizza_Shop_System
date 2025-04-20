@@ -59,8 +59,7 @@ public class NavigationBarController extends BaseController {
 
             CurrentOrder currentOrder = CurrentOrder.getInstance();
 
-            // Only load from disk if CurrentOrder is actually empty
-            if (currentOrder.isEmpty() && matchedOrder != null) {
+            if (matchedOrder != null) {
                 currentOrder.loadFrom(matchedOrder);
             }
 

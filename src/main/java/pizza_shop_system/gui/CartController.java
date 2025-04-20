@@ -57,6 +57,8 @@ public class CartController extends BaseController {
         double subtotal = 0.0;
 
         List<MenuItem> items = currentOrder.getItems();
+        System.out.println("Items to display in cart: " + items.size());
+
 
         for (MenuItem item : items) {
             double itemTotal = item.getPrice() * item.getQuantity();
@@ -77,34 +79,40 @@ public class CartController extends BaseController {
     }
 
     private HBox createItemRow(MenuItem item, double itemTotal) {
-        Label nameLabel = new Label(item.getName());
-        nameLabel.setStyle("-fx-font-weight: bold;");
-        nameLabel.setPrefWidth(250);
+        try {
+            Label nameLabel = new Label(item.getName());
+            nameLabel.setStyle("-fx-font-weight: bold;");
+            nameLabel.setPrefWidth(250);
 
-        Label quantityLabel = new Label("x" + item.getQuantity());
-        quantityLabel.setPrefWidth(40);
+            Label quantityLabel = new Label("x" + item.getQuantity());
+            quantityLabel.setPrefWidth(40);
 
-        Label priceLabel = new Label(String.format("$%.2f", itemTotal));
-        priceLabel.setPrefWidth(80);
-        priceLabel.setStyle("-fx-font-weight: bold;");
+            Label priceLabel = new Label(String.format("$%.2f", itemTotal));
+            priceLabel.setPrefWidth(80);
+            priceLabel.setStyle("-fx-font-weight: bold;");
 
-        Button removeButton = new Button("Remove");
-        removeButton.setOnAction(e -> removeItemFromCart(item));
+            Button removeButton = new Button("Remove");
+            removeButton.setOnAction(e -> removeItemFromCart(item));
 
-        VBox descriptionBox = new VBox();
-        if (item.getToppings() != null && !item.getToppings().isEmpty()) {
-            Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
-            toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
-            descriptionBox.getChildren().add(toppingsLabel);
+            VBox descriptionBox = new VBox();
+            if (item.getToppings() != null && !item.getToppings().isEmpty()) {
+                Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
+                toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
+                descriptionBox.getChildren().add(toppingsLabel);
+            }
+
+            VBox itemInfoBox = new VBox(nameLabel, descriptionBox);
+            itemInfoBox.setSpacing(2);
+            itemInfoBox.setPrefWidth(300);
+
+            HBox row = new HBox(10, itemInfoBox, quantityLabel, priceLabel, removeButton);
+            row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
+            return row;
+        } catch (Exception e) {
+            System.out.println("Error creating row for item: " + item.getName());
+            e.printStackTrace();
         }
-
-        VBox itemInfoBox = new VBox(nameLabel, descriptionBox);
-        itemInfoBox.setSpacing(2);
-        itemInfoBox.setPrefWidth(300);
-
-        HBox row = new HBox(10, itemInfoBox, quantityLabel, priceLabel, removeButton);
-        row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
-        return row;
+        return null;
     }
 
     private void removeItemFromCart(MenuItem itemToRemove) {
