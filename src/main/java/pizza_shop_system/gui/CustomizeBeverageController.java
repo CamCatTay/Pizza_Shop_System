@@ -33,6 +33,9 @@ public class CustomizeBeverageController extends BaseController{
 
     private Order currentOrder = new Order();
 
+    public void setCurrentOrder(Order order) {
+        this.currentOrder = order;
+    }
 
     @FXML
     public void initialize() {

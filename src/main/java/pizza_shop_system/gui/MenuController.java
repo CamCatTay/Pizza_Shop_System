@@ -82,7 +82,26 @@ public class MenuController extends BaseController {
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);
             } else if (category.equals("Beverage")) {
                 itemBox.getChildren().addAll(itemLabel, addToOrderButton);
-                addToOrderButton.setOnAction(e -> sceneController.switchScene("CustomizeBeverage"));
+                addToOrderButton.setOnAction(e -> {
+                    try {
+                        // Load existing incomplete order or create a new one
+                        var allOrders = pizza_shop_system.order.Order.loadAllOrders();
+                        var matchedOrder = allOrders.stream()
+                                .filter(o -> o.getStatus() == pizza_shop_system.order.OrderStatus.INCOMPLETE)
+                                .findFirst()
+                                .orElse(new pizza_shop_system.order.Order());
+
+                        // Switch and pass order to CustomizeBeverageController
+                        sceneController.switchSceneWithData("CustomizeBeverage", controller -> {
+                            if (controller instanceof CustomizeBeverageController) {
+                                ((CustomizeBeverageController) controller).setCurrentOrder(matchedOrder);
+                            }
+                        });
+                    } catch (Exception ex) {
+                        System.out.println("Error navigating to CustomizeBeverage: " + ex.getMessage());
+                    }
+                });
+
             }
 
             // Add itemBox to GridPane
