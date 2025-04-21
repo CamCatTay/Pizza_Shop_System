@@ -1,0 +1,24 @@
+{
+    "nextOrderId": 2,
+    "orders": [{
+        "date": "2025-04-21T01:05:12Z",
+        "accountId": 0,
+        "total": 13.36,
+        "orderId": 1,
+        "subtotal": 12.49,
+        "tax": 0.87,
+        "orderItems": [{
+            "orderItemId": 1,
+            "price": 12.49,
+            "name": "BBQ Chicken Pizza",
+            "pizzaSize": "medium",
+            "toppings": [
+                "chicken",
+                "bacon"
+            ],
+            "menuItemId": 4,
+            "crust": "regular"
+        }],
+        "nextOrderItemId": 2
+    }]
+}

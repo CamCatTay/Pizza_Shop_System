@@ -1,0 +1,109 @@
+{
+  "nextMenuItemId": 7,
+  "items": {
+    "pizza": [
+      {
+        "menuItemId": 1,
+        "name": "Cheese Pizza",
+        "pizzaSize": "medium",
+        "crust": "regular",
+        "toppings": []
+      },
+      {
+        "menuItemId": 2,
+        "name": "Pepperoni Pizza",
+        "pizzaSize": "medium",
+        "toppings": ["pepperoni"],
+        "crust": "regular"
+      },
+      {
+        "menuItemId": 3,
+        "name": "Supreme Pizza",
+        "pizzaSize": "medium",
+        "toppings": [
+          "sausage",
+          "bellpepper",
+          "onion",
+          "pepperoni"
+        ],
+        "crust": "regular"
+      },
+      {
+        "menuItemId": 4,
+        "name": "BBQ Chicken Pizza",
+        "pizzaSize": "medium",
+        "toppings": [
+          "chicken",
+          "bacon"
+        ],
+        "crust": "regular"
+      },
+      {
+        "menuItemId": 5,
+        "name": "Veggie Pizza",
+        "pizzaSize": "medium",
+        "toppings": [
+          "bellpepper",
+          "tomato",
+          "onion"
+        ],
+        "crust": "regular"
+      },
+      {
+        "menuItemId": 6,
+        "name": "Hawaiian Pizza",
+        "pizzaSize": "medium",
+        "toppings": [
+          "ham"
+        ],
+        "crust": "regular"
+      }
+    ],
+    "beverage": [
+      {
+        "menuItemId": 7,
+        "category": "Beverage",
+        "name": "Coca-Cola",
+        "beverageSize": "medium",
+        "ice": "regular"
+      },
+      {
+        "menuItemId": 8,
+        "category": "Beverage",
+        "name": "Lemonade",
+        "beverageSize": "medium",
+        "ice": "regular"
+      },
+      {
+        "menuItemId": 9,
+        "category": "Beverage",
+        "name": "Milkshake",
+        "beverageSize": "medium",
+        "ice": "regular"
+      },
+      {
+        "menuItemId": 10,
+        "category": "Beverage",
+        "name": "Iced Coffee",
+        "beverageSize": "medium",
+        "ice": "regular"
+      },
+      {
+        "menuItemId": 11,
+        "category": "Beverage",
+        "name": "Green Tea",
+        "beverageSize": "medium",
+        "ice": "regular"
+      },
+      {
+        "menuItemId": 12,
+        "category": "Beverage",
+        "name": "Fruit Punch",
+        "beverageSize": "medium",
+        "ice": "regular"
+      }
+    ]
+  }
+}
+
+
