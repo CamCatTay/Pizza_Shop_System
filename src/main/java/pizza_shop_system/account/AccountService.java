@@ -15,28 +15,50 @@ public class AccountService {
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
         File file = new File(DATA_FILE);
-        JSONArray users;
 
         if (!file.exists()) {
-            users = new JSONArray();
+            JSONArray users = new JSONArray();
             JSONObject metaData = new JSONObject();
             metaData.put("nextUserId", 1);
             users.put(metaData);
 
             saveUsers(users);
+            return users;
         } else {
             String content = new String(Files.readAllBytes(file.toPath()));
-            users = new JSONArray(content);
+            JSONObject root = new JSONObject(content);
+            return root.getJSONArray("users");
         }
-
-        return users;
     }
 
 
+    public User getActiveUser() throws IOException {
+        JSONArray users = loadUsers();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if(user.has("user_id") && user.getInt("user_id") == activeUserId){
+                return new User(
+                        user.getInt("user_id"),
+                        user.getString("account_type"),
+                        user.getString("email"),
+                        user.getString("password"),
+                        user.getString("name"),
+                        user.getString("address"),
+                        user.getString("phone_number")
+                        );
+            }
+        }
+        return null;
+    }
+
     // Save users back to file
     public void saveUsers(JSONArray users) throws IOException {
+        JSONObject root = new JSONObject();
+        root.put("users", users);
+
         try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
-            fileWriter.write(users.toString(4)); // Indent JSON for readability
+            fileWriter.write(root.toString(4)); // Indent JSON for readability
         }
     }
 
@@ -82,7 +104,7 @@ public class AccountService {
 
         int userId = users.getJSONObject(0).getInt("nextUserId");
         int nextUserId = userId + 1;
-        newUser.put("userId", nextUserId);
+        newUser.put("user_id", nextUserId);
         users.getJSONObject(0).put("nextUserId", nextUserId);
 
         users.put(newUser);
@@ -100,7 +122,7 @@ public class AccountService {
             JSONObject user = users.getJSONObject(i);
             if (user.optString("email").equalsIgnoreCase(email)) {
                 if (user.optString("password").equals(password)) {
-                    activeUserId = user.getInt("userId");
+                    activeUserId = user.getInt("user_id");
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -129,7 +151,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 // Update the given field
                 if (user.has(field)) {
                     user.put(field, newValue);
@@ -154,7 +176,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 // Check the old password
                 if (!user.optString("password").equals(oldPassword)) {
                     return "Incorrect old password.";
@@ -180,7 +202,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 users.remove(i);
 
                 // Save updated users
