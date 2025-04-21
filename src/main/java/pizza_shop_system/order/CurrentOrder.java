@@ -1,5 +1,5 @@
 package pizza_shop_system.order;
-
+/*
 import pizza_shop_system.account.User;
 import pizza_shop_system.menu.MenuItem;
 
@@ -77,3 +77,5 @@ public class CurrentOrder {
     }
 
 }
+
+ */
