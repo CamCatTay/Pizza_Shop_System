@@ -1,0 +1,32 @@
+{
+    "nextOrderId": 5,
+    "orders": [
+        {
+            "date": "2025-04-22T18:49:03Z",
+            "accountId": 0,
+            "total": 12.82,
+            "orderId": 3,
+            "subtotal": 11.99,
+            "tax": 0.83,
+            "orderItems": [{
+                "orderItemId": 1,
+                "price": 11.99,
+                "name": "Pepperoni Pizza",
+                "pizzaSize": "medium",
+                "toppings": ["pepperoni"],
+                "menuItemId": 2,
+                "crust": "regular"
+            }],
+            "nextOrderItemId": 2
+        },
+        {
+            "date": "2025-04-22T18:49:03Z",
+            "accountId": 0,
+            "total": 0,
+            "orderId": 4,
+            "subtotal": 0,
+            "tax": 0,
+            "orderItems": []
+        }
+    ]
+}
