@@ -21,8 +21,7 @@ public class OrderService {
     }
 
     // Gets the current order object and if it does not exist creates one
-    public JSONObject getCurrentOrder() throws IOException {
-        JSONObject ordersData = loadOrders();
+    public JSONObject getCurrentOrder(JSONObject ordersData) throws IOException {
         JSONArray orders = ordersData.getJSONArray("orders");
         int currentOrderId = ordersData.getInt("nextOrderId"); // Our current order id is the next available id since nextOrderId is not incremented until order is finalized
 
@@ -40,6 +39,10 @@ public class OrderService {
         newOrder.put("orderItems", new JSONArray()); // Must have JSONArray to insert order items
         orders.put(newOrder);
         return newOrder;
+    }
+
+    public JSONObject getOrderData() throws IOException {
+        return loadOrders();
     }
 
     // Save changes to the orders file
