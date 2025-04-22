@@ -2,11 +2,13 @@ package pizza_shop_system.account;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pizza_shop_system.payment.CreditCard;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
 
 public class AccountService {
     private static final String DATA_FILE = "data_files/users.json";
@@ -31,14 +33,13 @@ public class AccountService {
         }
     }
 
-
     public User getActiveUser() throws IOException {
         JSONArray users = loadUsers();
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
             if(user.has("user_id") && user.getInt("user_id") == activeUserId){
-                return new User(
+                User userObj = new User(
                         user.getInt("user_id"),
                         user.getString("account_type"),
                         user.getString("email"),
@@ -46,9 +47,31 @@ public class AccountService {
                         user.getString("name"),
                         user.getString("address"),
                         user.getString("phone_number")
+                );
+
+                // Load credit card if it exists
+                if (user.has("credit_card")) {
+                    JSONObject cc = user.getJSONObject("credit_card");
+                    LocalDate expDate = LocalDate.parse(cc.getString("exp_date"));
+
+                    if (!expDate.isBefore(LocalDate.now())) {  // Card is valid
+                        CreditCard card = new CreditCard(
+                                cc.getString("type"),
+                                cc.getString("number"),
+                                cc.getString("holder_name"),
+                                expDate,
+                                cc.getInt("cvc_num")
                         );
+                        userObj.setCreditCard(card);
+                    } else {
+                        System.out.println("Expired credit card found for user ID " + activeUserId);
+                    }
+                }
+
+                return userObj;
             }
         }
+
         return null;
     }
 
@@ -59,6 +82,27 @@ public class AccountService {
 
         try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
             fileWriter.write(root.toString(4)); // Indent JSON for readability
+        }
+    }
+
+    public void saveCardForActiveUser(CreditCard card) throws IOException {
+        JSONArray users = loadUsers();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if (user.has("user_id") && user.getInt("user_id") == activeUserId) {
+                JSONObject cc = new JSONObject();
+                cc.put("type", card.getType());
+                cc.put("number", card.getCardNumber());
+                cc.put("holder_name", card.getHolderName());
+                cc.put("exp_date", card.getExpDate().toString()); // Save as ISO date
+                cc.put("cvc_num", card.getCvcNum());
+
+                user.put("credit_card", cc);
+
+                saveUsers(users);
+                break;
+            }
         }
     }
 

@@ -1,247 +1,134 @@
 package pizza_shop_system.payment;
 
-import pizza_shop_system.menu.MenuItem;
-import pizza_shop_system.order.Order;
-import pizza_shop_system.order.OrderStatus;
 import pizza_shop_system.account.User;
-
-import java.util.ArrayList;
+import pizza_shop_system.orderSystem.OrderService;
 
 public class Payment {
 
-    public double amount;
-    public String paymentType;
-    public boolean isProcessed;
+    private double amount;
+    private String paymentType;
+    private boolean isProcessed;
+    private final OrderService orderService;
 
-    public Payment(){
+    public Payment(OrderService orderService) {
+        this.orderService = orderService;
         this.amount = 0;
         this.paymentType = "DEFAULT";
         this.isProcessed = false;
     }
 
-    public Payment(double amount, String paymentType, boolean isProcessed){
+    public Payment(OrderService orderService, double amount, String paymentType, boolean isProcessed) {
+        this.orderService = orderService;
         this.amount = amount;
         this.paymentType = paymentType;
         this.isProcessed = isProcessed;
     }
 
-    //Getters
-    public double getAmount(){ return this.amount; }
-    public String getPaymentType(){ return this.paymentType; }
-    public boolean getIsProcessed(){ return this.isProcessed; }
+    // Getters
+    public double getAmount() { return this.amount; }
+    public String getPaymentType() { return this.paymentType; }
+    public boolean getIsProcessed() { return this.isProcessed; }
 
-    //Setters
-    public void setAmount(double newAmount){ this.amount = newAmount; }
-    public void setPaymentType(String newPaymentType){ this.paymentType = newPaymentType; }
-    public void setProcessed(boolean newProcessed){ this.isProcessed = newProcessed; }
+    // Setters
+    public void setAmount(double newAmount) { this.amount = newAmount; }
+    public void setPaymentType(String newPaymentType) { this.paymentType = newPaymentType; }
+    public void setProcessed(boolean newProcessed) { this.isProcessed = newProcessed; }
 
-    public void processCheck(Order order, double checkAmount){
+
+    public void processCheck(double checkAmount) {
         try {
-            if (order == null){
-                System.err.println("Error: Order is null. Payment cannot be processed!");
-                return;
-            }
-
-            ArrayList<MenuItem> items = order.getOrderedItems();
-            if (items == null || items.isEmpty()){
-                System.err.println("Error: no items in the cart. Cannot process payment!");
-                setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
-                return;
-            }
-
-            if (checkAmount < 0){
+            if (checkAmount < 0) {
                 System.err.println("Error: Check amount cannot be negative");
                 setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
-            int orderId = order.getOrderID();
-            System.out.println("Processing payment for order ID: " + orderId);
+            double total = orderService.getCurrentOrderTotal();
+            System.out.println("Processing check payment. Total: $" + total);
+
             setPaymentType("Check");
+            this.amount = total;
 
-            //Set this amount to 0 for payment check
-            this.amount = 0;
-
-            for (MenuItem item : items) {
-                if (item.getPrice() < 0) {
-                    System.out.println("Error: Item price cannot be negative! Please check the menu.");
-                    setProcessed(false);
-                    order.setStatus(OrderStatus.INCOMPLETE);
-                    return;
-                }
-                this.amount += item.getPrice();
-            }
-
-            if (this.amount > 0 && checkAmount >= this.amount) {
+            if (total > 0 && checkAmount >= total) {
                 setProcessed(true);
-                order.setStatus(OrderStatus.IN_PROGRESS);
-                System.out.println("Payment processed successfully");
+                orderService.finalizeOrder();
+                System.out.println("Check payment processed successfully.");
             } else {
                 setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
-
-                if (checkAmount < this.amount) {
-                    System.err.println("Payment processing failed: Insufficient funds.");
-                } else {
-                    System.err.println("Payment processing failed: Order amount is 0 or negative.");
-                }
+                System.err.println("Payment failed: insufficient check amount or zero total.");
             }
 
-        } catch (ArithmeticException e) {
-            System.err.println("Error: ArithmeticException: occurred during payment processing");
-            e.printStackTrace();
-            setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
         } catch (Exception e) {
-            System.err.println("An error occurred, check the stack trace");
+            System.err.println("Error during check payment processing.");
             e.printStackTrace();
             setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
         }
-
     }
 
-    public void processCash(Order order, double cash) {
+    public void processCash(double cashAmount) {
         try {
-            if (order == null){
-                System.err.println("Error: Order is null. Payment cannot be processed!");
-                return;
-            }
-
-            ArrayList<MenuItem> items = order.getOrderedItems();
-            if (items == null || items.isEmpty()){
-                System.err.println("Error: no items in the cart. Cannot process payment!");
-                setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
-                return;
-            }
-
-            if (cash < 0){
+            if (cashAmount < 0) {
                 System.err.println("Error: Cash amount cannot be negative");
                 setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
                 return;
             }
 
-            int orderId = order.getOrderID();
-            System.out.println("Processing payment for order ID: " + orderId);
+            double total = orderService.getCurrentOrderTotal();
+            System.out.println("Processing cash payment. Total: $" + total);
+
             setPaymentType("Cash");
+            this.amount = total;
 
-            //Set this amount to 0 for payment check
-            this.amount = 0;
-
-            for (MenuItem item : items) {
-                if (item.getPrice() < 0) {
-                    System.err.println("Error: Item price cannot be negative! Please check the menu.");
-                    setProcessed(false);
-                    order.setStatus(OrderStatus.INCOMPLETE);
-                    return;
-                }
-                this.amount += item.getPrice();
-            }
-
-            if (this.amount > 0 && cash >= this.amount) {
-
-                double change = cash - this.amount;
-
-                //More accurate rounding
-                change = Math.round(change * 100.0) / 100.0;
-
+            if (total > 0 && cashAmount >= total) {
+                double change = Math.round((cashAmount - total) * 100.0) / 100.0;
                 setProcessed(true);
-                order.setStatus(OrderStatus.IN_PROGRESS);
-                System.out.println("Payment processed successfully");
-                System.out.println("Amount to give in change: $" + String.format("%.2f", change));
+                orderService.finalizeOrder();
+                System.out.println("Cash payment processed successfully. Change: $" + change);
             } else {
                 setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
-
-                if (cash < this.amount) {
-                    System.err.println("Payment processing failed: Insufficient funds.");
-                } else {
-                    System.err.println("Payment processing failed: Order amount is 0 or negative.");
-                }
+                System.err.println("Payment failed: insufficient cash or zero total.");
             }
 
-        } catch (ArithmeticException e) {
-            System.err.println("Error: ArithmeticException: occurred during payment processing");
-            e.printStackTrace();
-            setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
         } catch (Exception e) {
-            System.err.println("An error occurred, check the stack trace");
+            System.err.println("Error during cash payment processing.");
             e.printStackTrace();
             setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
         }
-
     }
 
-    public void processCard(Order order, User account){
+    public void processCard(User account) {
         try {
-            if(order == null){
-                System.err.println("Error: Order is null. Payment cannot be processed!");
+            if (account == null || account.getCreditCard() == null) {
+                System.err.println("Error: Account or credit card is null");
+                setProcessed(false);
                 return;
             }
 
-            if(account == null || account.getCreditCard() == null){
-                System.err.println("Error: Account or Credit Card is null. Payment cannot be processed!");
+            if (!account.getCreditCard().verifyCard(account)) {
+                System.err.println("Card verification failed.");
+                setProcessed(false);
                 return;
             }
 
-            if (account.getCreditCard().verifyCard(account)) {
+            double total = orderService.getCurrentOrderTotal();
+            System.out.println("Processing card payment. Total: $" + total);
 
-                int orderId = order.getOrderID();
-                System.out.println("Processing payment for order ID: " + orderId);
+            setPaymentType("Card");
+            this.amount = total;
 
-                setPaymentType("Card");
-
-                //Set this amount to 0 for payment check
-                this.amount = 0;
-
-                ArrayList<MenuItem> items = order.getOrderedItems();
-                for (MenuItem item : items) {
-                    this.amount += item.getPrice();
-                }
-
-                if (this.amount > 0) {
-                    setProcessed(true);
-                    order.setStatus(OrderStatus.IN_PROGRESS);
-                    System.out.println("Payment processed successfully");
-                } else {
-                    setProcessed(false);
-                    order.setStatus(OrderStatus.INCOMPLETE);
-                    System.err.println("Payment processing failed");
-                }
+            if (total > 0) {
+                setProcessed(true);
+                orderService.finalizeOrder();
+                System.out.println("Card payment processed successfully.");
             } else {
                 setProcessed(false);
-                order.setStatus(OrderStatus.INCOMPLETE);
-                System.err.println("Payment processing failed");
+                System.err.println("Payment failed: zero total.");
             }
-        } catch (ArithmeticException e) {
-            System.err.println("Error: ArithmeticException: occurred during payment processing");
-            e.printStackTrace();
-            setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
+
         } catch (Exception e) {
-            System.err.println("An error occurred, check the stack trace");
+            System.err.println("Error during card payment processing.");
             e.printStackTrace();
             setProcessed(false);
-            if (order != null) {
-                order.setStatus(OrderStatus.INCOMPLETE);
-            }
         }
     }
-
 }

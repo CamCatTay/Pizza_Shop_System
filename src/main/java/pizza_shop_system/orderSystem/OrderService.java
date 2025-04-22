@@ -210,6 +210,13 @@ public class OrderService {
         orderItem.put("price", totalPrice); // Set the price of the order item with the calculated total price
     }
 
+    public double getCurrentOrderTotal() throws IOException {
+        JSONObject ordersData = loadOrders();
+        JSONObject currentOrder = getCurrentOrder(ordersData);
+        updateOrderDetails(currentOrder); // Ensure it's up-to-date
+        return currentOrder.optDouble("total", 0.00); //If no total present returns 0.00
+    }
+
     // Cuts off to 2 decimal points and does not round
     private double floorCurrency(double currencyAmount) {
         return  Math.floor(currencyAmount * 100) / 100;
