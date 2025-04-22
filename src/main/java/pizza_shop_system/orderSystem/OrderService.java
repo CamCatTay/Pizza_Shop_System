@@ -148,14 +148,17 @@ public class OrderService {
         JSONObject currentOrder = getCurrentOrder(orderData);
 
         currentOrder.put("date", dateUtil.getCurrentDateTime());
-        currentOrder.put("accountId", 0); // Get current accountId from AccountService
-        System.out.println("Implement accountId fetching and do not allow an order to be finalized is an acocunt is not signed in");
+        currentOrder.put("accountId", accountId);
+
+        // Add payment details here
 
         int orderId = orderData.getInt("nextOrderId");
         int nextOrderId = orderId + 1;
         orderData.put("nextOrderId",nextOrderId);
+
         updateOrderDetails(currentOrder);
         saveOrders(orderData);
+
         System.out.println("Finalized order number: " + orderId + " Now on order number: " + nextOrderId);
     }
 
