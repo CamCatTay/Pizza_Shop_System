@@ -13,7 +13,7 @@ public class OrderService {
     private final DateUtil dateUtil = new DateUtil();
     private static CartController cartController;
     private final AccountService accountService = new AccountService();
-    private final String ORDERS_FILE_PATH = "src/main/java/pizza_shop_system/orderSystem/orders.json";
+    private final String ORDERS_FILE_PATH = "data_files/Orders.json";
 
     public JSONObject loadOrders() throws IOException {
         return jsonUtil.loadJSONObject(ORDERS_FILE_PATH);
@@ -21,7 +21,7 @@ public class OrderService {
 
     // Load the customizations json (Used to calculate a price for each order item)
     public JSONObject loadCustomizations() throws IOException {
-        return jsonUtil.loadJSONObject("src/main/java/pizza_shop_system/orderSystem/customizations.json");
+        return jsonUtil.loadJSONObject("data_files/MenuItemCustomizations.json");
     }
 
     // Gets the current order object and if it does not exist creates one

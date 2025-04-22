@@ -43,9 +43,9 @@ public class CartController extends BaseController {
             cartItemsVBox.getChildren().add(row);
         }
 
-        double tax = currentOrder.getDouble("tax");
-        double total = currentOrder.getDouble("total");
-        double subtotal = currentOrder.getDouble("subtotal");
+        double tax = currentOrder.optDouble("tax");
+        double total = currentOrder.optDouble("total");
+        double subtotal = currentOrder.optDouble("subtotal");
 
         subTotalLabel.setText(String.format("$%.2f", subtotal));
         taxLabel.setText(String.format("$%.2f", tax));

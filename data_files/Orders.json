@@ -27,6 +27,33 @@
             "subtotal": 0,
             "tax": 0,
             "orderItems": []
+        },
+        {
+            "total": 24.58,
+            "orderId": 5,
+            "subtotal": 22.98,
+            "tax": 1.6,
+            "orderItems": [
+                {
+                    "orderItemId": 1,
+                    "price": 11.99,
+                    "name": "Pepperoni Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": ["pepperoni"],
+                    "menuItemId": 2,
+                    "crust": "regular"
+                },
+                {
+                    "orderItemId": 2,
+                    "price": 10.99,
+                    "name": "Cheese Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": [],
+                    "menuItemId": 1,
+                    "crust": "regular"
+                }
+            ],
+            "nextOrderItemId": 3
         }
     ]
 }

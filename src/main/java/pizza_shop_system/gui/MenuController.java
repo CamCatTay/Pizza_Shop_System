@@ -7,13 +7,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pizza_shop_system.menu.MenuItem;
-import pizza_shop_system.menu.MenuLoader;
 import pizza_shop_system.orderSystem.JSONUtil;
 import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MenuController extends BaseController {
     @FXML private GridPane menuContainer;
@@ -31,7 +28,7 @@ public class MenuController extends BaseController {
     private final OrderService orderService = new OrderService();
 
     private JSONObject loadMenuItems() throws IOException {
-        String MENU_ITEMS_FILE_PATH = "src/main/java/pizza_shop_system/orderSystem/menuItems.json";
+        String MENU_ITEMS_FILE_PATH = "data_files/MenuItems.json";
         return jsonUtil.loadJSONObject(MENU_ITEMS_FILE_PATH);
     }
 
@@ -95,7 +92,7 @@ public class MenuController extends BaseController {
     }
 
     // displays menu items along with add to order and customize button. category chooses what items to display
-    // category name should match menuItems.json category name
+    // category name should match MenuItems.json category name
     private void displayMenuItemsByCategory(String category) {
             menuContainer.getChildren().clear(); // Clear previously displayed menu items
             menuContainer.setHgap(CELL_SPACING);

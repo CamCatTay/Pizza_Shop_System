@@ -1,4 +1,4 @@
-package pizza_shop_system.payment;
+package pizza_shop_system.orderSystem.payment;
 
 import pizza_shop_system.account.User;
 import pizza_shop_system.orderSystem.OrderService;
@@ -67,6 +67,7 @@ public class Payment {
 
     public void processCash(double cashAmount) {
         try {
+            System.out.println("Processing Cash payment. Amount: $" + cashAmount);
             if (cashAmount < 0) {
                 System.err.println("Error: Cash amount cannot be negative");
                 setProcessed(false);

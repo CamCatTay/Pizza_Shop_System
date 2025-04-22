@@ -2,7 +2,7 @@ package pizza_shop_system.account;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pizza_shop_system.payment.CreditCard;
+import pizza_shop_system.orderSystem.payment.CreditCard;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 
 public class AccountService {
-    private static final String DATA_FILE = "data_files/users.json";
+    private static final String DATA_FILE = "data_files/Users.json";
     private static int activeUserId = 0;
 
     // Load user data from the file

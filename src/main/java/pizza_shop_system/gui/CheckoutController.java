@@ -1,7 +1,7 @@
 package pizza_shop_system.gui;
 
 import pizza_shop_system.orderSystem.OrderService;
-import pizza_shop_system.payment.Payment;
+import pizza_shop_system.orderSystem.payment.Payment;
 import pizza_shop_system.account.AccountService;
 import pizza_shop_system.account.User;
 
@@ -33,7 +33,7 @@ public class CheckoutController extends BaseController {
 
     @FXML private Button confirmButton;
 
-    private double orderTotal;
+    private static double orderTotal;
 
     private final OrderService orderService = new OrderService();
 
@@ -54,6 +54,7 @@ public class CheckoutController extends BaseController {
         pickupRadioButton.setOnAction(e -> hideDeliveryFields());
         paymentMethodComboBox.setOnAction(e -> handlePaymentMethodSelection());
 
+        // confirm button action
         confirmButton.setOnAction(e -> {
             try {
                 processOrder();
@@ -107,6 +108,7 @@ public class CheckoutController extends BaseController {
     }
 
     private void processOrder() throws IOException {
+        setTotal(orderService.getCurrentOrderTotal());
         String orderType = deliveryRadioButton.isSelected() ? "Delivery" : "Pickup";
         String paymentMethod = paymentMethodComboBox.getValue();
 
@@ -165,7 +167,10 @@ public class CheckoutController extends BaseController {
                 return;
         }
 
+        // order successfully processed finalize order and store payment details in Orders.json
         if (success) {
+            orderService.finalizeOrder();
+
             sceneController.switchScene("Home");
             System.out.println("Order confirmed! Total: $" + orderTotal);
         } else {

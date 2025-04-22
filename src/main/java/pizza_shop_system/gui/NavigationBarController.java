@@ -10,7 +10,6 @@ import pizza_shop_system.account.AccountService;
 import pizza_shop_system.account.User;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class NavigationBarController extends BaseController {

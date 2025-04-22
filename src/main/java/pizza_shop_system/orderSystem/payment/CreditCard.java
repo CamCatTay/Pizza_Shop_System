@@ -1,4 +1,4 @@
-package pizza_shop_system.payment;
+package pizza_shop_system.orderSystem.payment;
 
 import pizza_shop_system.account.User;
 
