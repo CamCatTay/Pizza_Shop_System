@@ -34,5 +34,14 @@
         "name": "Cameron Taylor",
         "phone_number": "1112223333",
         "email": "cam@customer.com"
+    },
+    {
+        "password": "1",
+        "account_type": "customer",
+        "address": "Random",
+        "user_id": 5,
+        "name": "EZ Login",
+        "phone_number": "Random",
+        "email": "1"
     }
 ]}

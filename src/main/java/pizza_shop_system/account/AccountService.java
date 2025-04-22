@@ -2,41 +2,107 @@ package pizza_shop_system.account;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pizza_shop_system.orderSystem.payment.CreditCard;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
 
 public class AccountService {
-    private static final String DATA_FILE = "data_files/users.json";
+    private static final String DATA_FILE = "data_files/Users.json";
     private static int activeUserId = 0;
 
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
         File file = new File(DATA_FILE);
-        JSONArray users;
 
         if (!file.exists()) {
-            users = new JSONArray();
+            JSONArray users = new JSONArray();
             JSONObject metaData = new JSONObject();
             metaData.put("nextUserId", 1);
             users.put(metaData);
 
             saveUsers(users);
+            return users;
         } else {
             String content = new String(Files.readAllBytes(file.toPath()));
-            users = new JSONArray(content);
+            JSONObject root = new JSONObject(content);
+            return root.getJSONArray("users");
         }
-
-        return users;
     }
 
+    public User getActiveUser() throws IOException {
+        JSONArray users = loadUsers();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if(user.has("user_id") && user.getInt("user_id") == activeUserId){
+                User userObj = new User(
+                        user.getInt("user_id"),
+                        user.getString("account_type"),
+                        user.getString("email"),
+                        user.getString("password"),
+                        user.getString("name"),
+                        user.getString("address"),
+                        user.getString("phone_number")
+                );
+
+                // Load credit card if it exists
+                if (user.has("credit_card")) {
+                    JSONObject cc = user.getJSONObject("credit_card");
+                    LocalDate expDate = LocalDate.parse(cc.getString("exp_date"));
+
+                    if (!expDate.isBefore(LocalDate.now())) {  // Card is valid
+                        CreditCard card = new CreditCard(
+                                cc.getString("type"),
+                                cc.getString("number"),
+                                cc.getString("holder_name"),
+                                expDate,
+                                cc.getInt("cvc_num")
+                        );
+                        userObj.setCreditCard(card);
+                    } else {
+                        System.out.println("Expired credit card found for user ID " + activeUserId);
+                    }
+                }
+
+                return userObj;
+            }
+        }
+
+        return null;
+    }
 
     // Save users back to file
     public void saveUsers(JSONArray users) throws IOException {
+        JSONObject root = new JSONObject();
+        root.put("users", users);
+
         try (FileWriter fileWriter = new FileWriter(DATA_FILE)) {
-            fileWriter.write(users.toString(4)); // Indent JSON for readability
+            fileWriter.write(root.toString(4)); // Indent JSON for readability
+        }
+    }
+
+    public void saveCardForActiveUser(CreditCard card) throws IOException {
+        JSONArray users = loadUsers();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if (user.has("user_id") && user.getInt("user_id") == activeUserId) {
+                JSONObject cc = new JSONObject();
+                cc.put("type", card.getType());
+                cc.put("number", card.getCardNumber());
+                cc.put("holder_name", card.getHolderName());
+                cc.put("exp_date", card.getExpDate().toString()); // Save as ISO date
+                cc.put("cvc_num", card.getCvcNum());
+
+                user.put("credit_card", cc);
+
+                saveUsers(users);
+                break;
+            }
         }
     }
 
@@ -82,7 +148,7 @@ public class AccountService {
 
         int userId = users.getJSONObject(0).getInt("nextUserId");
         int nextUserId = userId + 1;
-        newUser.put("userId", nextUserId);
+        newUser.put("user_id", nextUserId);
         users.getJSONObject(0).put("nextUserId", nextUserId);
 
         users.put(newUser);
@@ -100,7 +166,7 @@ public class AccountService {
             JSONObject user = users.getJSONObject(i);
             if (user.optString("email").equalsIgnoreCase(email)) {
                 if (user.optString("password").equals(password)) {
-                    activeUserId = user.getInt("userId");
+                    activeUserId = user.getInt("user_id");
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -129,7 +195,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 // Update the given field
                 if (user.has(field)) {
                     user.put(field, newValue);
@@ -154,7 +220,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 // Check the old password
                 if (!user.optString("password").equals(oldPassword)) {
                     return "Incorrect old password.";
@@ -180,7 +246,7 @@ public class AccountService {
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
 
-            if (user.getInt("userId") == userId) {
+            if (user.getInt("user_id") == userId) {
                 users.remove(i);
 
                 // Save updated users

@@ -13,10 +13,8 @@ module org.example.demo {
     opens pizza_shop_system.account to javafx.fxml;
     exports pizza_shop_system.gui;
     opens pizza_shop_system.gui to javafx.fxml;
-    exports pizza_shop_system.payment;
-    opens pizza_shop_system.payment to javafx.fxml;
-    exports pizza_shop_system.order;
-    opens pizza_shop_system.order to javafx.fxml;
+    exports pizza_shop_system.orderSystem.payment;
+    opens pizza_shop_system.orderSystem.payment to javafx.fxml;
     exports pizza_shop_system.users;
     opens pizza_shop_system.users to javafx.fxml;
     exports pizza_shop_system.menu;

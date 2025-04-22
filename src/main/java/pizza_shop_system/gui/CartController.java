@@ -1,135 +1,109 @@
 package pizza_shop_system.gui;
 
-import pizza_shop_system.menu.MenuItem;
-import pizza_shop_system.order.Order;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CartController extends BaseController {
+    private final OrderService orderService = new OrderService();
 
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
-
     @FXML private Label subTotalLabel;
     @FXML private Label taxLabel;
     @FXML private Label totalLabel;
 
-    private Order currentOrder;
-
     @FXML
-    public void initialize() {
-        buttonCheckout.setOnAction(e -> sceneController.switchScene("Checkout"));
+    public void initialize() throws IOException {
+        orderService.setCartController(this); // Set the cart controller in OrderService
+        displayCurrentOrder(orderService.loadOrders()); // Load the current order
+
+        buttonCheckout.setOnAction(e -> {
+            sceneController.switchScene("Checkout");
+        });
     }
 
-    public void setOrder(Order order) {
-        try {
-            List<Order> matchingOrders = Order.fromJsonByOrderID(order.getOrderID());
+    public void displayCurrentOrder(JSONObject orderData) throws IOException {
+        cartItemsVBox.getChildren().clear(); // Clear cart items
 
-            if (matchingOrders.isEmpty()) {
-                this.currentOrder = order;
-            } else {
-                this.currentOrder = new Order(
-                        matchingOrders.get(0).getPaymentMethod(),
-                        order.getOrderID(),
-                        new ArrayList<>(),
-                        matchingOrders.get(0).getOrderType(),
-                        matchingOrders.get(0).getStatus(),
-                        matchingOrders.get(0).getAccount()
-                );
-                this.currentOrder.setDatePlaced(matchingOrders.get(0).getDatePlaced());
+        JSONObject currentOrder = orderService.getCurrentOrder(orderData);
+        JSONArray orderItems = currentOrder.getJSONArray("orderItems");
 
-                for (Order o : matchingOrders) {
-                    this.currentOrder.getOrderedItems().addAll(o.getOrderedItems());
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.currentOrder = order;
-        }
-        displayCartItems();
-    }
-
-    private void displayCartItems() {
-        cartItemsVBox.getChildren().clear();
-        double subtotal = 0.0;
-
-        for (MenuItem item : currentOrder.getOrderedItems()) {
-            double itemTotal = item.getPrice() * item.getQuantity();
-            subtotal += itemTotal;
-
-            HBox row = createItemRow(item, itemTotal);
+        for (int i = 0; i < orderItems.length(); i++) {
+            JSONObject orderItem = orderItems.getJSONObject(i);
+            HBox row = createItemRow(orderItem);
             cartItemsVBox.getChildren().add(row);
         }
 
-        double tax = subtotal * 0.10;
-        double total = subtotal + tax;
+        double tax = currentOrder.optDouble("tax");
+        double total = currentOrder.optDouble("total");
+        double subtotal = currentOrder.optDouble("subtotal");
 
         subTotalLabel.setText(String.format("$%.2f", subtotal));
         taxLabel.setText(String.format("$%.2f", tax));
         totalLabel.setText(String.format("$%.2f", total));
 
-        buttonCheckout.setDisable(currentOrder.getOrderedItems().isEmpty());
+        buttonCheckout.setDisable(orderItems.isEmpty()); // Disable the checkout button if there are no order items
     }
 
-    private HBox createItemRow(MenuItem item, double itemTotal) {
-        Label nameLabel = new Label(item.getName());
-        nameLabel.setStyle("-fx-font-weight: bold;");
-        nameLabel.setPrefWidth(250);
+    private HBox createItemRow(JSONObject orderItem) {
+        try {
+            Label nameLabel = new Label(orderItem.getString("name"));
+            nameLabel.setStyle("-fx-font-weight: bold;");
+            nameLabel.setPrefWidth(250);
 
-        Label quantityLabel = new Label("x" + item.getQuantity());
-        quantityLabel.setPrefWidth(40);
+            Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
+            priceLabel.setPrefWidth(80);
+            priceLabel.setStyle("-fx-font-weight: bold;");
 
-        Label priceLabel = new Label(String.format("$%.2f", itemTotal));
-        priceLabel.setPrefWidth(80);
-        priceLabel.setStyle("-fx-font-weight: bold;");
-
-        Button removeButton = new Button("Remove");
-        removeButton.setOnAction(e -> removeItemFromCart(item));
-
-        VBox descriptionBox = new VBox();
-        if (item.getToppings() != null && !item.getToppings().isEmpty()) {
-            Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
-            toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
-            descriptionBox.getChildren().add(toppingsLabel);
-        }
-
-        VBox itemInfoBox = new VBox(nameLabel, descriptionBox);
-        itemInfoBox.setSpacing(2);
-        itemInfoBox.setPrefWidth(300);
-
-        HBox row = new HBox(10, itemInfoBox, quantityLabel, priceLabel, removeButton);
-        row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
-        return row;
-    }
-
-    private void removeItemFromCart(MenuItem itemToRemove) {
-        if (currentOrder != null) {
-            currentOrder.getOrderedItems().remove(itemToRemove);
-
-            try {
-                if (currentOrder.getOrderedItems().isEmpty()) {
-                    // Order is now empty — remove from storage and create a new order
-                    Order.removeOrderById(currentOrder.getOrderID());
-                    currentOrder = new Order(); // Reset to a new empty order
-                } else {
-                    // Just update the modified order
-                    Order.updateOrder(currentOrder);
+            Button removeButton = new Button("Remove");
+            removeButton.setOnAction(e -> {
+                try {
+                    removeItemFromCart(orderItem);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
+            });
 
-                displayCartItems(); // Refresh the UI
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            // For displaying the customizations of an item. Implement after customizations are complete.
+            /*
+            VBox descriptionBox = new VBox();
+            if (item.getToppings() != null && !item.getToppings().isEmpty()) {
+                Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
+                toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
+                descriptionBox.getChildren().add(toppingsLabel);
             }
+             */
+
+            VBox itemInfoBox = new VBox(nameLabel);
+            itemInfoBox.setSpacing(2);
+            itemInfoBox.setPrefWidth(300);
+
+            HBox row = new HBox(10, itemInfoBox, priceLabel, removeButton);
+            row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
+            return row;
+        } catch (Exception e) {
+            System.out.println("Error creating row for item: " + orderItem.getString("name"));
+            e.printStackTrace();
         }
+        return null;
+    }
+
+    private void removeItemFromCart(JSONObject orderItem) throws IOException {
+        orderService.removeOrderItem(orderItem.getInt("orderItemId"));
+    }
+
+    // for testing
+    public static void main(String[] args){
+
     }
 }
+

@@ -24,14 +24,27 @@ public class LoginController extends BaseController {
     private void login() throws IOException {
         String result = accountService.login(emailField.getText(), passwordField.getText());
 
-        // All possible results when attempting to log in
         switch (result) {
-            case "Success" -> System.out.println("Log in Success");
+            case "Success" -> {
+                System.out.println("Log in Success");
+                // Check account type of active user and switch accordingly
+                var user = accountService.getActiveUser();
+                if (user != null) {
+                    if ("manager".equalsIgnoreCase(user.getAccountType())) {
+                        sceneController.switchScene("ManagerHome");
+                    } else {
+                        sceneController.switchScene("Menu");
+                    }
+                } else {
+                    System.out.println("No active user found.");
+                }
+            }
             case "EmailDoesNotExist" -> System.out.println("Email Does Not Exist");
             case "IncorrectPassword" -> System.out.println("Incorrect Password");
             default -> System.out.println("Unknown Error");
         }
     }
+
     public void initialize() {
         loginButton.setOnAction(e -> {
             try {

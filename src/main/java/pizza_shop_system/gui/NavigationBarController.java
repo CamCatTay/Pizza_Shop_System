@@ -6,14 +6,14 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import pizza_shop_system.order.Order;
-import pizza_shop_system.order.OrderStatus;
+import pizza_shop_system.account.AccountService;
+import pizza_shop_system.account.User;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class NavigationBarController extends BaseController {
+
     public HBox navigationBar;
     @FXML private Button buttonHome;
     @FXML private Button buttonMenu;
@@ -21,6 +21,7 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonBack;
     @FXML private Button buttonForward;
     @FXML private Button buttonLogin;
+    @FXML private Button buttonAccount;
     @FXML private ImageView logoView;
 
     private void setHomeButtonImage() {
@@ -47,50 +48,33 @@ public class NavigationBarController extends BaseController {
         buttonBack.setGraphic(imageView);
     }
 
-    private void switchToCartWithOrder() {
-        try {
-            ArrayList<Order> allOrders = Order.loadAllOrders();
-
-            if (allOrders.isEmpty()) {
-                System.out.println("No orders exist. Showing empty cart.");
-                showEmptyCart();
-                return;
-            }
-
-            Order matchedOrder = allOrders.stream().filter(order -> order.getStatus() == OrderStatus.INCOMPLETE).findFirst().orElse(null);
-
-            if (matchedOrder == null) {
-                System.out.println("No active cart found. Showing empty cart.");
-                showEmptyCart();
-                return;
-            }
-
-            // Pass the matched order to the cart view
-            sceneController.switchSceneWithData("Cart", controller -> {
-                if (controller instanceof CartController) {
-                    ((CartController) controller).setOrder(matchedOrder);
-                }
-            });
-
-        } catch (Exception e) {
-            System.out.println("Error switching to cart: " + e.getMessage());
-        }
-    }
-
-    private void showEmptyCart() {
-        sceneController.switchSceneWithData("Cart", controller -> {
-            if (controller instanceof CartController) {
-                ((CartController) controller).setOrder(new Order()); // Empty/default order
-            }
-        });
-    }
 
     @FXML
     public void initialize() {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonCart.setOnAction(e -> switchToCartWithOrder());
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
+        buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
+
+        buttonAccount.setOnAction(e -> {
+            try {
+                AccountService accountService = new AccountService();
+                User currentUser = accountService.getActiveUser();
+                if (currentUser != null) {
+                    String accountType = currentUser.getAccountType();
+
+                    if("manager".equals(accountType)) {
+                        sceneController.switchScene("ManagerHome");
+                    } else {
+                        sceneController.switchScene("CustomerHome"); //Need to set up scene for this
+                    }
+                }
+            } catch (IOException er) {
+                System.err.println("Error switching to Account: " + er.getMessage());
+                er.printStackTrace();
+            }
+        });
+
         buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
         buttonBack.setOnAction(e -> sceneController.switchToForwardScene());
         setHomeButtonImage();
