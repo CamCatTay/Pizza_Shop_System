@@ -54,6 +54,7 @@ public class NavigationBarController extends BaseController {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
+        buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
 
         buttonAccount.setOnAction(e -> {
             try {

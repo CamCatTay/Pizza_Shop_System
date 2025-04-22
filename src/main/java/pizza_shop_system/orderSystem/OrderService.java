@@ -2,6 +2,8 @@ package pizza_shop_system.orderSystem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pizza_shop_system.account.AccountService;
+import pizza_shop_system.gui.CartController;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +11,8 @@ import java.io.IOException;
 public class OrderService {
     private final JSONUtil jsonUtil = new JSONUtil();
     private final DateUtil dateUtil = new DateUtil();
+    private static CartController cartController;
+    private final AccountService accountService = new AccountService();
     private final String ORDERS_FILE_PATH = "src/main/java/pizza_shop_system/orderSystem/orders.json";
 
     public JSONObject loadOrders() throws IOException {
@@ -41,15 +45,19 @@ public class OrderService {
         return newOrder;
     }
 
-    public JSONObject getOrderData() throws IOException {
-        return loadOrders();
-    }
-
     // Save changes to the orders file
     public void saveOrders(JSONObject orders) throws IOException {
         try (FileWriter file = new FileWriter(ORDERS_FILE_PATH)) {
             file.write(orders.toString(4));
         }
+
+        // Order item has been updated. Update the display of the cart
+        cartController.displayCurrentOrder(orders);
+    }
+
+    // Set the current cart controller
+    public void setCartController(CartController cartController) {
+        this.cartController = cartController;
     }
 
     // Add a OrderItem JSONObject to the current order
@@ -84,7 +92,7 @@ public class OrderService {
     }
 
     // Finds the selected orderItemId in the current order and removes it
-    public void deleteOrderItem(int orderItemId) throws IOException {
+    public void removeOrderItem(int orderItemId) throws IOException {
         JSONObject ordersData = loadOrders();
         JSONObject currentOrder = getCurrentOrder(ordersData);
         JSONArray orderItems = currentOrder.getJSONArray("orderItems");
@@ -93,7 +101,7 @@ public class OrderService {
 
             if (orderItem.getInt("orderItemId") == orderItemId)  {
                 orderItems.remove(i); // Remove the order by its index
-                System.out.println("Order item deleted successfully: ");
+                System.out.println("Order item removed successfully: ");
 
                 updateOrderItemDetails(orderItem);
                 updateOrderDetails(currentOrder);
@@ -130,7 +138,7 @@ public class OrderService {
     public void finalizeOrder() throws IOException {
 
         // If no user is logged in then order will not be finalized
-        int accountId = 1; // This should be fetched from AccountService to get the active user
+        int accountId = accountService.getActiveUserId(); // This should be fetched from AccountService to get the active user
         if (accountId == 0) {
             System.out.println("NO USER IS LOGGED IN. ORDER COULD NOT BE FINALIZED");
             return;
@@ -208,7 +216,7 @@ public class OrderService {
 
         // Check for ice options (Included but not functional because ice is free lol)
         if (orderItem.has("ice")) {
-            System.out.println("Ice option exist");
+            // System.out.println("Ice option exist");
         }
 
         orderItem.put("price", totalPrice); // Set the price of the order item with the calculated total price

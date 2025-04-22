@@ -1,6 +1,7 @@
 package pizza_shop_system.gui;
-/*
-import pizza_shop_system.menu.MenuItem;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,94 +11,94 @@ import javafx.scene.layout.VBox;
 import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class CartController extends BaseController {
+    private final OrderService orderService = new OrderService();
 
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
-
     @FXML private Label subTotalLabel;
     @FXML private Label taxLabel;
     @FXML private Label totalLabel;
 
-    private final OrderService orderService = new OrderService();
-
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
+        orderService.setCartController(this); // Set the cart controller in OrderService
+        displayCurrentOrder(orderService.loadOrders()); // Load the current order
+
         buttonCheckout.setOnAction(e -> {
             sceneController.switchScene("Checkout");
         });
     }
 
-    private void displayCurrentOrder() {
+    public void displayCurrentOrder(JSONObject orderData) throws IOException {
+        cartItemsVBox.getChildren().clear(); // Clear cart items
 
-        cartItemsVBox.getChildren().clear();
-        double subtotal = 0.0;
+        JSONObject currentOrder = orderService.getCurrentOrder(orderData);
+        JSONArray orderItems = currentOrder.getJSONArray("orderItems");
 
-        List<MenuItem> items = currentOrder.getItems();
-        System.out.println("Items to display in cart: " + items.size());
-
-
-        for (MenuItem item : items) {
-            double itemTotal = item.getPrice() * item.getQuantity();
-            subtotal += itemTotal;
-
-            HBox row = createItemRow(item, itemTotal);
+        for (int i = 0; i < orderItems.length(); i++) {
+            JSONObject orderItem = orderItems.getJSONObject(i);
+            HBox row = createItemRow(orderItem);
             cartItemsVBox.getChildren().add(row);
         }
 
-        double tax = subtotal * 0.10;
-        double total = subtotal + tax;
+        double tax = currentOrder.getDouble("tax");
+        double total = currentOrder.getDouble("total");
+        double subtotal = currentOrder.getDouble("subtotal");
 
         subTotalLabel.setText(String.format("$%.2f", subtotal));
         taxLabel.setText(String.format("$%.2f", tax));
         totalLabel.setText(String.format("$%.2f", total));
 
-        buttonCheckout.setDisable(items.isEmpty());
-
-
+        buttonCheckout.setDisable(orderItems.isEmpty()); // Disable the checkout button if there are no order items
     }
 
-    private HBox createItemRow(MenuItem item, double itemTotal) {
+    private HBox createItemRow(JSONObject orderItem) {
         try {
-            Label nameLabel = new Label(item.getName());
+            Label nameLabel = new Label(orderItem.getString("name"));
             nameLabel.setStyle("-fx-font-weight: bold;");
             nameLabel.setPrefWidth(250);
 
-            Label quantityLabel = new Label("x" + item.getQuantity());
-            quantityLabel.setPrefWidth(40);
-
-            Label priceLabel = new Label(String.format("$%.2f", itemTotal));
+            Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
             priceLabel.setPrefWidth(80);
             priceLabel.setStyle("-fx-font-weight: bold;");
 
             Button removeButton = new Button("Remove");
-            removeButton.setOnAction(e -> removeItemFromCart(item));
+            removeButton.setOnAction(e -> {
+                try {
+                    removeItemFromCart(orderItem);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
 
+            // For displaying the customizations of an item. Implement after customizations are complete.
+            /*
             VBox descriptionBox = new VBox();
             if (item.getToppings() != null && !item.getToppings().isEmpty()) {
                 Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
                 toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
                 descriptionBox.getChildren().add(toppingsLabel);
             }
+             */
 
-            VBox itemInfoBox = new VBox(nameLabel, descriptionBox);
+            VBox itemInfoBox = new VBox(nameLabel);
             itemInfoBox.setSpacing(2);
             itemInfoBox.setPrefWidth(300);
 
-            HBox row = new HBox(10, itemInfoBox, quantityLabel, priceLabel, removeButton);
+            HBox row = new HBox(10, itemInfoBox, priceLabel, removeButton);
             row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
             return row;
         } catch (Exception e) {
-            System.out.println("Error creating row for item: " + item.getName());
+            System.out.println("Error creating row for item: " + orderItem.getString("name"));
             e.printStackTrace();
         }
         return null;
     }
 
-    private void removeItemFromCart(int orderItemId) {
-
+    private void removeItemFromCart(JSONObject orderItem) throws IOException {
+        orderService.removeOrderItem(orderItem.getInt("orderItemId"));
     }
 
     // for testing
@@ -106,4 +107,3 @@ public class CartController extends BaseController {
     }
 }
 
- */
