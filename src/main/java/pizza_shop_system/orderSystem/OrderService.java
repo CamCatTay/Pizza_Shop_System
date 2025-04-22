@@ -9,7 +9,7 @@ import java.io.IOException;
 public class OrderService {
     private final JSONUtil jsonUtil = new JSONUtil();
     private final DateUtil dateUtil = new DateUtil();
-    private final String ORDERS_FILE_PATH = "src/main/java/main/orders.json";
+    private final String ORDERS_FILE_PATH = "src/main/java/pizza_shop_system/orderSystem/orders.json";
 
     public JSONObject loadOrders() throws IOException {
         return jsonUtil.loadJSONObject(ORDERS_FILE_PATH);
@@ -17,7 +17,7 @@ public class OrderService {
 
     // Load the customizations json (Used to calculate a price for each order item)
     public JSONObject loadCustomizations() throws IOException {
-        return jsonUtil.loadJSONObject("src/main/java/main/customizations.json");
+        return jsonUtil.loadJSONObject("src/main/java/pizza_shop_system/orderSystem/customizations.json");
     }
 
     // Gets the current order object and if it does not exist creates one

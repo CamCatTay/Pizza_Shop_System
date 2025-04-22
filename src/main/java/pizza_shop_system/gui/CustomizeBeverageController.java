@@ -1,11 +1,9 @@
 package pizza_shop_system.gui;
-
-
+/*
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.awt.event.ActionEvent;
 
-import pizza_shop_system.order.Order;
 import pizza_shop_system.menu.MenuItem;
 
 import java.io.IOException;
@@ -113,7 +111,5 @@ public class CustomizeBeverageController extends BaseController{
         currentOrder.addItem(drink);
         currentOrder.saveToFile();
     }
-
-
 }
-
+ */

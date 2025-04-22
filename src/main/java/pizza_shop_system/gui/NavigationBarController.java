@@ -8,9 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import pizza_shop_system.account.AccountService;
 import pizza_shop_system.account.User;
-import pizza_shop_system.order.CurrentOrder;
-import pizza_shop_system.order.Order;
-import pizza_shop_system.order.OrderStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,39 +48,11 @@ public class NavigationBarController extends BaseController {
         buttonBack.setGraphic(imageView);
     }
 
-    private void switchToCartWithOrder() {
-        try {
-            ArrayList<Order> allOrders = Order.loadAllOrders();
-
-            // Check for an INCOMPLETE order only if CurrentOrder isn't already empty
-            Order matchedOrder = allOrders.stream()
-                    .filter(order -> order.getStatus() == OrderStatus.INCOMPLETE)
-                    .findFirst()
-                    .orElse(null);
-
-            CurrentOrder currentOrder = CurrentOrder.getInstance();
-
-            if (matchedOrder != null) {
-                currentOrder.loadFrom(matchedOrder);
-            }
-
-            sceneController.switchSceneWithData("Cart", controller -> {
-                if (controller instanceof CartController cartController) {
-                    cartController.loadCurrentOrder(); // refresh UI
-                }
-            });
-
-        } catch (Exception e) {
-            System.out.println("Error switching to cart: " + e.getMessage());
-        }
-    }
-
 
     @FXML
     public void initialize() {
         buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonCart.setOnAction(e -> switchToCartWithOrder());
         buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
 
         buttonAccount.setOnAction(e -> {

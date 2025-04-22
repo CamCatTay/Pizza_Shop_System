@@ -5,49 +5,53 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import pizza_shop_system.menu.MenuItem;
 import pizza_shop_system.menu.MenuLoader;
+import pizza_shop_system.orderSystem.JSONUtil;
+import pizza_shop_system.orderSystem.OrderService;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MenuController extends BaseController {
     @FXML private GridPane menuContainer;
-    @FXML private Button buttonPizza;
-    @FXML private Button buttonBeverage;
-    @FXML private Button buttonDessert;
 
-    private final MenuLoader menuLoader = new MenuLoader();
-
-    public MenuController() {
-        menuLoader.loadMenu("data_files/menu_items.txt");
-    }
-
+    // Customize how menu items are displayed
     private static final int MAX_COLUMNS = 3;
     private static final int MAX_ROWS = 4;
     private static final int CELL_SIZE = 150;
     private static final int CELL_SPACING = 5;
 
-    public void loadCategory(String category) {
-        menuContainer.getChildren().clear(); // Clear previous items
-        List<MenuItem> items = menuLoader.getItemsByCategory(category);
+    @FXML private Button buttonPizza;
+    @FXML private Button buttonBeverage;
 
-        menuContainer.setHgap(CELL_SPACING);
-        menuContainer.setVgap(CELL_SPACING);
+    private final JSONUtil jsonUtil = new JSONUtil();
+    private final OrderService orderService = new OrderService();
 
-        int totalItems = items.size();
+    private JSONObject loadMenuItems() throws IOException {
+        String MENU_ITEMS_FILE_PATH = "src/main/java/pizza_shop_system/orderSystem/menuItems.json";
+        return jsonUtil.loadJSONObject(MENU_ITEMS_FILE_PATH);
+    }
+
+    // After displayMenuItemsByCategory creates a JSONArray for categoryItems this method will load them into the menu scene
+    private void loadCategoryItemsIntoMenu(JSONArray categoryItems) {
+
+        int totalItems = categoryItems.length();
         int columns = Math.min(MAX_COLUMNS, totalItems);
-
         int row = 0, col = 0;
 
-        for (MenuItem item : items) {
+        for (int i = 0; i < categoryItems.length(); i++) {
             if (row >= MAX_ROWS) break; // Prevent adding extra rows beyond max limit
+            JSONObject menuItem = categoryItems.getJSONObject(i);
 
             VBox itemBox = new VBox();
             itemBox.setSpacing(5);
             itemBox.setStyle("-fx-padding: 10px; -fx-border-color: gray; -fx-background-color: white;");
             itemBox.setPrefSize(CELL_SIZE, CELL_SIZE);
 
-            Label itemLabel = new Label(item.getName());
+            Label itemLabel = new Label(menuItem.getString("name"));
             itemLabel.setWrapText(true);
             itemLabel.setMaxWidth(Double.MAX_VALUE);
             itemLabel.setStyle("-fx-font-size: 16px; -fx-padding: 5px; -fx-text-fill: black;");
@@ -55,56 +59,31 @@ public class MenuController extends BaseController {
             Button addToOrderButton = new Button("Add to Order");
             addToOrderButton.getStyleClass().add("button-add-to-order");
 
-            if (category.equals("Pizza")) {
-                Button customizeButton = new Button("Customize");
-                customizeButton.setOnAction(e -> {
-                    try {
-                        // Load all orders (or create new if none exist)
-                        var allOrders = pizza_shop_system.order.Order.loadAllOrders();
-                        var matchedOrder = allOrders.stream()
-                                .filter(o -> o.getStatus() == pizza_shop_system.order.OrderStatus.INCOMPLETE)
-                                .findFirst()
-                                .orElse(new pizza_shop_system.order.Order());
+            // add to order action
+            addToOrderButton.setOnAction(event -> {
+                try {
+                    // Clone default properties of menu item into a new order item
+                    JSONObject orderItem = new JSONObject(menuItem.toString());
+                    orderService.addOrderItem(orderItem); // Add order item to the current order
+                } catch (IOException e) {
+                    System.out.print("Error adding order item");
+                    throw new RuntimeException(e);
+                }
+            });
 
-                        // Switch to CustomizePizza scene and pass the order
-                        sceneController.switchSceneWithData("CustomizePizza", controller -> {
-                            if (controller instanceof CustomizePizzaController) {
-                                ((CustomizePizzaController) controller).setCurrentOrder(matchedOrder);
-                            }
-                        });
-                    } catch (Exception ex) {
-                        System.out.println("Error navigating to CustomizePizza: " + ex.getMessage());
-                    }
-                });
+            Button customizeButton = new Button("Customize");
+            customizeButton.getStyleClass().add("button-customize");
 
-                customizeButton.getStyleClass().add("button-customize");
+            // customize action
+            customizeButton.setOnAction(event -> {
+                // Implement switch to customize screen. Check a variable in item to determine what item type it is (to know which scene to switch to)
+                // or loop through each category until its found
+            });
 
-                itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);
-            } else if (category.equals("Beverage")) {
-                itemBox.getChildren().addAll(itemLabel, addToOrderButton);
-                addToOrderButton.setOnAction(e -> {
-                    try {
-                        // Load existing incomplete order or create a new one
-                        var allOrders = pizza_shop_system.order.Order.loadAllOrders();
-                        var matchedOrder = allOrders.stream()
-                                .filter(o -> o.getStatus() == pizza_shop_system.order.OrderStatus.INCOMPLETE)
-                                .findFirst()
-                                .orElse(new pizza_shop_system.order.Order());
+            // Put all menu item elements into VBox
+            itemBox.getChildren().addAll(itemLabel, addToOrderButton, customizeButton);
 
-                        // Switch and pass order to CustomizeBeverageController
-                        sceneController.switchSceneWithData("CustomizeBeverage", controller -> {
-                            if (controller instanceof CustomizeBeverageController) {
-                                ((CustomizeBeverageController) controller).setCurrentOrder(matchedOrder);
-                            }
-                        });
-                    } catch (Exception ex) {
-                        System.out.println("Error navigating to CustomizeBeverage: " + ex.getMessage());
-                    }
-                });
-
-            }
-
-            // Add itemBox to GridPane
+            // Put VBox in GridPane
             menuContainer.add(itemBox, col, row);
 
             col++;
@@ -115,11 +94,41 @@ public class MenuController extends BaseController {
         }
     }
 
+    // displays menu items along with add to order and customize button. category chooses what items to display
+    // category name should match menuItems.json category name
+    private void displayMenuItemsByCategory(String category) {
+            menuContainer.getChildren().clear(); // Clear previously displayed menu items
+            menuContainer.setHgap(CELL_SPACING);
+            menuContainer.setVgap(CELL_SPACING);
+
+            try {
+                JSONObject data = loadMenuItems(); // contains items and nextId
+                JSONObject items = data.getJSONObject("items");
+
+                if (items.has(category)) {
+                    JSONArray categoryItems = items.getJSONArray(category);
+                    loadCategoryItemsIntoMenu(categoryItems);
+
+                } else { // If category does not exist then default to display all menu items
+                    JSONArray allCategoryItems = new JSONArray(); // Add all items into an array
+                    for (String categoryName : items.keySet()) {
+                        JSONArray categoryItems = items.getJSONArray(categoryName);
+                        for (int i = 0; i < categoryItems.length(); i++) {
+                            allCategoryItems.put(categoryItems.getJSONObject(i));
+                        }
+                    }
+                    loadCategoryItemsIntoMenu(allCategoryItems);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
     @FXML
     private void initialize() {
-        buttonPizza.setOnAction(e -> loadCategory("Pizza"));
-        buttonBeverage.setOnAction(e -> loadCategory("Beverage"));
-        buttonDessert.setOnAction(e -> loadCategory("Dessert"));
-        loadCategory("Pizza"); // Load initial category
+        buttonPizza.setOnAction(e -> displayMenuItemsByCategory("pizza"));
+        buttonBeverage.setOnAction(e -> displayMenuItemsByCategory("beverage"));
+        displayMenuItemsByCategory("all");
     }
 }

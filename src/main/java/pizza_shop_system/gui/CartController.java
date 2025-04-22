@@ -1,14 +1,13 @@
 package pizza_shop_system.gui;
-
+/*
 import pizza_shop_system.menu.MenuItem;
-import pizza_shop_system.order.CurrentOrder;
-import pizza_shop_system.order.Order;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,37 +21,17 @@ public class CartController extends BaseController {
     @FXML private Label taxLabel;
     @FXML private Label totalLabel;
 
-    private CurrentOrder currentOrder;
+    private final OrderService orderService = new OrderService();
 
     @FXML
     public void initialize() {
-        currentOrder = CurrentOrder.getInstance();
-
         buttonCheckout.setOnAction(e -> {
-            double subtotal = currentOrder.getItems().stream()
-                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                    .sum();
-            double tax = subtotal * 0.10;
-            double total = subtotal + tax;
-
-            sceneController.switchSceneWithData("Checkout", controller -> {
-                if (controller instanceof CheckoutController checkoutController) {
-                    checkoutController.setTotal(total);
-                }
-            });
+            sceneController.switchScene("Checkout");
         });
     }
 
-    public void loadCurrentOrder() {
-        displayCartItems();
-    }
+    private void displayCurrentOrder() {
 
-    public void clearCart() {
-        currentOrder.reset();
-        displayCartItems();
-    }
-
-    private void displayCartItems() {
         cartItemsVBox.getChildren().clear();
         double subtotal = 0.0;
 
@@ -76,6 +55,8 @@ public class CartController extends BaseController {
         totalLabel.setText(String.format("$%.2f", total));
 
         buttonCheckout.setDisable(items.isEmpty());
+
+
     }
 
     private HBox createItemRow(MenuItem item, double itemTotal) {
@@ -115,21 +96,14 @@ public class CartController extends BaseController {
         return null;
     }
 
-    private void removeItemFromCart(MenuItem itemToRemove) {
-        currentOrder.removeItem(itemToRemove);
+    private void removeItemFromCart(int orderItemId) {
 
-        try {
-            if (currentOrder.getItems().isEmpty()) {
-                Order.removeOrderById(currentOrder.getOrderID());
-                currentOrder.reset(); // Start fresh
-            } else {
-                Order.updateOrder(currentOrder.toOrder());
-            }
+    }
 
-            displayCartItems();
+    // for testing
+    public static void main(String[] args){
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
+
+ */

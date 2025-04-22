@@ -1,5 +1,5 @@
 package pizza_shop_system.gui;
-
+/*
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pizza_shop_system.reports.ReportGenerator;
@@ -111,3 +111,5 @@ public class ReportsController extends BaseController {
         // Add navigation logic here if applicable
     }
 }
+
+ */

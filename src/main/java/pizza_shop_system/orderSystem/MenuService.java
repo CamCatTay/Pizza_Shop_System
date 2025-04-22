@@ -31,6 +31,8 @@ public class MenuService {
             } else { // If category does not exist then default to display all menu items
                 for (String key : items.keySet()) {
                     JSONArray arr = items.getJSONArray(key);
+                    JSONArray categoryItems = items.getJSONArray(category);
+
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject item = arr.getJSONObject(i);
                         System.out.println("ID: " + item.getInt("menuItemId") + " Name: " + item.getString("name"));

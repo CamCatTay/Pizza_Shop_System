@@ -3,7 +3,6 @@ package pizza_shop_system.gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import pizza_shop_system.order.Receipt;
 
 public class OrderCompletionController extends BaseController {
 
@@ -16,11 +15,6 @@ public class OrderCompletionController extends BaseController {
         orderAgainButton.setOnAction(e -> orderAgain());
         exitButton.setOnAction(e -> exitApplication());
         loadExampleReceipt();
-    }
-
-    public void displayReceipt(Receipt receipt) {
-        String receiptContent = receipt.generateReceipt();
-        receiptTextArea.setText(receiptContent);
     }
 
     private void orderAgain() {

@@ -1,5 +1,6 @@
 package pizza_shop_system.gui;
 
+/*
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -96,11 +97,14 @@ public class CustomizePizzaController extends BaseController {
         currentOrder.saveToFile();
 
         // Optional feedback:
-        /*
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Pizza added to order!");
         alert.showAndWait();
-        */
+
     }
+
+
+
 
     private void handleToppingSelection() {
         int selectedCount = (int) toppingsCheck.stream().filter(CheckBox::isSelected).count();
@@ -166,3 +170,5 @@ public class CustomizePizzaController extends BaseController {
         return new MenuItem(itemID, "Pizza", basePrice, quantity, itemName, description, new ArrayList<>(selectedToppings));
     }
 }
+
+ */
