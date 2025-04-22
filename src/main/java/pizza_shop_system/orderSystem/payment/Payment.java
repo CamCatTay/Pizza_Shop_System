@@ -44,7 +44,7 @@ public class Payment {
             }
 
             double total = orderService.getCurrentOrderTotal();
-            System.out.println("Processing check payment. Total: $" + total);
+            //System.out.println("Processing check payment. Total: $" + total);
 
             setPaymentType("Check");
             this.amount = total;
@@ -52,7 +52,7 @@ public class Payment {
             if (total > 0 && checkAmount >= total) {
                 setProcessed(true);
                 orderService.finalizeOrder();
-                System.out.println("Check payment processed successfully.");
+                //System.out.println("Check payment processed successfully.");
             } else {
                 setProcessed(false);
                 System.err.println("Payment failed: insufficient check amount or zero total.");
@@ -67,7 +67,7 @@ public class Payment {
 
     public void processCash(double cashAmount) {
         try {
-            System.out.println("Processing Cash payment. Amount: $" + cashAmount);
+            //System.out.println("Processing Cash payment. Amount: $" + cashAmount);
             if (cashAmount < 0) {
                 System.err.println("Error: Cash amount cannot be negative");
                 setProcessed(false);
@@ -75,7 +75,7 @@ public class Payment {
             }
 
             double total = orderService.getCurrentOrderTotal();
-            System.out.println("Processing cash payment. Total: $" + total);
+            //System.out.println("Processing cash payment. Total: $" + total);
 
             setPaymentType("Cash");
             this.amount = total;
@@ -84,7 +84,7 @@ public class Payment {
                 double change = Math.round((cashAmount - total) * 100.0) / 100.0;
                 setProcessed(true);
                 orderService.finalizeOrder();
-                System.out.println("Cash payment processed successfully. Change: $" + change);
+                //System.out.println("Cash payment processed successfully. Change: $" + change);
             } else {
                 setProcessed(false);
                 System.err.println("Payment failed: insufficient cash or zero total.");
@@ -99,6 +99,7 @@ public class Payment {
 
     public void processCard(User account) {
         try {
+            /*
             if (account == null || account.getCreditCard() == null) {
                 System.err.println("Error: Account or credit card is null");
                 setProcessed(false);
@@ -111,8 +112,10 @@ public class Payment {
                 return;
             }
 
+             */
+
             double total = orderService.getCurrentOrderTotal();
-            System.out.println("Processing card payment. Total: $" + total);
+            //System.out.println("Processing card payment. Total: $" + total);
 
             setPaymentType("Card");
             this.amount = total;
@@ -120,7 +123,7 @@ public class Payment {
             if (total > 0) {
                 setProcessed(true);
                 orderService.finalizeOrder();
-                System.out.println("Card payment processed successfully.");
+                //System.out.println("Card payment processed successfully.");
             } else {
                 setProcessed(false);
                 System.err.println("Payment failed: zero total.");

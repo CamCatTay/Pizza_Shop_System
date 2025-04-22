@@ -87,7 +87,7 @@ public class OrderService {
         updateOrderDetails(currentOrder);
         saveOrders(ordersData);
 
-        System.out.println("Order item added successfully: ");
+        //System.out.println("Order item added successfully: ");
         return orderItemId;
     }
 
@@ -101,7 +101,7 @@ public class OrderService {
 
             if (orderItem.getInt("orderItemId") == orderItemId)  {
                 orderItems.remove(i); // Remove the order by its index
-                System.out.println("Order item removed successfully: ");
+                //System.out.println("Order item removed successfully: ");
 
                 updateOrderItemDetails(orderItem);
                 updateOrderDetails(currentOrder);
@@ -109,7 +109,7 @@ public class OrderService {
                 return;
             }
         }
-        System.out.println("Failed to delete order item");
+        //System.out.println("Failed to delete order item");
     }
 
     // Updates an orderItem by overwriting its old contents with new contents
@@ -127,11 +127,29 @@ public class OrderService {
                 updateOrderItemDetails(newOrderItem);
                 updateOrderDetails(currentOrder);
                 saveOrders(ordersData);
-                System.out.println("Order item updated successfully: ");
+                //.println("Order item updated successfully: ");
                 return;
             }
         }
-        System.out.println("Order item with ID: " + orderItemId + " not found");
+        //System.out.println("Order item with ID: " + orderItemId + " not found");
+    }
+
+    // Checkout will send the users selected orderType and details here to store in the current order
+    public void addOrderInformation(JSONObject orderInfo) throws IOException {
+        //System.out.println("Adding order information " + paymentInfo.toString());
+        JSONObject ordersData = loadOrders();
+        JSONObject currentOrder = getCurrentOrder(ordersData);
+        currentOrder.put("orderInformation", orderInfo);
+        saveOrders(ordersData);
+    }
+
+    // Checkout will send the users selected paymentMethod and details here to store in the current order
+    public void addPaymentInformation(JSONObject paymentInfo) throws IOException {
+        //System.out.println("Adding payment information " + paymentInfo.toString());
+        JSONObject ordersData = loadOrders();
+        JSONObject currentOrder = getCurrentOrder(ordersData);
+        currentOrder.put("paymentInformation", paymentInfo);
+        saveOrders(ordersData);
     }
 
     // Finalizes the current order. Applies date and time stamp, applies accountId, and increments to the nextOrderId (essentially starting a new order)
@@ -159,7 +177,7 @@ public class OrderService {
         updateOrderDetails(currentOrder);
         saveOrders(orderData);
 
-        System.out.println("Finalized order number: " + orderId + " Now on order number: " + nextOrderId);
+        //System.out.println("Finalized order number: " + orderId + " Now on order number: " + nextOrderId);
     }
 
     // When an order item is added or updated its price information needs to be recalculated
@@ -177,7 +195,7 @@ public class OrderService {
                 if (toppingsData.has(topping)) {
                     totalPrice += toppingsData.getDouble(topping); // get price of topping and add it to total cost of menu item
                 } else {
-                    System.out.println("WARNING: topping " + topping + " not found in customizations");
+                    //System.out.println("WARNING: topping " + topping + " not found in customizations");
                 }
             }
         }
@@ -191,7 +209,7 @@ public class OrderService {
             if (pizzaSizeData.has(pizzaSize)) {
                 totalPrice += pizzaSizeData.getDouble(pizzaSize);
             } else {
-                System.out.println("Pizza size " + pizzaSize + " not found in customizations");
+                //System.out.println("Pizza size " + pizzaSize + " not found in customizations");
             }
         }
 
@@ -202,7 +220,7 @@ public class OrderService {
             if (crustData.has(crust)) {
                 totalPrice += crustData.getDouble(crust);
             } else {
-                System.out.println("Crust " + crust + " not found in customizations");
+                //System.out.println("Crust " + crust + " not found in customizations");
             }
         }
 
@@ -213,7 +231,7 @@ public class OrderService {
             if (beverageSizeData.has(beverageSizes)) {
                 totalPrice += beverageSizeData.getDouble(beverageSizes);
             } else {
-                System.out.println("Beverage size " + beverageSizes + " not found in customizations");
+                //System.out.println("Beverage size " + beverageSizes + " not found in customizations");
             }
         }
 

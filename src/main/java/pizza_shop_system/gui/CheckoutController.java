@@ -1,5 +1,6 @@
 package pizza_shop_system.gui;
 
+import org.json.JSONObject;
 import pizza_shop_system.orderSystem.OrderService;
 import pizza_shop_system.orderSystem.payment.Payment;
 import pizza_shop_system.account.AccountService;
@@ -107,7 +108,43 @@ public class CheckoutController extends BaseController {
         addressField.setVisible(false);
     }
 
+    // If payment was success then add order information for the selected order type into current order
+    private void addOrderInformationToOrder(String orderType, String address) throws IOException {
+        JSONObject orderInfo = new JSONObject();
+        orderInfo.put("orderType", orderType);
+        if (address != null && orderType.equals("Delivery")) {
+            orderInfo.put("address", address);
+        }
+        orderService.addOrderInformation(orderInfo);
+    }
+
+    // If payment was a success then put the payment information for the selected payment into current order
+    private void addPaymentInformationToOrder(String paymentMethod) throws IOException {
+        JSONObject paymentInfo = new JSONObject(); // Create a payment info JSONObject to put into the current orders paymentInformation
+        paymentInfo.put("paymentMethod", paymentMethod);
+
+        switch (paymentMethod) {
+
+            case "Credit Card", "Debit Card" -> {
+                paymentInfo.put("cardNumber", cardNumberField.getText());
+                paymentInfo.put("cvv", cvvField.getText());
+                paymentInfo.put("expirationDate", expirationDateField.getText());
+            }
+
+            case "Check" -> {
+                paymentInfo.put("checkNumber", checkNumberField.getText());
+            }
+
+            case "Cash" -> {
+                // Do nothing for cash. Only useful if we add change handling later on.
+            }
+        }
+
+        orderService.addPaymentInformation(paymentInfo);
+    }
+
     private void processOrder() throws IOException {
+
         setTotal(orderService.getCurrentOrderTotal());
         String orderType = deliveryRadioButton.isSelected() ? "Delivery" : "Pickup";
         String paymentMethod = paymentMethodComboBox.getValue();
@@ -126,6 +163,11 @@ public class CheckoutController extends BaseController {
         Payment payment = new Payment(orderService);
         boolean success = false;
 
+        // Tbh this is not handled well, because I don't check for valid input before storing it
+        // However, It's still perfectly functional because invalid input would just get overwritten by whatever input was valid later onn
+        addPaymentInformationToOrder(paymentMethod);
+        addOrderInformationToOrder(orderType, addressField.getText());
+
         switch (paymentMethod) {
             case "Credit Card":
             case "Debit Card": //Added debit card here just in case
@@ -138,6 +180,7 @@ public class CheckoutController extends BaseController {
 
                 AccountService accountService = new AccountService();
                 User currentUser = accountService.getActiveUser();
+
                 if (currentUser == null) {
                     System.out.println("No user logged in.");
                     return;
@@ -167,10 +210,8 @@ public class CheckoutController extends BaseController {
                 return;
         }
 
-        // order successfully processed finalize order and store payment details in Orders.json
-        if (success) {
-            orderService.finalizeOrder();
 
+        if (success) {
             sceneController.switchScene("Home");
             System.out.println("Order confirmed! Total: $" + orderTotal);
         } else {
