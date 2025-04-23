@@ -3,7 +3,6 @@ package pizza_shop_system.gui;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.orderSystem.OrderService;
@@ -15,8 +14,6 @@ import java.util.Map;
 public class CustomizePizzaController extends BaseController {
 
     @FXML
-    private HBox sizeContainer, crustContainer;
-    @FXML
     private GridPane toppingsContainer;
     @FXML
     private ToggleButton personalButton, smallButton, mediumButton, largeButton;
@@ -25,9 +22,9 @@ public class CustomizePizzaController extends BaseController {
     @FXML
     private Button addToOrderButton;
     @FXML
-    private ToggleGroup crustToggleGroup = new ToggleGroup();
+    private final ToggleGroup crustToggleGroup = new ToggleGroup();
     @FXML
-    private ToggleGroup sizeToggleGroup = new ToggleGroup();
+    private final ToggleGroup sizeToggleGroup = new ToggleGroup();
     @FXML
     private ChoiceBox<Integer> quantityChoiceBox;
 
@@ -76,6 +73,7 @@ public class CustomizePizzaController extends BaseController {
         });
     }
 
+    // Creates the checkboxes for each topping that is stored in the MenuItemCustomizations.json
     private void setupToppings() {
         JSONObject toppings = customizations.getJSONObject("toppings");
 
@@ -93,9 +91,8 @@ public class CustomizePizzaController extends BaseController {
             toppingsContainer.add(toppingCheckBox, col, row);
             toppingCheckBoxes.put(toppingName, toppingCheckBox); // Store check boxes in map for later reference
 
-            toppingCheckBox.setOnAction(event -> {
-                ensureMaxToppingsIsNotExceeded();
-            });
+            // bind topping check box action
+            toppingCheckBox.setOnAction(_ -> ensureMaxToppingsIsNotExceeded());
 
             col++;
             if (col >= columns) { // Move to next row when column limit is reached
@@ -105,10 +102,49 @@ public class CustomizePizzaController extends BaseController {
         }
     }
 
-    private void setupCustomizePizzaGUI() throws IOException {
+    private void setupCustomizePizzaGUI() {
         setupToggleButtons();
         setupQuantityChoiceBox();
         setupToppings();
+    }
+
+    private void addToOrder() {
+        for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
+            JSONObject orderItem = new JSONObject();
+
+            orderItem.put("name", "Customized Pizza");
+
+            ToggleButton selectedSizeButton = (ToggleButton) sizeToggleGroup.getSelectedToggle();
+            ToggleButton selectedCrustButton = (ToggleButton) crustToggleGroup.getSelectedToggle();
+            String selectedSize = selectedSizeButton.getText().toLowerCase();
+            String selectedCrust = selectedCrustButton.getText().toLowerCase();
+
+            orderItem.put("pizzaSize", selectedSize);
+            orderItem.put("crust", selectedCrust);
+
+            JSONArray selectedToppings = new JSONArray();
+            toppingCheckBoxes.values().forEach(cb -> {
+                if (cb.isSelected()) {
+                    selectedToppings.put(cb.getText().toLowerCase());
+                }
+            });
+
+            orderItem.put("toppings", selectedToppings);
+
+            try {
+
+                if (orderItemId == 0) {
+                    orderService.addOrderItem(orderItem);
+                    sceneController.switchScene("Menu"); // Switch to menu so user can continue to add items
+                } else {
+                    orderService.updateOrderItem(orderItemId, orderItem); // If there was an order item then we update the order item selected to be edited
+                    sceneController.switchScene("Cart"); // Switch to cart so user can see their changes
+                    break;
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     @FXML
@@ -118,48 +154,11 @@ public class CustomizePizzaController extends BaseController {
         setupCustomizePizzaGUI();
         cartController.setCustomizePizzaController(this);
 
-        // add to order
-        addToOrderButton.setOnAction(e -> {
-            for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
-                JSONObject orderItem = new JSONObject();
-
-                orderItem.put("name", "Customized Pizza");
-
-                ToggleButton selectedSizeButton = (ToggleButton) sizeToggleGroup.getSelectedToggle();
-                ToggleButton selectedCrustButton = (ToggleButton) crustToggleGroup.getSelectedToggle();
-                String selectedSize = selectedSizeButton.getText().toLowerCase();
-                String selectedCrust = selectedCrustButton.getText().toLowerCase();
-
-                orderItem.put("pizzaSize", selectedSize);
-                orderItem.put("crust", selectedCrust);
-
-                JSONArray selectedToppings = new JSONArray();
-                toppingCheckBoxes.values().forEach(cb -> {
-                    if (cb.isSelected()) {
-                        selectedToppings.put(cb.getText().toLowerCase());
-                    };
-                });
-
-                orderItem.put("toppings", selectedToppings);
-
-                try {
-
-                    if (orderItemId == 0) {
-                        orderService.addOrderItem(orderItem);
-                        sceneController.switchScene("Menu"); // Switch to menu so user can continue to add items
-                    } else {
-                        orderService.updateOrderItem(orderItemId, orderItem); // If there was an order item then we update the order item selected to be edited
-                        sceneController.switchScene("Cart"); // Switch to cart so user can see their changes
-                        break;
-                    }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
+        // bind add to order button action
+        addToOrderButton.setOnAction(_ -> addToOrder());
     }
 
-    // Set default customizations
+    // Set default customization option methods
 
     private void setDefaultPizzaSize(String pizzaSize) {
         switch (pizzaSize) {
@@ -173,7 +172,7 @@ public class CustomizePizzaController extends BaseController {
                 largeButton.setSelected(true);
             default:
                 mediumButton.setSelected(true);
-        };
+        }
     }
 
     private void setDefaultCrustSize(String crust) {
@@ -186,7 +185,7 @@ public class CustomizePizzaController extends BaseController {
                 stuffedButton.setSelected(true);
             default:
                 regularButton.setSelected(true);
-        };
+        }
     }
 
     private void setDefaultToppings(JSONArray itemToppings) {
@@ -200,6 +199,7 @@ public class CustomizePizzaController extends BaseController {
     // Takes in an orderItem/MenuItem to get default customizations and switches to this scene for customization
     public void customizePizza(JSONObject orderItem) throws IOException {
         orderItemId = orderItem.optInt("orderItemId"); // try to get an order item id, if there is not one (0) this is a menu item not an order item from the cart
+
         String pizzaSize = orderItem.getString("pizzaSize");
         String crust = orderItem.getString("crust");
         JSONArray itemToppings = orderItem.getJSONArray("toppings");
@@ -210,5 +210,4 @@ public class CustomizePizzaController extends BaseController {
 
         sceneController.switchScene("CustomizePizza");
     }
-
 }
