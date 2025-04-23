@@ -15,6 +15,8 @@ module org.example.demo {
     opens pizza_shop_system.account.services to javafx.fxml;
     exports pizza_shop_system.gui.base;
     opens pizza_shop_system.gui.base to javafx.fxml;
+    exports pizza_shop_system.gui.reports;
+    opens pizza_shop_system.gui.reports to javafx.fxml;
     exports pizza_shop_system.gui.order;
     opens pizza_shop_system.gui.order to javafx.fxml;
     exports pizza_shop_system.gui.home;
