@@ -40,11 +40,14 @@ public class CustomizePizzaController extends BaseController {
 
     // Add buttons to their appropriate toggle groups
     private void setupToggleButtons() {
+
+        // Size buttons
         personalButton.setToggleGroup(sizeToggleGroup);
         smallButton.setToggleGroup(sizeToggleGroup);
         mediumButton.setToggleGroup(sizeToggleGroup);
         largeButton.setToggleGroup(sizeToggleGroup);
 
+        // Crust buttons
         regularButton.setToggleGroup(crustToggleGroup);
         thinButton.setToggleGroup(crustToggleGroup);
         stuffedButton.setToggleGroup(crustToggleGroup);
@@ -52,8 +55,10 @@ public class CustomizePizzaController extends BaseController {
 
     // Add all the options to quantity choice box up to MAX_QUANTITY
     private void setupQuantityChoiceBox() {
-        // Max quantity of an item that can be added at once
+
+        //Constants
         int MAX_QUANTITY = 10;
+
         for (int i = 1; i <= MAX_QUANTITY; i++) {
             quantityChoiceBox.getItems().add(i);
         }
@@ -77,6 +82,7 @@ public class CustomizePizzaController extends BaseController {
     private void setupToppings() {
         JSONObject toppings = customizations.getJSONObject("toppings");
 
+        // Constants
         int MAX_COLUMNS = 7;
         int MAX_ROWS = 999;
 
