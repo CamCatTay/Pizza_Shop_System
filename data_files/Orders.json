@@ -1,5 +1,5 @@
 {
-    "nextOrderId": 22,
+    "nextOrderId": 23,
     "orders": [
         {
             "date": "2025-04-23T04:03:19Z",
@@ -51,25 +51,37 @@
             "nextOrderItemId": 9
         },
         {
-            "total": 14.22,
+            "date": "2025-04-23T20:15:42Z",
+            "accountId": 3,
+            "total": 17.41,
             "orderId": 22,
-            "subtotal": 13.29,
-            "tax": 0.93,
-            "orderItems": [{
-                "orderItemId": 8,
-                "price": 13.29,
-                "name": "Supreme Pizza",
-                "pizzaSize": "medium",
-                "toppings": [
-                    "sausage",
-                    "bellpepper",
-                    "onion",
-                    "pepperoni"
-                ],
-                "menuItemId": 3,
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 10
+            "subtotal": 16.27,
+            "tax": 1.13,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [
+                {
+                    "beverageSize": "large",
+                    "orderItemId": 10,
+                    "price": 1.99,
+                    "name": "Coca-Cola",
+                    "ice": "extra"
+                },
+                {
+                    "orderItemId": 8,
+                    "price": 14.29,
+                    "name": "Customized Pizza",
+                    "pizzaSize": "large",
+                    "toppings": [
+                        "onion",
+                        "sausage",
+                        "bellpepper",
+                        "pepperoni"
+                    ],
+                    "crust": "regular"
+                }
+            ],
+            "nextOrderItemId": 11
         }
     ]
 }

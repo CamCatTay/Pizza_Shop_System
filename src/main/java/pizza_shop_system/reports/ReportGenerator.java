@@ -1,316 +1,151 @@
 package pizza_shop_system.reports;
-/*
-import pizza_shop_system.order.*;
-import pizza_shop_system.account.*;
-import pizza_shop_system.menu.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportGenerator {
 
-    private LocalDate date;
-    private String customerName;
-    private double amount;
-    private int orderNumber;
+    public static List<JSONObject> readOrders(LocalDate startDate, LocalDate endDate) throws IOException {
+        List<JSONObject> matchingOrders = new ArrayList<>();
+        String content = Files.readString(Paths.get("data_files/orders.json"));
+        JSONObject root = new JSONObject(content);
+        JSONArray ordersArray = root.getJSONArray("orders");
 
-    public static List<Order> readOrders(LocalDate startDate, LocalDate endDate) throws IOException {
-        List<Order> orders = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("data_files/orders.txt"))) {
-            String line;
+        for (int i = 0; i < ordersArray.length(); i++) {
+            JSONObject order = ordersArray.getJSONObject(i);
 
-            while ((line = reader.readLine()) != null) {
-                if (line.isEmpty()) {
-                    continue;
-                }
-
-                String[] fields = line.split(",");
-                LocalDate checkDate = LocalDate.parse(fields[3].trim());
-
-                // Check if the order date is within the range
-                if (!checkDate.isBefore(startDate) && !checkDate.isAfter(endDate)) {
-                    int orderID = Integer.parseInt(fields[0].trim());
-                    String customerName = fields[1].trim();
-                    int customerID = Integer.parseInt(fields[2]);
-                    LocalDate date = LocalDate.parse(fields[3].trim());
-                    String orderType = fields[4].trim();
-                    OrderStatus status = OrderStatus.valueOf(fields[5].trim());
-                    String paymentMethod = fields[6].trim();
-                    ArrayList<MenuItem> orderedItems = readOrderItems(orderID);
-
-                    User account = new User(customerName, customerID);
-                    Order order = new Order(paymentMethod, orderID, orderedItems, orderType, status, account);
-                    orders.add(order);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("IOException: Unable to read file " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return orders;
-    }
-
-    //May be issue reading multiple types
-    public static ArrayList<MenuItem> readOrderItems(int orderID) throws IOException{
-
-        ArrayList<MenuItem> items = new ArrayList<>();
-        try(BufferedReader reader = new BufferedReader(new FileReader("data_files/order_items.txt"))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-
-                String itemID = fields[0].trim();
-                String category = fields[1].trim();
-                Double price = Double.parseDouble(fields[2].trim());
-                String name = fields[3].trim();
-                String description = fields[4].trim();
-
-                MenuItem menuItem = new MenuItem(itemID, category, price, name, description);
-                items.add(menuItem);
-
-                // OLD CODE
-                //String name = fields[1].trim();
-                //double price = Double.parseDouble(fields[2]);
-                //int amount = Integer.parseInt(fields[3]);
-                //String category = fields[4].trim();
-                //ArrayList<String> toppings = new ArrayList<>();
-                //for(int i = 4; i < fields.length; i++){
-                //    toppings.add(fields[i]);
-                //}
-                //MenuItem menuItem = new MenuItem(name, price, amount, category, toppings);
-                //items.add(menuItem);
-            }
-        } catch (IOException e) {
-            System.err.println("IOException: Unable to read file " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        //Check if list is populated if not return empty list
-        return items.isEmpty() ? new ArrayList<>() : items;
-    }
-
-    public static User readAccounts(String customerName, int customerID) throws IOException{
-
-        User user = null;
-
-        try(BufferedReader reader = new BufferedReader(new FileReader("data_files/users.txt"))){
-            String line;
-
-            while ((line = reader.readLine()) != null){
-                if(line.isEmpty()){
-                    continue;
-                }
-
-                String[] fields = line.split(",");
-                int userID = Integer.parseInt(fields[0]);
-                String email = fields[1].trim();
-                String password = fields[2].trim();
-                String accountType = fields[3].trim();
-                String name = fields[4].trim();
-                String address = fields[5].trim();
-                String phoneNumber = fields[6].trim();
-
-                if(userID == customerID && name.equalsIgnoreCase(customerName)){
-                    user = new User(userID, name, email, address, phoneNumber, password, accountType);
-                    break;
-                }
+            // Skip if no date present
+            if (!order.has("date")) {
+                System.err.println("Skipping order without date: " + order.optInt("orderId", -1));
+                continue;
             }
 
-        } catch (IOException e){
-            System.err.println("IOException: Unable to read file " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e){
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            String dateStr = order.getString("date");
+            LocalDate orderDate = ZonedDateTime.parse(dateStr).toLocalDate();
+
+            if (!orderDate.isBefore(startDate) && !orderDate.isAfter(endDate)) {
+                matchingOrders.add(order);
+            }
         }
 
-        return user;
-
+        return matchingOrders;
     }
 
-    public static List<String> countItems(List<MenuItem> order){
-
-        List<String> uniqueItems = new ArrayList<>();
-
-        for(MenuItem item: order){
-            String name = item.getName();
-            uniqueItems.add(name);
-        }
-
-        List<String> result = new ArrayList<>();
-        result.addAll(uniqueItems);
-
-        return result;
-
-    }
 
     public static String generateDailyReport(LocalDate specifiedDate) throws IOException {
         StringBuilder report = new StringBuilder();
+        List<JSONObject> orders = readOrders(specifiedDate, specifiedDate);
 
-        try {
-            List<Order> orders = readOrders(specifiedDate, specifiedDate);
+        if (orders.isEmpty()) {
+            return "There are no orders for this date!";
+        }
 
-            if (orders.isEmpty()) {
-                report.append("There are no orders for this date!");
-                return report.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        report.append(specifiedDate.format(formatter)).append("\n");
+        report.append("__________________________\n");
+
+        for (JSONObject order : orders) {
+            int orderId = order.getInt("orderId");
+            double subtotal = order.getDouble("subtotal");
+            double tax = order.getDouble("tax");
+            double total = order.getDouble("total");
+            JSONObject orderInfo = order.getJSONObject("orderInformation");
+            JSONObject paymentInfo = order.getJSONObject("paymentInformation");
+
+            report.append("Order #").append(orderId).append("\n");
+
+            JSONArray items = order.getJSONArray("orderItems");
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                report.append(item.getString("name"))
+                        .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
+            report.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
+            report.append("Total: $").append(String.format("%.2f", total)).append("\n");
 
-            report.append(specifiedDate.format(formatter)).append("\n");
-            report.append("__________________________\n");
-
-            for (Order order : orders) {
-                report.append(order.getAccount().getName())
-                        .append(" Order #").append(order.getOrderID()).append("\n");
-                List<MenuItem> orderItems = readOrderItems(order.getOrderID());
-                double subtotal = 0.0;
-
-                for (MenuItem item : orderItems) {
-                    report.append(item.getName()).append("\t\t\t$").append(String.format("%.2f", item.getPrice())).append("\n");
-
-                    subtotal += item.getPrice();
-                }
-
-                double tax = order.calcTax(0.08);
-                double tip = order.calcTip(0.1);
-                double total = subtotal + tip + tax;
-
-                report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
-                report.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
-                report.append("Tip: $").append(String.format("%.2f", tip)).append("\n");
-                report.append("___________\n");
-                report.append("Total: $").append(String.format("%.2f", total)).append("\n");
-
-                report.append("Order Status: ").append(order.getStatus()).append("\n");
-                String orderType = order.getOrderType();
-                if (orderType.equalsIgnoreCase("DELIVERY")) {
-                    report.append("Pickup Option: DELIVERY\n");
-                    if (order.getAccount().getAddress() != null) {
-                        report.append("Address: ").append(order.getAccount().getAddress()).append("\n");
-                    } else {
-                        report.append("No address found!\n");
-                    }
-                } else {
-                    report.append("Pickup Option: IN STORE\n");
-                }
-
-                report.append("__________________________________\n");
-            }
-
-        } catch (Exception e) {
-            report.append("Error: ").append(e.getMessage()).append("\n");
-            e.printStackTrace();
+            report.append("Payment Method: ").append(paymentInfo.getString("paymentMethod")).append("\n");
+            report.append("Order Type: ").append(orderInfo.getString("orderType")).append("\n");
+            report.append("__________________________________\n");
         }
 
         return report.toString();
     }
-
 
     public static String generateWeeklyReport(LocalDate startDate, LocalDate endDate) throws IOException {
         StringBuilder report = new StringBuilder();
-        List<Order> orders = new ArrayList<>();
-        for (Order order : readOrders(startDate, endDate)) {
-            orders.add(order);
+        List<JSONObject> orders = readOrders(startDate, endDate);
+
+        if (orders.isEmpty()) {
+            return "There are no orders from "
+                    + startDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+                    + " to "
+                    + endDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+                    + "!";
         }
 
-        try {
-            if (orders == null || orders.isEmpty()) {
-                report.append("There are no orders for this date range!");
-                return report.toString();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        report.append("Weekly Report\n")
+                .append("From: ").append(startDate.format(fmt))
+                .append(" To: ").append(endDate.format(fmt))
+                .append("\n__________________________\n");
+
+        double totalSales = 0;
+        int totalOrders = 0;
+
+        for (JSONObject order : orders) {
+            int orderId = order.getInt("orderId");
+            double subtotal = order.optDouble("subtotal", 0.0);
+            double tax      = order.optDouble("tax",      0.0);
+            double total    = order.optDouble("total",    subtotal + tax);
+
+            // Some orders may not have these; use safe defaults
+            JSONObject info = order.optJSONObject("orderInformation");
+            JSONObject pay  = order.optJSONObject("paymentInformation");
+
+            report.append("Order #").append(orderId).append("\n");
+
+            JSONArray items = order.getJSONArray("orderItems");
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                String name = item.getString("name");
+                double price = item.optDouble("price", 0.0);
+                report.append(name)
+                        .append("\t$").append(String.format("%.2f", price))
+                        .append("\n");
             }
 
-            LocalDate currentDate = startDate;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE MMMM dd, yyyy");
+            report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n")
+                    .append("Tax: $").append(String.format("%.2f", tax)).append("\n")
+                    .append("Total: $").append(String.format("%.2f", total)).append("\n");
 
-            while (!currentDate.isAfter(endDate)) {
-                String formattedDate = currentDate.format(formatter);
-                report.append(formattedDate).append("\n");
-                report.append("—----------------------\n");
-
-                double subtotal = 0.0;
-                List<String> itemNames = new ArrayList<>();
-                List<Integer> itemQuantities = new ArrayList<>();
-                List<Double> itemPrices = new ArrayList<>();
-
-                for (Order order : orders) {
-                    LocalDate orderDate = LocalDate.from(order.getDatePlaced());
-                    if (orderDate.equals(currentDate)) {
-                        List<MenuItem> orderItems = readOrderItems(order.getOrderID());
-
-                        for (MenuItem item : orderItems) {
-                            String itemName = item.getName();
-                            double price = item.getPrice();
-                            int index = itemNames.indexOf(itemName);
-
-                            if (index >= 0) {
-                                itemQuantities.set(index, itemQuantities.get(index));
-                            } else {
-                                itemNames.add(itemName);
-                                itemPrices.add(price);
-                            }
-
-                            subtotal += price;
-                        }
-                    }
-                }
-
-                boolean hasItems = false;
-                for (int i = 0; i < itemNames.size(); i++) {
-                    String itemName = itemNames.get(i);
-                    int quantity = itemQuantities.get(i);
-                    double price = itemPrices.get(i);
-                    double totalItemPrice = price * quantity;
-                    report.append(String.format("%dx %s $%.2f\n", quantity, itemName, totalItemPrice));
-                    hasItems = true;
-                }
-
-                if (!hasItems) {
-                    report.append("No orders for this day.\n");
-                }
-
-                double tax = subtotal * 0.08;  // assuming 8% tax rate
-                double total = subtotal + tax;
-
-                report.append("—-------\n");
-                report.append(String.format("Subtotal: $%.2f\n", subtotal));
-                report.append(String.format("Tax: $%.2f\n", tax));
-                report.append("—-------\n");
-                report.append(String.format("Total: $%.2f\n", total));
-
-                currentDate = currentDate.plusDays(1);  // Move to the next day
+            if (pay != null) {
+                report.append("Payment Method: ").append(pay.optString("paymentMethod", "N/A")).append("\n");
             }
-        } catch (IOException e) {
-            report.append("IOException: Unable to read file ").append(e.getMessage()).append("\n");
-            e.printStackTrace();
-        } catch (Exception e) {
-            report.append("Error: ").append(e.getMessage()).append("\n");
-            e.printStackTrace();
+            if (info != null) {
+                report.append("Order Type: ").append(info.optString("orderType", "N/A")).append("\n");
+            }
+            report.append("__________________________________\n");
+
+            totalSales += total;
+            totalOrders++;
         }
+
+        report.append("\nTotal Orders: ").append(totalOrders).append("\n")
+                .append("Total Weekly Sales: $").append(String.format("%.2f", totalSales)).append("\n");
 
         return report.toString();
     }
 
 
-    //Orders will have orderID, userID, orderType, status, deliveryAddress, driverID
-
-    public static void main(String[] args){
-
-
-    }
 }
-
- */
