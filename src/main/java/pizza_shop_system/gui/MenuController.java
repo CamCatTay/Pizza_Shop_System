@@ -2,7 +2,6 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -60,7 +59,7 @@ public class MenuController extends BaseController {
             addToOrderButton.getStyleClass().add("button-add-to-order");
 
             // add to order action
-            addToOrderButton.setOnAction(event -> {
+            addToOrderButton.setOnAction(_ -> {
                 try {
                     // Clone default properties of menu item into a new order item
                     JSONObject orderItem = new JSONObject(menuItem.toString());
@@ -75,7 +74,7 @@ public class MenuController extends BaseController {
             customizeButton.getStyleClass().add("button-customize");
 
             // customize action
-            customizeButton.setOnAction(event -> {
+            customizeButton.setOnAction(_ -> {
                 // Just use customizations that are unique to menu item to determine what customization screen is needed
                 if (menuItem.has("pizzaSize")) {
                     try {
@@ -145,8 +144,8 @@ public class MenuController extends BaseController {
 
     @FXML
     private void initialize() {
-        buttonPizza.setOnAction(e -> displayMenuItemsByCategory("pizza"));
-        buttonBeverage.setOnAction(e -> displayMenuItemsByCategory("beverage"));
+        buttonPizza.setOnAction(_ -> displayMenuItemsByCategory("pizza"));
+        buttonBeverage.setOnAction(_ -> displayMenuItemsByCategory("beverage"));
         displayMenuItemsByCategory("all");
     }
 }

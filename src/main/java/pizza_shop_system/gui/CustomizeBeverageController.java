@@ -2,15 +2,9 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.awt.event.ActionEvent;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-import pizza_shop_system.menu.MenuItem;
 import pizza_shop_system.orderSystem.OrderService;
-
 import java.io.IOException;
-
 
 public class CustomizeBeverageController extends BaseController{
 

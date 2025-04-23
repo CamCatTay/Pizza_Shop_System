@@ -28,9 +28,7 @@ public class CartController extends BaseController {
         orderService.setCartController(this); // Set the cart controller in OrderService
         displayCurrentOrder(orderService.loadOrders()); // Load the current order
 
-        buttonCheckout.setOnAction(e -> {
-            sceneController.switchScene("Checkout");
-        });
+        buttonCheckout.setOnAction(_ -> sceneController.switchScene("Checkout"));
     }
 
     public void displayCurrentOrder(JSONObject orderData) throws IOException {
@@ -68,7 +66,7 @@ public class CartController extends BaseController {
 
             // remove button
             Button removeButton = new Button("Remove");
-            removeButton.setOnAction(e -> {
+            removeButton.setOnAction(_ -> {
                 try {
                     removeItemFromCart(orderItem);
                 } catch (IOException ex) {
@@ -78,7 +76,7 @@ public class CartController extends BaseController {
 
             // edit button
             Button editButton = new Button("Edit");
-            editButton.setOnAction(e -> {
+            editButton.setOnAction(_ -> {
                 try {
                     editItemInCart(orderItem);
                 } catch (IOException ex) {
