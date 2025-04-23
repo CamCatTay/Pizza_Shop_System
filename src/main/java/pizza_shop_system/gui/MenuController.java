@@ -2,6 +2,7 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -26,6 +27,8 @@ public class MenuController extends BaseController {
 
     private final JSONUtil jsonUtil = new JSONUtil();
     private final OrderService orderService = new OrderService();
+    private static CustomizePizzaController customizePizzaController;
+    //private static CustomizeBeverageController customizeBeverageController;
 
     private JSONObject loadMenuItems() throws IOException {
         String MENU_ITEMS_FILE_PATH = "data_files/MenuItems.json";
@@ -73,8 +76,16 @@ public class MenuController extends BaseController {
 
             // customize action
             customizeButton.setOnAction(event -> {
-                // Implement switch to customize screen. Check a variable in item to determine what item type it is (to know which scene to switch to)
-                // or loop through each category until its found
+                // Just use customizations that are unique to menu item to determine what customization screen is needed
+                if (menuItem.has("pizzaSize")) {
+                    try {
+                        customizePizzaController.customizePizza(menuItem);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (menuItem.has("beverageSize")) {
+                    sceneController.switchScene("CustomizeBeverage");
+                }
             });
 
             // Put all menu item elements into VBox
@@ -89,6 +100,11 @@ public class MenuController extends BaseController {
                 row++;
             }
         }
+    }
+
+    // Set customize pizza controller for customization
+    public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
+        MenuController.customizePizzaController = customizePizzaController;
     }
 
     // displays menu items along with add to order and customize button. category chooses what items to display

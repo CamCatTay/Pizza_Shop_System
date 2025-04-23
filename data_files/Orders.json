@@ -1,215 +1,52 @@
 {
-    "nextOrderId": 21,
-    "orders": [
-        {
-            "date": "2025-04-22T23:16:55Z",
-            "accountId": 5,
-            "total": 11.75,
-            "orderId": 13,
-            "subtotal": 10.99,
-            "tax": 0.76,
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 10.99,
-                "name": "Cheese Pizza",
-                "pizzaSize": "medium",
-                "toppings": [],
-                "menuItemId": 1,
+    "nextOrderId": 22,
+    "orders": [{
+        "date": "2025-04-23T04:03:19Z",
+        "accountId": 5,
+        "total": 37.41,
+        "orderId": 21,
+        "subtotal": 34.97,
+        "tax": 2.44,
+        "orderInformation": {"orderType": "Pickup"},
+        "paymentInformation": {"paymentMethod": "Cash"},
+        "orderItems": [
+            {
+                "orderItemId": 2,
+                "price": 9.99,
+                "name": "Custom Pizza",
+                "pizzaSize": "personal",
+                "toppings": [
+                    "onion",
+                    "pepperoni",
+                    "anchovies"
+                ],
                 "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:19:25Z",
-            "accountId": 5,
-            "total": 11.75,
-            "orderId": 14,
-            "subtotal": 10.99,
-            "tax": 0.76,
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 10.99,
-                "name": "Cheese Pizza",
-                "pizzaSize": "medium",
-                "toppings": [],
-                "menuItemId": 1,
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:20:47Z",
-            "accountId": 5,
-            "total": 14.22,
-            "orderId": 15,
-            "subtotal": 13.29,
-            "tax": 0.93,
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 13.29,
-                "name": "Supreme Pizza",
+            },
+            {
+                "orderItemId": 3,
+                "price": 13.99,
+                "name": "Customized Pizza",
                 "pizzaSize": "medium",
                 "toppings": [
-                    "sausage",
-                    "bellpepper",
+                    "ham",
+                    "onion",
+                    "pepperoni",
+                    "anchovies"
+                ],
+                "crust": "stuffed"
+            },
+            {
+                "orderItemId": 5,
+                "price": 10.99,
+                "name": "Customized Pizza",
+                "pizzaSize": "small",
+                "toppings": [
                     "onion",
                     "pepperoni"
                 ],
-                "menuItemId": 3,
                 "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:21:31Z",
-            "accountId": 5,
-            "total": 12.82,
-            "orderId": 16,
-            "subtotal": 11.99,
-            "tax": 0.83,
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 11.99,
-                "name": "Pepperoni Pizza",
-                "pizzaSize": "medium",
-                "toppings": ["pepperoni"],
-                "menuItemId": 2,
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:22:06Z",
-            "accountId": 5,
-            "total": 12.82,
-            "orderId": 17,
-            "subtotal": 11.99,
-            "tax": 0.83,
-            "paymentInformation": {"paymentMethod": "Cash"},
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 11.99,
-                "name": "Pepperoni Pizza",
-                "pizzaSize": "medium",
-                "toppings": ["pepperoni"],
-                "menuItemId": 2,
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:24:56Z",
-            "accountId": 5,
-            "total": 38.15,
-            "orderId": 18,
-            "subtotal": 35.66,
-            "tax": 2.49,
-            "paymentInformation": {
-                "cvv": "321",
-                "paymentMethod": "Credit Card",
-                "cardNumber": "131313124214",
-                "expirationDate": "05/29"
-            },
-            "orderItems": [
-                {
-                    "orderItemId": 1,
-                    "price": 10.99,
-                    "name": "Hawaiian Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": ["ham"],
-                    "menuItemId": 6,
-                    "crust": "regular"
-                },
-                {
-                    "orderItemId": 2,
-                    "price": 10.99,
-                    "name": "Veggie Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": [
-                        "bellpepper",
-                        "tomato",
-                        "onion"
-                    ],
-                    "menuItemId": 5,
-                    "crust": "regular"
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 3,
-                    "price": 1.69,
-                    "name": "Lemonade",
-                    "ice": "regular",
-                    "category": "Beverage",
-                    "menuItemId": 8
-                },
-                {
-                    "orderItemId": 4,
-                    "price": 11.99,
-                    "name": "Pepperoni Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": ["pepperoni"],
-                    "menuItemId": 2,
-                    "crust": "regular"
-                }
-            ],
-            "nextOrderItemId": 5
-        },
-        {
-            "date": "2025-04-22T23:35:55Z",
-            "accountId": 5,
-            "total": 12.82,
-            "orderId": 19,
-            "subtotal": 11.99,
-            "tax": 0.83,
-            "orderInformation": {"orderType": "Pickup"},
-            "paymentInformation": {"paymentMethod": "Cash"},
-            "orderItems": [{
-                "orderItemId": 1,
-                "price": 11.99,
-                "name": "Pepperoni Pizza",
-                "pizzaSize": "medium",
-                "toppings": ["pepperoni"],
-                "menuItemId": 2,
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 2
-        },
-        {
-            "date": "2025-04-22T23:36:10Z",
-            "accountId": 5,
-            "total": 13.56,
-            "orderId": 20,
-            "subtotal": 12.68,
-            "tax": 0.88,
-            "orderInformation": {
-                "orderType": "Delivery",
-                "address": "123 Pizza Rd"
-            },
-            "paymentInformation": {
-                "checkNumber": "11111222233",
-                "paymentMethod": "Check"
-            },
-            "orderItems": [
-                {
-                    "orderItemId": 1,
-                    "price": 10.99,
-                    "name": "Hawaiian Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": ["ham"],
-                    "menuItemId": 6,
-                    "crust": "regular"
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 2,
-                    "price": 1.69,
-                    "name": "Milkshake",
-                    "ice": "regular",
-                    "category": "Beverage",
-                    "menuItemId": 9
-                }
-            ],
-            "nextOrderItemId": 3
-        }
-    ]
+            }
+        ],
+        "nextOrderItemId": 9
+    }]
 }

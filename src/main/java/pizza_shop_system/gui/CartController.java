@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class CartController extends BaseController {
     private final OrderService orderService = new OrderService();
+    private static CustomizePizzaController customizePizzaController;
 
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
@@ -64,6 +65,7 @@ public class CartController extends BaseController {
             priceLabel.setPrefWidth(80);
             priceLabel.setStyle("-fx-font-weight: bold;");
 
+            // remove button
             Button removeButton = new Button("Remove");
             removeButton.setOnAction(e -> {
                 try {
@@ -72,6 +74,17 @@ public class CartController extends BaseController {
                     throw new RuntimeException(ex);
                 }
             });
+
+            // edit button
+            Button editButton = new Button("Edit");
+            editButton.setOnAction(e -> {
+                try {
+                    editItemInCart(orderItem);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
 
             // For displaying the customizations of an item. Implement after customizations are complete.
             /*
@@ -87,11 +100,11 @@ public class CartController extends BaseController {
             itemInfoBox.setSpacing(2);
             itemInfoBox.setPrefWidth(300);
 
-            HBox row = new HBox(10, itemInfoBox, priceLabel, removeButton);
+            HBox row = new HBox(10, itemInfoBox, priceLabel, removeButton, editButton);
             row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
             return row;
         } catch (Exception e) {
-            System.out.println("Error creating row for item: " + orderItem.getString("name"));
+            System.out.println("Error creating row for item: " + orderItem.toString());
             e.printStackTrace();
         }
         return null;
@@ -99,6 +112,14 @@ public class CartController extends BaseController {
 
     private void removeItemFromCart(JSONObject orderItem) throws IOException {
         orderService.removeOrderItem(orderItem.getInt("orderItemId"));
+    }
+
+    private void editItemInCart(JSONObject orderItem) throws IOException {
+        customizePizzaController.customizePizza(orderItem);
+    }
+
+    public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
+        CartController.customizePizzaController = customizePizzaController;
     }
 
     // for testing
