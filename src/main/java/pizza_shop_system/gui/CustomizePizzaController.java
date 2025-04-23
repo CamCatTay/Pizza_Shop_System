@@ -152,17 +152,6 @@ public class CustomizePizzaController extends BaseController {
         }
     }
 
-    @FXML
-    public void initialize() throws IOException {
-        menuController.setCustomizePizzaController(this);
-        customizations = orderService.loadCustomizations();
-        setupCustomizePizzaGUI();
-        cartController.setCustomizePizzaController(this);
-
-        // bind add to order button action
-        addToOrderButton.setOnAction(_ -> addToOrder());
-    }
-
     // Set default customization option methods
 
     private void setDefaultPizzaSize(String pizzaSize) {
@@ -214,5 +203,16 @@ public class CustomizePizzaController extends BaseController {
         setDefaultToppings(itemToppings);
 
         sceneController.switchScene("CustomizePizza");
+    }
+
+    @FXML
+    public void initialize() throws IOException {
+        menuController.setCustomizePizzaController(this);
+        customizations = orderService.loadCustomizations();
+        setupCustomizePizzaGUI();
+        cartController.setCustomizePizzaController(this);
+
+        // bind add to order button action
+        addToOrderButton.setOnAction(_ -> addToOrder());
     }
 }
