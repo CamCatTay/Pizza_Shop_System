@@ -6,37 +6,33 @@
 <StackPane prefHeight="400.0" prefWidth="600.0"
            xmlns="http://javafx.com/javafx/17.0.12"
            xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="pizza_shop_system.gui.CustomizeBeverageController"
-           styleClass="customize-root">
-   <children>
-      <VBox spacing="20" alignment="TOP_CENTER" styleClass="customize-container">
+           fx:controller="pizza_shop_system.gui.CustomizeBeverageController">
+   <VBox spacing="20" alignment="TOP_CENTER">
 
-         <!-- Header -->
-         <Label text="CUSTOMIZE YOUR DRINK" styleClass="customize-header" />
+      <!-- Header -->
+      <Label text="CUSTOMIZE YOUR DRINK"/>
 
-         <!-- Size Section -->
-         <Label text="Size" styleClass="customize-label" />
-         <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <ToggleButton fx:id="smallSizeBtn" text="Small" styleClass="choice-button" />
-            <ToggleButton fx:id="mediumSizeBtn" text="Medium" styleClass="choice-button" />
-            <ToggleButton fx:id="largeSizeBtn" text="Large" styleClass="choice-button" />
-         </HBox>
+      <!-- Size Section -->
+      <Label text="Size"/>
+      <HBox spacing="20" alignment="CENTER">
+         <ToggleButton fx:id="smallSizeButton" text="Small"/>
+         <ToggleButton fx:id="mediumSizeButton" text="Medium"/>
+         <ToggleButton fx:id="largeSizeButton" text="Large"/>
+      </HBox>
 
-         <!-- Ice Section -->
-         <Label text="Ice" styleClass="customize-label" />
-         <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-            <ToggleButton fx:id="iceNoneBtn" text="None" styleClass="choice-button" />
-            <ToggleButton fx:id="iceLightBtn" text="Light" styleClass="choice-button" />
-            <ToggleButton fx:id="iceRegularBtn" text="Regular" styleClass="choice-button" />
-            <ToggleButton fx:id="iceExtraBtn" text="Extra" styleClass="choice-button" />
-         </HBox>
+      <!-- Ice Section -->
+      <Label text="Ice"/>
+      <HBox spacing="20" alignment="CENTER">
+         <ToggleButton fx:id="iceNoneButton" text="None"/>
+         <ToggleButton fx:id="iceLightButton" text="Light"/>
+         <ToggleButton fx:id="iceRegularButton" text="Regular"/>
+         <ToggleButton fx:id="iceExtraButton" text="Extra"/>
+      </HBox>
 
-         <!-- Quantity and Add to Order Section -->
-         <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
-            <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
-            <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-            <Button fx:id="addToOrderButton" text="ADD TO ORDER" styleClass="add-to-order-button" onAction="#handleAddToOrder"/>
-         </HBox>
-      </VBox>
-   </children>
+      <!-- Quantity and Add to Order Section -->
+      <HBox spacing="20" alignment="CENTER">
+         <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0"/>
+         <Button fx:id="addToOrderButton" text="ADD TO ORDER"/>
+      </HBox>
+   </VBox>
 </StackPane>
