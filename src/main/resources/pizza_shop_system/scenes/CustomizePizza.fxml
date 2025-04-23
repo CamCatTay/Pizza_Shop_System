@@ -5,7 +5,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0"
            prefWidth="1056.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="pizza_shop_system.gui.CustomizePizzaController">
+           fx:controller="pizza_shop_system.gui.order.CustomizePizzaController">
    <ScrollPane fitToHeight="true" fitToWidth="true">
       <VBox alignment="TOP_CENTER" prefHeight="489.0" prefWidth="755.0" spacing="15">
          <!-- Header -->

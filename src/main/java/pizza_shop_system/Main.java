@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import pizza_shop_system.gui.NavigationBarController;
-import pizza_shop_system.gui.SceneController;
+import pizza_shop_system.gui.navigation.NavigationBarController;
+import pizza_shop_system.gui.base.SceneController;
 
 import java.io.File;
 import java.io.IOException;

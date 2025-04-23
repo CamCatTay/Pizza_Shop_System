@@ -6,7 +6,7 @@
 <StackPane prefHeight="400.0" prefWidth="600.0"
            xmlns="http://javafx.com/javafx/17.0.12"
            xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="pizza_shop_system.gui.CustomizeBeverageController">
+           fx:controller="pizza_shop_system.gui.order.CustomizeBeverageController">
    <VBox spacing="20" alignment="TOP_CENTER">
 
       <!-- Header -->
