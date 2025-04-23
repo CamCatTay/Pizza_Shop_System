@@ -15,6 +15,7 @@ import java.io.IOException;
 public class CartController extends BaseController {
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
+    private static CustomizeBeverageController customizeBeverageController;
 
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
@@ -27,9 +28,7 @@ public class CartController extends BaseController {
         orderService.setCartController(this); // Set the cart controller in OrderService
         displayCurrentOrder(orderService.loadOrders()); // Load the current order
 
-        buttonCheckout.setOnAction(e -> {
-            sceneController.switchScene("Checkout");
-        });
+        buttonCheckout.setOnAction(_ -> sceneController.switchScene("Checkout"));
     }
 
     public void displayCurrentOrder(JSONObject orderData) throws IOException {
@@ -67,7 +66,7 @@ public class CartController extends BaseController {
 
             // remove button
             Button removeButton = new Button("Remove");
-            removeButton.setOnAction(e -> {
+            removeButton.setOnAction(_ -> {
                 try {
                     removeItemFromCart(orderItem);
                 } catch (IOException ex) {
@@ -77,7 +76,7 @@ public class CartController extends BaseController {
 
             // edit button
             Button editButton = new Button("Edit");
-            editButton.setOnAction(e -> {
+            editButton.setOnAction(_ -> {
                 try {
                     editItemInCart(orderItem);
                 } catch (IOException ex) {
@@ -115,11 +114,26 @@ public class CartController extends BaseController {
     }
 
     private void editItemInCart(JSONObject orderItem) throws IOException {
-        customizePizzaController.customizePizza(orderItem);
+        // Just use customizations that are unique to menu item to determine what customization screen is needed
+        if (orderItem.has("pizzaSize")) {
+            try {
+                customizePizzaController.customizePizza(orderItem);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (orderItem.has("beverageSize")) {
+            customizeBeverageController.customizeBeverage(orderItem);
+        }
     }
 
+    // Set customize pizza controller for customization
     public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
         CartController.customizePizzaController = customizePizzaController;
+    }
+
+    // Set customize beverage controller for customization
+    public void setCustomizeBeverageController(CustomizeBeverageController customizeBeverageController) {
+        CartController.customizeBeverageController = customizeBeverageController;
     }
 
     // for testing

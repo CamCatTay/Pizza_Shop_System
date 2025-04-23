@@ -2,7 +2,6 @@ package pizza_shop_system.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -28,7 +27,7 @@ public class MenuController extends BaseController {
     private final JSONUtil jsonUtil = new JSONUtil();
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
-    //private static CustomizeBeverageController customizeBeverageController;
+    private static CustomizeBeverageController customizeBeverageController;
 
     private JSONObject loadMenuItems() throws IOException {
         String MENU_ITEMS_FILE_PATH = "data_files/MenuItems.json";
@@ -60,7 +59,7 @@ public class MenuController extends BaseController {
             addToOrderButton.getStyleClass().add("button-add-to-order");
 
             // add to order action
-            addToOrderButton.setOnAction(event -> {
+            addToOrderButton.setOnAction(_ -> {
                 try {
                     // Clone default properties of menu item into a new order item
                     JSONObject orderItem = new JSONObject(menuItem.toString());
@@ -75,7 +74,7 @@ public class MenuController extends BaseController {
             customizeButton.getStyleClass().add("button-customize");
 
             // customize action
-            customizeButton.setOnAction(event -> {
+            customizeButton.setOnAction(_ -> {
                 // Just use customizations that are unique to menu item to determine what customization screen is needed
                 if (menuItem.has("pizzaSize")) {
                     try {
@@ -84,7 +83,7 @@ public class MenuController extends BaseController {
                         throw new RuntimeException(e);
                     }
                 } else if (menuItem.has("beverageSize")) {
-                    sceneController.switchScene("CustomizeBeverage");
+                    customizeBeverageController.customizeBeverage(menuItem);
                 }
             });
 
@@ -105,6 +104,11 @@ public class MenuController extends BaseController {
     // Set customize pizza controller for customization
     public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
         MenuController.customizePizzaController = customizePizzaController;
+    }
+
+    // Set customize beverage controller for customization
+    public void setCustomizeBeverageController(CustomizeBeverageController customizeBeverageController) {
+        MenuController.customizeBeverageController = customizeBeverageController;
     }
 
     // displays menu items along with add to order and customize button. category chooses what items to display
@@ -140,8 +144,8 @@ public class MenuController extends BaseController {
 
     @FXML
     private void initialize() {
-        buttonPizza.setOnAction(e -> displayMenuItemsByCategory("pizza"));
-        buttonBeverage.setOnAction(e -> displayMenuItemsByCategory("beverage"));
+        buttonPizza.setOnAction(_ -> displayMenuItemsByCategory("pizza"));
+        buttonBeverage.setOnAction(_ -> displayMenuItemsByCategory("beverage"));
         displayMenuItemsByCategory("all");
     }
 }

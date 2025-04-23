@@ -11,7 +11,6 @@ import pizza_shop_system.gui.SceneController;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main extends Application {

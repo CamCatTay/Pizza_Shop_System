@@ -16,9 +16,8 @@ public class CustomizePizzaController extends BaseController {
     @FXML
     private GridPane toppingsContainer;
     @FXML
-    private ToggleButton personalButton, smallButton, mediumButton, largeButton;
-    @FXML
-    private ToggleButton regularButton, thinButton, stuffedButton;
+    private ToggleButton personalButton, smallButton, mediumButton, largeButton,
+            regularButton, thinButton, stuffedButton;
     @FXML
     private Button addToOrderButton;
     @FXML
@@ -40,11 +39,14 @@ public class CustomizePizzaController extends BaseController {
 
     // Add buttons to their appropriate toggle groups
     private void setupToggleButtons() {
+
+        // Size buttons
         personalButton.setToggleGroup(sizeToggleGroup);
         smallButton.setToggleGroup(sizeToggleGroup);
         mediumButton.setToggleGroup(sizeToggleGroup);
         largeButton.setToggleGroup(sizeToggleGroup);
 
+        // Crust buttons
         regularButton.setToggleGroup(crustToggleGroup);
         thinButton.setToggleGroup(crustToggleGroup);
         stuffedButton.setToggleGroup(crustToggleGroup);
@@ -52,8 +54,10 @@ public class CustomizePizzaController extends BaseController {
 
     // Add all the options to quantity choice box up to MAX_QUANTITY
     private void setupQuantityChoiceBox() {
-        // Max quantity of an item that can be added at once
+
+        //Constants
         int MAX_QUANTITY = 10;
+
         for (int i = 1; i <= MAX_QUANTITY; i++) {
             quantityChoiceBox.getItems().add(i);
         }
@@ -77,6 +81,7 @@ public class CustomizePizzaController extends BaseController {
     private void setupToppings() {
         JSONObject toppings = customizations.getJSONObject("toppings");
 
+        // Constants
         int MAX_COLUMNS = 7;
         int MAX_ROWS = 999;
 
@@ -147,29 +152,20 @@ public class CustomizePizzaController extends BaseController {
         }
     }
 
-    @FXML
-    public void initialize() throws IOException {
-        menuController.setCustomizePizzaController(this);
-        customizations = orderService.loadCustomizations();
-        setupCustomizePizzaGUI();
-        cartController.setCustomizePizzaController(this);
-
-        // bind add to order button action
-        addToOrderButton.setOnAction(_ -> addToOrder());
-    }
-
     // Set default customization option methods
 
     private void setDefaultPizzaSize(String pizzaSize) {
+        System.out.println(pizzaSize);
         switch (pizzaSize) {
             case "personal":
                 personalButton.setSelected(true);
+                break;
             case "small":
                 smallButton.setSelected(true);
-            case "medium":
-                mediumButton.setSelected(true);
+                break;
             case "large":
                 largeButton.setSelected(true);
+                break;
             default:
                 mediumButton.setSelected(true);
         }
@@ -177,12 +173,12 @@ public class CustomizePizzaController extends BaseController {
 
     private void setDefaultCrustSize(String crust) {
         switch (crust) {
-            case "regular":
-                regularButton.setSelected(true);
             case "thin":
                 thinButton.setSelected(true);
+                break;
             case "stuffed":
                 stuffedButton.setSelected(true);
+                break;
             default:
                 regularButton.setSelected(true);
         }
@@ -209,5 +205,16 @@ public class CustomizePizzaController extends BaseController {
         setDefaultToppings(itemToppings);
 
         sceneController.switchScene("CustomizePizza");
+    }
+
+    @FXML
+    public void initialize() throws IOException {
+        menuController.setCustomizePizzaController(this);
+        customizations = orderService.loadCustomizations();
+        setupCustomizePizzaGUI();
+        cartController.setCustomizePizzaController(this);
+
+        // bind add to order button action
+        addToOrderButton.setOnAction(_ -> addToOrder());
     }
 }
