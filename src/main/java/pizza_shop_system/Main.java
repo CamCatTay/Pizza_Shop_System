@@ -15,9 +15,9 @@ import java.util.Objects;
 
 public class Main extends Application {
 
-    // Adds each scene in the scenes folder to the scene controller so they can be loaded and switched to
-    private void addScenes(SceneController sceneController) {
-        File scenesFolder = new File("src/main/resources/pizza_shop_system/scenes");
+    // Adds all scenes in scenes folder recursively
+    private void addScenes(SceneController sceneController, String baseScenesPath) {
+        File scenesFolder = new File("src/main/resources/" + baseScenesPath);
         File[] listOfScenes = scenesFolder.listFiles();
 
         if (listOfScenes != null) {
@@ -25,8 +25,12 @@ public class Main extends Application {
                 if (sceneFile.isFile() && sceneFile.getName().endsWith(".fxml")) {
                     String sceneFileName = sceneFile.getName();
                     String sceneName = sceneFileName.substring(0, sceneFileName.lastIndexOf(".")); // Get the name of the scene before .fxml
-                    String scenePath = "/pizza_shop_system/scenes/" + sceneFileName;
+                    String scenePath = baseScenesPath + "/" + sceneFileName;
                     sceneController.addScene(sceneName, scenePath);
+                } else if (sceneFile.isDirectory()) {
+                    String sceneFolderName = sceneFile.getName();
+                    String newBaseScenePath = baseScenesPath + "/" + sceneFolderName;
+                    addScenes(sceneController, newBaseScenePath);
                 }
             }
         } else {
@@ -34,16 +38,20 @@ public class Main extends Application {
         }
     }
 
-    // Attaches all stylesheets to the main scene
-    private void attachStylesheets(Scene scene) {
-        File stylesheetsFolder = new File("src/main/resources/pizza_shop_system/stylesheets");
+    // Attaches all stylesheets in stylesheets recursively
+    private void attachStylesheets(Scene scene, String baseStylesheetPath) {
+        File stylesheetsFolder = new File("src/main/resources/" + baseStylesheetPath);
         File[] listOfStylesheets = stylesheetsFolder.listFiles();
 
         if (listOfStylesheets != null) {
             for (File stylesheetFile : listOfStylesheets) {
                 if (stylesheetFile.isFile() && stylesheetFile.getName().endsWith(".css")) {
-                    String stylesheetPath = "/pizza_shop_system/stylesheets/" + stylesheetFile.getName();
+                    String stylesheetPath = baseStylesheetPath + "/" + stylesheetFile.getName();
                     scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylesheetPath)).toExternalForm());
+                } else if (stylesheetFile.isDirectory()) {
+                    String stylesheetFolderName = stylesheetFile.getName();
+                    String newBaseScenePath = baseStylesheetPath + "/" + stylesheetFolderName;
+                    attachStylesheets(scene, newBaseScenePath);
                 }
             }
         } else {
@@ -53,7 +61,7 @@ public class Main extends Application {
 
     private SceneController loadScenes(BorderPane mainLayout, FXMLLoader navigationBarLoader) {
         SceneController sceneController = new SceneController(mainLayout);
-        addScenes(sceneController);
+        addScenes(sceneController, "/pizza_shop_system/scenes");
 
         // Set main SceneController inside the navigation bar
         NavigationBarController navigationBarController = navigationBarLoader.getController();
@@ -71,7 +79,7 @@ public class Main extends Application {
         int DEFAULT_WIDTH = 1000;
         int DEFAULT_HEIGHT = 800;
 
-        FXMLLoader navigationBarLoader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/NavigationBar.fxml"));
+        FXMLLoader navigationBarLoader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/navigation/NavigationBar.fxml"));
         Parent navigationBar = navigationBarLoader.load();
 
         // Create the border pane that holds the nav bar at the top and other scenes in the center
@@ -86,7 +94,7 @@ public class Main extends Application {
         SceneController sceneController = loadScenes(mainLayout, navigationBarLoader);
 
         // Attach ALL CSS stylesheets
-        attachStylesheets(scene);
+        attachStylesheets(scene, "/pizza_shop_system/stylesheets");
 
         // Switch to default scene
         sceneController.switchScene(DEFAULT_SCENE); // Set the default scene

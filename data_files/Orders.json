@@ -51,35 +51,24 @@
             "nextOrderItemId": 9
         },
         {
-            "total": 25.97,
+            "total": 14.22,
             "orderId": 22,
-            "subtotal": 24.28,
-            "tax": 1.69,
-            "orderItems": [
-                {
-                    "orderItemId": 8,
-                    "price": 13.29,
-                    "name": "Supreme Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": [
-                        "sausage",
-                        "bellpepper",
-                        "onion",
-                        "pepperoni"
-                    ],
-                    "menuItemId": 3,
-                    "crust": "regular"
-                },
-                {
-                    "orderItemId": 9,
-                    "price": 10.99,
-                    "name": "Hawaiian Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": ["ham"],
-                    "menuItemId": 6,
-                    "crust": "regular"
-                }
-            ],
+            "subtotal": 13.29,
+            "tax": 0.93,
+            "orderItems": [{
+                "orderItemId": 8,
+                "price": 13.29,
+                "name": "Supreme Pizza",
+                "pizzaSize": "medium",
+                "toppings": [
+                    "sausage",
+                    "bellpepper",
+                    "onion",
+                    "pepperoni"
+                ],
+                "menuItemId": 3,
+                "crust": "regular"
+            }],
             "nextOrderItemId": 10
         }
     ]
