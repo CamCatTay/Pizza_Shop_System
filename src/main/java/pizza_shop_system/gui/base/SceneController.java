@@ -38,9 +38,11 @@ public class SceneController {
             }
 
         } catch (IOException e) {
-            System.out.println("Failed to add scene -> " + name + ": " + e.getMessage());
+            System.out.println("Failed to add scene -> " + name + ": " + e.getClass());
         } catch (NullPointerException e) {
-            System.out.println("Warning: This FXML file was not loaded. Ensure " + fxmlFile + " exists and path is correct.");
+            System.out.println("Error: Ensure " + fxmlFile + " exists and path is correct. " + e.getClass());
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + fxmlFile + " is not a valid path. " + e.getClass());
         }
     }
 
