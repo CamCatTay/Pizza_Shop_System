@@ -9,7 +9,7 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="pizza_shop_system.gui.CheckoutController"
+          fx:controller="pizza_shop_system.gui.order.CheckoutController"
           styleClass="checkout-root"
           alignment="CENTER" hgap="15" vgap="15" prefHeight="450.0" prefWidth="600.0">
 

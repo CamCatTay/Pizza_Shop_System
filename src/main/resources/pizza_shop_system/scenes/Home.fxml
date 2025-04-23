@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="843.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.HomeController">
+<StackPane prefHeight="843.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.home.HomeController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="636.0" prefWidth="944.0">
          <children>
