@@ -16,9 +16,8 @@ public class CustomizePizzaController extends BaseController {
     @FXML
     private GridPane toppingsContainer;
     @FXML
-    private ToggleButton personalButton, smallButton, mediumButton, largeButton;
-    @FXML
-    private ToggleButton regularButton, thinButton, stuffedButton;
+    private ToggleButton personalButton, smallButton, mediumButton, largeButton,
+            regularButton, thinButton, stuffedButton;
     @FXML
     private Button addToOrderButton;
     @FXML
