@@ -42,16 +42,33 @@ public class ReportGenerator {
 
 
     public static String generateDailyReport(LocalDate specifiedDate) throws IOException {
-        StringBuilder report = new StringBuilder();
         List<JSONObject> orders = readOrders(specifiedDate, specifiedDate);
 
         if (orders.isEmpty()) {
             return "There are no orders for this date!";
         }
 
+        double totalSales = 0;
+        double totalTax = 0;
+        double totalSubtotal = 0;
+        int totalOrders = 0;
+
+        for (JSONObject order : orders) {
+            totalSubtotal += order.getDouble("subtotal");
+            totalTax += order.getDouble("tax");
+            totalSales += order.getDouble("total");
+            totalOrders++;
+        }
+
+        StringBuilder report = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        report.append(specifiedDate.format(formatter)).append("\n");
-        report.append("__________________________\n");
+
+        report.append("Daily Report for ").append(specifiedDate.format(formatter)).append("\n")
+                .append("Total Orders: ").append(totalOrders).append("\n")
+                .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
+                .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
+                .append("Total Sales: $").append(String.format("%.2f", totalSales)).append("\n")
+                .append("__________________________\n");
 
         for (JSONObject order : orders) {
             int orderId = order.getInt("orderId");
@@ -73,7 +90,6 @@ public class ReportGenerator {
             report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
             report.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
             report.append("Total: $").append(String.format("%.2f", total)).append("\n");
-
             report.append("Payment Method: ").append(paymentInfo.getString("paymentMethod")).append("\n");
             report.append("Order Type: ").append(orderInfo.getString("orderType")).append("\n");
             report.append("__________________________________\n");
@@ -82,8 +98,8 @@ public class ReportGenerator {
         return report.toString();
     }
 
+
     public static String generateWeeklyReport(LocalDate startDate, LocalDate endDate) throws IOException {
-        StringBuilder report = new StringBuilder();
         List<JSONObject> orders = readOrders(startDate, endDate);
 
         if (orders.isEmpty()) {
@@ -94,24 +110,37 @@ public class ReportGenerator {
                     + "!";
         }
 
+        double totalSales = 0;
+        double totalTax = 0;
+        double totalSubtotal = 0;
+        int totalOrders = 0;
+
+        for (JSONObject order : orders) {
+            totalSubtotal += order.optDouble("subtotal", 0.0);
+            totalTax += order.optDouble("tax", 0.0);
+            totalSales += order.optDouble("total", order.optDouble("subtotal", 0.0) + order.optDouble("tax", 0.0));
+            totalOrders++;
+        }
+
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        StringBuilder report = new StringBuilder();
         report.append("Weekly Report\n")
                 .append("From: ").append(startDate.format(fmt))
-                .append(" To: ").append(endDate.format(fmt))
-                .append("\n__________________________\n");
-
-        double totalSales = 0;
-        int totalOrders = 0;
+                .append(" To: ").append(endDate.format(fmt)).append("\n")
+                .append("Total Orders: ").append(totalOrders).append("\n")
+                .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
+                .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
+                .append("Total Sales: $").append(String.format("%.2f", totalSales)).append("\n")
+                .append("__________________________\n");
 
         for (JSONObject order : orders) {
             int orderId = order.getInt("orderId");
             double subtotal = order.optDouble("subtotal", 0.0);
-            double tax      = order.optDouble("tax",      0.0);
-            double total    = order.optDouble("total",    subtotal + tax);
+            double tax = order.optDouble("tax", 0.0);
+            double total = order.optDouble("total", subtotal + tax);
 
-            // Some orders may not have these; use safe defaults
             JSONObject info = order.optJSONObject("orderInformation");
-            JSONObject pay  = order.optJSONObject("paymentInformation");
+            JSONObject pay = order.optJSONObject("paymentInformation");
 
             report.append("Order #").append(orderId).append("\n");
 
@@ -136,16 +165,9 @@ public class ReportGenerator {
                 report.append("Order Type: ").append(info.optString("orderType", "N/A")).append("\n");
             }
             report.append("__________________________________\n");
-
-            totalSales += total;
-            totalOrders++;
         }
-
-        report.append("\nTotal Orders: ").append(totalOrders).append("\n")
-                .append("Total Weekly Sales: $").append(String.format("%.2f", totalSales)).append("\n");
 
         return report.toString();
     }
-
 
 }
