@@ -22,7 +22,7 @@
       <VBox layoutX="50.0" layoutY="150.0" spacing="15" styleClass="main-content">
          <!-- Report Type Selection -->
          <Label text="Select Report Type:" styleClass="label" />
-         <ChoiceBox fx:id="timeSelectionChoiceBox" prefWidth="200.0" />
+         <ComboBox fx:id="timeSelectionChoiceBox" prefWidth="200.0" />
 
          <!-- Date Picker for Weekly Option -->
          <Label fx:id="weeklyStartDateLabel" text="Pick the start date of the week:" visible="false" styleClass="label" />

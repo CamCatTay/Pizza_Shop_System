@@ -7,11 +7,13 @@ import pizza_shop_system.reports.ReportGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class ReportsController extends BaseController {
 
     @FXML
-    private ChoiceBox<String> timeSelectionChoiceBox;
+    private ComboBox<String> timeSelectionChoiceBox;
 
     @FXML
     private DatePicker datePicker;
@@ -28,17 +30,36 @@ public class ReportsController extends BaseController {
     @FXML
     private Button backButton;
 
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @FXML
     private void initialize() {
-        // Populate ChoiceBox with report types
+        // Populate ComboBox with report types
         timeSelectionChoiceBox.getItems().addAll("Daily Report", "Weekly Report");
+        timeSelectionChoiceBox.getSelectionModel().select("Daily Report");
+
+        // Set visible row count to show both options at once
+        timeSelectionChoiceBox.setVisibleRowCount(2);
+
+        // Set default date to today and make sure the DatePicker is visible
+        datePicker.setValue(LocalDate.now());
+        datePicker.setVisible(true);
+        datePicker.setEditable(true); // Allow user to type in the DatePicker
+
+        // Add a listener to detect text changes in the DatePicker's text field
+        datePicker.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (isValidDate(newValue)) {
+                LocalDate typedDate = LocalDate.parse(newValue, dateFormatter);
+                datePicker.setValue(typedDate); // Update the DatePicker value with the typed date
+            }
+        });
 
         // Listener for report type selection
         timeSelectionChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             handleReportTypeSelection(newVal);
         });
 
-        generateButton.setDisable(true);
+        generateButton.setDisable(false);
         reportTextArea.setVisible(false);
 
         generateButton.setOnAction(e -> {
@@ -53,20 +74,27 @@ public class ReportsController extends BaseController {
         backButton.setOnAction(e -> goBack());
     }
 
+    private boolean isValidDate(String date) {
+        try {
+            LocalDate.parse(date, dateFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
     private void handleReportTypeSelection(String reportType) {
         boolean isWeekly = "Weekly Report".equals(reportType);
-        datePicker.setVisible(true);
-        datePicker.setValue(LocalDate.now());
         weeklyStartDateLabel.setVisible(isWeekly);
-        generateButton.setDisable(false);
     }
 
     private void generateReport() throws IOException {
         String reportType = timeSelectionChoiceBox.getValue();
         LocalDate selectedDate = datePicker.getValue();
 
+        // Ensure that the date is selected or typed in
         if (selectedDate == null) {
-            showError("Please select a date.");
+            showError("Please select or type a date.");
             return;
         }
 
