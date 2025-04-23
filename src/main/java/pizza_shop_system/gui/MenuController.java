@@ -28,7 +28,7 @@ public class MenuController extends BaseController {
     private final JSONUtil jsonUtil = new JSONUtil();
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
-    //private static CustomizeBeverageController customizeBeverageController;
+    private static CustomizeBeverageController customizeBeverageController;
 
     private JSONObject loadMenuItems() throws IOException {
         String MENU_ITEMS_FILE_PATH = "data_files/MenuItems.json";
@@ -84,7 +84,7 @@ public class MenuController extends BaseController {
                         throw new RuntimeException(e);
                     }
                 } else if (menuItem.has("beverageSize")) {
-                    sceneController.switchScene("CustomizeBeverage");
+                    customizeBeverageController.customizeBeverage(menuItem);
                 }
             });
 
@@ -105,6 +105,11 @@ public class MenuController extends BaseController {
     // Set customize pizza controller for customization
     public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
         MenuController.customizePizzaController = customizePizzaController;
+    }
+
+    // Set customize beverage controller for customization
+    public void setCustomizeBeverageController(CustomizeBeverageController customizeBeverageController) {
+        MenuController.customizeBeverageController = customizeBeverageController;
     }
 
     // displays menu items along with add to order and customize button. category chooses what items to display

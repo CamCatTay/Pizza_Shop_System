@@ -155,15 +155,17 @@ public class CustomizePizzaController extends BaseController {
     // Set default customization option methods
 
     private void setDefaultPizzaSize(String pizzaSize) {
+        System.out.println(pizzaSize);
         switch (pizzaSize) {
             case "personal":
                 personalButton.setSelected(true);
+                break;
             case "small":
                 smallButton.setSelected(true);
-            case "medium":
-                mediumButton.setSelected(true);
+                break;
             case "large":
                 largeButton.setSelected(true);
+                break;
             default:
                 mediumButton.setSelected(true);
         }
@@ -171,12 +173,12 @@ public class CustomizePizzaController extends BaseController {
 
     private void setDefaultCrustSize(String crust) {
         switch (crust) {
-            case "regular":
-                regularButton.setSelected(true);
             case "thin":
                 thinButton.setSelected(true);
+                break;
             case "stuffed":
                 stuffedButton.setSelected(true);
+                break;
             default:
                 regularButton.setSelected(true);
         }

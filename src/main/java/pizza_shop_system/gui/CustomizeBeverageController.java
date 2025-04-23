@@ -1,115 +1,141 @@
 package pizza_shop_system.gui;
-/*
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.awt.event.ActionEvent;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import pizza_shop_system.menu.MenuItem;
+import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
 
 
 public class CustomizeBeverageController extends BaseController{
 
-    @FXML private ToggleButton smallSizeBtn;
-    @FXML private ToggleButton mediumSizeBtn;
-    @FXML private ToggleButton largeSizeBtn;
-    @FXML private ToggleGroup sizeGroup = new ToggleGroup();
 
-    @FXML private ToggleButton iceNoneBtn;
-    @FXML private ToggleButton iceLightBtn;
-    @FXML private ToggleButton iceRegularBtn;
-    @FXML private ToggleButton iceExtraBtn;
-    @FXML private ToggleGroup iceGroup = new ToggleGroup();
+    @FXML private ToggleButton smallSizeButton, mediumSizeButton, largeSizeButton,
+            iceNoneButton, iceLightButton, iceRegularButton, iceExtraButton;
 
-    // Quantity and order
+    @FXML final private ToggleGroup iceToggleGroup = new ToggleGroup();
+    @FXML final private ToggleGroup sizeToggleGroup = new ToggleGroup();
+
     @FXML private ChoiceBox<Integer> quantityChoiceBox;
 
     @FXML private Button addToOrderButton;
-    @FXML private Label priceLabel;
-    private final double baseDrinkPrice = 1.5;
 
-    private Order currentOrder = new Order();
+    private int orderItemId = 0;
+    private String orderItemName = "";
 
-    public void setCurrentOrder(Order order) {
-        this.currentOrder = order;
+    private final MenuController menuController = new MenuController();
+    private final CartController cartController = new CartController();
+    private final OrderService orderService = new OrderService();
+
+    // Add all the options to quantity choice box up to MAX_QUANTITY
+    private void setupQuantityChoiceBox() {
+
+        //Constants
+        int MAX_QUANTITY = 10;
+
+        for (int i = 1; i <= MAX_QUANTITY; i++) {
+            quantityChoiceBox.getItems().add(i);
+        }
+        quantityChoiceBox.setValue(1); // Default value
+    }
+
+    private void setupToggleButtons() {
+        smallSizeButton.setToggleGroup(sizeToggleGroup);
+        mediumSizeButton.setToggleGroup(sizeToggleGroup);
+        largeSizeButton.setToggleGroup(sizeToggleGroup);
+
+        iceNoneButton.setToggleGroup(iceToggleGroup);
+        iceLightButton.setToggleGroup(iceToggleGroup);
+        iceRegularButton.setToggleGroup(iceToggleGroup);
+        iceExtraButton.setToggleGroup(iceToggleGroup);
+    }
+
+    // Set default customization option methods
+
+    private void setDefaultBeverageSize(String beverageSize) {
+        switch (beverageSize) {
+            case "small":
+                smallSizeButton.setSelected(true);
+                break;
+            case "large":
+                largeSizeButton.setSelected(true);
+                break;
+            default:
+                mediumSizeButton.setSelected(true);
+        }
+    }
+
+    private void setDefaultIce(String ice) {
+        switch (ice) {
+            case "none":
+                iceNoneButton.setSelected(true);
+                break;
+            case "extra":
+                iceExtraButton.setSelected(true);
+                break;
+            default:
+                iceRegularButton.setSelected(true);
+        }
+    }
+
+    // Takes in an orderItem/MenuItem to get default customizations and switches to this scene for customization
+    public void customizeBeverage(JSONObject orderItem) {
+        orderItemId = orderItem.optInt("orderItemId"); // try to get an order item id, if there is not one (0) this is a menu item not an order item from the cart
+        orderItemName = orderItem.getString("name");
+
+        String beverageSize = orderItem.getString("beverageSize");
+        String ice = orderItem.getString("ice");
+
+        setDefaultBeverageSize(beverageSize);
+        setDefaultIce(ice);
+
+        sceneController.switchScene("CustomizeBeverage");
+    }
+
+    private void addToOrder() {
+        for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
+            JSONObject orderItem = new JSONObject();
+
+            orderItem.put("name", orderItemName);
+
+            ToggleButton selectedSizeButton = (ToggleButton) sizeToggleGroup.getSelectedToggle();
+            ToggleButton selectedIceButton = (ToggleButton) iceToggleGroup.getSelectedToggle();
+            String selectedSize = selectedSizeButton.getText().toLowerCase();
+            String selectedIce = selectedIceButton.getText().toLowerCase();
+
+            orderItem.put("beverageSize", selectedSize);
+            orderItem.put("ice", selectedIce);
+
+            try {
+                if (orderItemId == 0) {
+                    orderService.addOrderItem(orderItem);
+                    sceneController.switchScene("Menu"); // Switch to menu so user can continue to add items
+                } else {
+                    orderService.updateOrderItem(orderItemId, orderItem); // If there was an order item then we update the order item selected to be edited
+                    sceneController.switchScene("Cart"); // Switch to cart so user can see their changes
+                    break;
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     @FXML
     public void initialize() {
+        menuController.setCustomizeBeverageController(this);
+        cartController.setCustomizeBeverageController(this);
 
-        //Quantity choices
-        quantityChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
-        quantityChoiceBox.setValue(1);
+        setupToggleButtons();
+        setupQuantityChoiceBox();
 
-        //Default selections
-        smallSizeBtn.setSelected(true);
-        iceRegularBtn.setSelected(true);
-
-        smallSizeBtn.setToggleGroup(sizeGroup);
-        mediumSizeBtn.setToggleGroup(sizeGroup);
-        largeSizeBtn.setToggleGroup(sizeGroup);
-
-        iceNoneBtn.setToggleGroup(iceGroup);
-        iceLightBtn.setToggleGroup(iceGroup);
-        iceRegularBtn.setToggleGroup(iceGroup);
-        iceExtraBtn.setToggleGroup(iceGroup);
-        iceRegularBtn.setSelected(true);
-
-        //Price multiplier initial
-        updatePriceLabel(baseDrinkPrice * quantityChoiceBox.getValue());
-
-        quantityChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            updateTotalPrice();
-        });
-
-        sizeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            updateTotalPrice();
-        });
-
+        // bind add to order button action
+        addToOrderButton.setOnAction(_ -> addToOrder());
     }
-
-    private void updatePriceLabel(double total){
-        priceLabel.setText("$" + String.format("%.2f", total));
-    }
-
-    private void updateTotalPrice() {
-        int quantity = quantityChoiceBox.getValue();
-        double pricePerDrink = getSizePriceMultiplier();
-        double total = pricePerDrink * quantity;
-        updatePriceLabel(total);
-    }
-
-    private double getSizePriceMultiplier(){
-        ToggleButton selected = (ToggleButton) sizeGroup.getSelectedToggle();
-        if(selected == null) return baseDrinkPrice;
-
-        switch(selected.getText()){
-            case "Medium": return 2.00;
-            case "Large": return 2.50;
-            default: return baseDrinkPrice;
-        }
-
-    }
-
-    @FXML
-    private void handleAddToOrder() throws IOException {
-        String size = ((ToggleButton) sizeGroup.getSelectedToggle()).getText();
-        String ice = ((ToggleButton) iceGroup.getSelectedToggle()).getText();
-        int quantity = quantityChoiceBox.getValue();
-        double price = getSizePriceMultiplier();
-
-        String name = size + " Beverage";
-        String description = "Ice: " + ice;
-        String itemID = "1";
-        String category = "Beverage";
-
-        MenuItem drink = new MenuItem(itemID, category, price, quantity, name, description, null);
-
-        System.out.println("Beverage added: " + name + ", Qty: " + quantity + ", Ice: " + ice);
-
-        currentOrder.addItem(drink);
-        currentOrder.saveToFile();
-    }
+    
 }
- */

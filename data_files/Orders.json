@@ -1,52 +1,78 @@
 {
     "nextOrderId": 22,
-    "orders": [{
-        "date": "2025-04-23T04:03:19Z",
-        "accountId": 5,
-        "total": 37.41,
-        "orderId": 21,
-        "subtotal": 34.97,
-        "tax": 2.44,
-        "orderInformation": {"orderType": "Pickup"},
-        "paymentInformation": {"paymentMethod": "Cash"},
-        "orderItems": [
-            {
-                "orderItemId": 2,
-                "price": 9.99,
-                "name": "Custom Pizza",
-                "pizzaSize": "personal",
-                "toppings": [
-                    "onion",
-                    "pepperoni",
-                    "anchovies"
-                ],
-                "crust": "regular"
-            },
-            {
-                "orderItemId": 3,
-                "price": 13.99,
-                "name": "Customized Pizza",
-                "pizzaSize": "medium",
-                "toppings": [
-                    "ham",
-                    "onion",
-                    "pepperoni",
-                    "anchovies"
-                ],
-                "crust": "stuffed"
-            },
-            {
-                "orderItemId": 5,
-                "price": 10.99,
-                "name": "Customized Pizza",
-                "pizzaSize": "small",
-                "toppings": [
-                    "onion",
-                    "pepperoni"
-                ],
-                "crust": "regular"
-            }
-        ],
-        "nextOrderItemId": 9
-    }]
+    "orders": [
+        {
+            "date": "2025-04-23T04:03:19Z",
+            "accountId": 5,
+            "total": 37.41,
+            "orderId": 21,
+            "subtotal": 34.97,
+            "tax": 2.44,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [
+                {
+                    "orderItemId": 2,
+                    "price": 9.99,
+                    "name": "Custom Pizza",
+                    "pizzaSize": "personal",
+                    "toppings": [
+                        "onion",
+                        "pepperoni",
+                        "anchovies"
+                    ],
+                    "crust": "regular"
+                },
+                {
+                    "orderItemId": 3,
+                    "price": 13.99,
+                    "name": "Customized Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": [
+                        "ham",
+                        "onion",
+                        "pepperoni",
+                        "anchovies"
+                    ],
+                    "crust": "stuffed"
+                },
+                {
+                    "orderItemId": 5,
+                    "price": 10.99,
+                    "name": "Customized Pizza",
+                    "pizzaSize": "small",
+                    "toppings": [
+                        "onion",
+                        "pepperoni"
+                    ],
+                    "crust": "regular"
+                }
+            ],
+            "nextOrderItemId": 9
+        },
+        {
+            "total": 18.16,
+            "orderId": 22,
+            "subtotal": 16.98,
+            "tax": 1.18,
+            "orderItems": [
+                {
+                    "beverageSize": "large",
+                    "orderItemId": 6,
+                    "price": 1.99,
+                    "name": "Milkshake",
+                    "ice": "extra"
+                },
+                {
+                    "orderItemId": 5,
+                    "price": 14.99,
+                    "name": "Customized Pizza",
+                    "pizzaSize": "large",
+                    "toppings": ["pepperoni"],
+                    "crust": "stuffed"
+                }
+            ],
+            "nextOrderItemId": 7
+        }
+    ]
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 public class CartController extends BaseController {
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
+    private static CustomizeBeverageController customizeBeverageController;
 
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
@@ -115,11 +116,26 @@ public class CartController extends BaseController {
     }
 
     private void editItemInCart(JSONObject orderItem) throws IOException {
-        customizePizzaController.customizePizza(orderItem);
+        // Just use customizations that are unique to menu item to determine what customization screen is needed
+        if (orderItem.has("pizzaSize")) {
+            try {
+                customizePizzaController.customizePizza(orderItem);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (orderItem.has("beverageSize")) {
+            customizeBeverageController.customizeBeverage(orderItem);
+        }
     }
 
+    // Set customize pizza controller for customization
     public void setCustomizePizzaController(CustomizePizzaController customizePizzaController) {
         CartController.customizePizzaController = customizePizzaController;
+    }
+
+    // Set customize beverage controller for customization
+    public void setCustomizeBeverageController(CustomizeBeverageController customizeBeverageController) {
+        CartController.customizeBeverageController = customizeBeverageController;
     }
 
     // for testing
