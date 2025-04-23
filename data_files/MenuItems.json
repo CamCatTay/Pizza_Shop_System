@@ -79,7 +79,7 @@
         "category": "Beverage",
         "name": "Milkshake",
         "beverageSize": "medium",
-        "ice": "regular"
+        "ice": "none"
       },
       {
         "menuItemId": 10,
