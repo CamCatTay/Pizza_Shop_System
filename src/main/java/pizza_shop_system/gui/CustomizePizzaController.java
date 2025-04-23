@@ -9,25 +9,35 @@ import org.json.JSONObject;
 import pizza_shop_system.orderSystem.OrderService;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomizePizzaController extends BaseController {
 
     @FXML
-    HBox sizeContainer, crustContainer;
+    private HBox sizeContainer, crustContainer;
     @FXML
-    GridPane toppingsContainer;
+    private GridPane toppingsContainer;
     @FXML
-    ToggleButton personalButton, smallButton, mediumButton, largeButton;
+    private ToggleButton personalButton, smallButton, mediumButton, largeButton;
     @FXML
-    ToggleButton regularButton, thinButton, stuffedButton;
+    private ToggleButton regularButton, thinButton, stuffedButton;
     @FXML
-    ToggleGroup crustToggleGroup = new ToggleGroup();
+    private Button addToOrderButton;
     @FXML
-    ToggleGroup sizeToggleGroup = new ToggleGroup();
+    private ToggleGroup crustToggleGroup = new ToggleGroup();
+    @FXML
+    private ToggleGroup sizeToggleGroup = new ToggleGroup();
     @FXML
     private ChoiceBox<Integer> quantityChoiceBox;
 
+    private int orderItemId = 0;
+
+    Map<String, CheckBox> toppingCheckBoxes = new HashMap<>(); // After setting up toppings store them in hashmap so they can be referenced when selecting defaults
+    int MAX_TOPPINGS = 4;
+
     private final OrderService orderService = new OrderService();
+    private final CartController cartController = new CartController();
     private final MenuController menuController = new MenuController();
     private JSONObject customizations;
 
@@ -53,9 +63,52 @@ public class CustomizePizzaController extends BaseController {
         quantityChoiceBox.setValue(1); // Default value
     }
 
+    // Listen for check box selections and disable further selections if it exceeds or is equal to the MAX_TOPPINGS amount
+    private void ensureMaxToppingsIsNotExceeded() {
+        long selectedCount = toppingCheckBoxes.values().stream()
+                .filter(CheckBox::isSelected)
+                .count();
+
+        // Disable unchecked checkboxes if limit is reached
+        boolean disableOthers = selectedCount >= MAX_TOPPINGS;
+        toppingCheckBoxes.values().forEach(cb -> {
+            if (!cb.isSelected()) cb.setDisable(disableOthers);
+        });
+    }
+
+    private void setupToppings() {
+        JSONObject toppings = customizations.getJSONObject("toppings");
+
+        int MAX_COLUMNS = 7;
+        int MAX_ROWS = 999;
+
+        int totalToppings = toppings.length();
+        int columns = Math.min(MAX_COLUMNS, totalToppings);
+        int row = 0, col = 0;
+
+        for (String toppingName : toppings.keySet()) {
+            if (row >= MAX_ROWS) break;
+
+            CheckBox toppingCheckBox = new CheckBox(toppingName);
+            toppingsContainer.add(toppingCheckBox, col, row);
+            toppingCheckBoxes.put(toppingName, toppingCheckBox); // Store check boxes in map for later reference
+
+            toppingCheckBox.setOnAction(event -> {
+                ensureMaxToppingsIsNotExceeded();
+            });
+
+            col++;
+            if (col >= columns) { // Move to next row when column limit is reached
+                col = 0;
+                row++;
+            }
+        }
+    }
+
     private void setupCustomizePizzaGUI() throws IOException {
         setupToggleButtons();
         setupQuantityChoiceBox();
+        setupToppings();
     }
 
     @FXML
@@ -63,19 +116,99 @@ public class CustomizePizzaController extends BaseController {
         menuController.setCustomizePizzaController(this);
         customizations = orderService.loadCustomizations();
         setupCustomizePizzaGUI();
+        cartController.setCustomizePizzaController(this);
+
+        // add to order
+        addToOrderButton.setOnAction(e -> {
+            for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
+                JSONObject orderItem = new JSONObject();
+
+                orderItem.put("name", "Customized Pizza");
+
+                ToggleButton selectedSizeButton = (ToggleButton) sizeToggleGroup.getSelectedToggle();
+                ToggleButton selectedCrustButton = (ToggleButton) crustToggleGroup.getSelectedToggle();
+                String selectedSize = selectedSizeButton.getText().toLowerCase();
+                String selectedCrust = selectedCrustButton.getText().toLowerCase();
+
+                orderItem.put("pizzaSize", selectedSize);
+                orderItem.put("crust", selectedCrust);
+
+                JSONArray selectedToppings = new JSONArray();
+                toppingCheckBoxes.values().forEach(cb -> {
+                    if (cb.isSelected()) {
+                        selectedToppings.put(cb.getText().toLowerCase());
+                    };
+                });
+
+                orderItem.put("toppings", selectedToppings);
+
+                try {
+
+                    if (orderItemId == 0) {
+                        orderService.addOrderItem(orderItem);
+                        sceneController.switchScene("Menu"); // Switch to menu so user can continue to add items
+                    } else {
+                        orderService.updateOrderItem(orderItemId, orderItem); // If there was an order item then we update the order item selected to be edited
+                        sceneController.switchScene("Cart"); // Switch to cart so user can see their changes
+                        break;
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+    }
+
+    // Set default customizations
+
+    private void setDefaultPizzaSize(String pizzaSize) {
+        switch (pizzaSize) {
+            case "personal":
+                personalButton.setSelected(true);
+            case "small":
+                smallButton.setSelected(true);
+            case "medium":
+                mediumButton.setSelected(true);
+            case "large":
+                largeButton.setSelected(true);
+            default:
+                mediumButton.setSelected(true);
+        };
+    }
+
+    private void setDefaultCrustSize(String crust) {
+        switch (crust) {
+            case "regular":
+                regularButton.setSelected(true);
+            case "thin":
+                thinButton.setSelected(true);
+            case "stuffed":
+                stuffedButton.setSelected(true);
+            default:
+                regularButton.setSelected(true);
+        };
+    }
+
+    private void setDefaultToppings(JSONArray itemToppings) {
+        for (int i = 0; i < itemToppings.length(); i++) {
+            String toppingName = itemToppings.getString(i);
+            toppingCheckBoxes.get(toppingName).setSelected(true); // Get topping check box by its name and then set it to true because it was selected by default
+        }
+        ensureMaxToppingsIsNotExceeded();
     }
 
     // Takes in an orderItem/MenuItem to get default customizations and switches to this scene for customization
     public void customizePizza(JSONObject orderItem) throws IOException {
+        orderItemId = orderItem.optInt("orderItemId"); // try to get an order item id, if there is not one (0) this is a menu item not an order item from the cart
         String pizzaSize = orderItem.getString("pizzaSize");
         String crust = orderItem.getString("crust");
-        JSONArray toppings = orderItem.getJSONArray("toppings");
-        for (int i = 0; i < toppings.length(); i++) {
-            String toppingName = toppings.getString(i);
+        JSONArray itemToppings = orderItem.getJSONArray("toppings");
 
-        }
+        setDefaultPizzaSize(pizzaSize);
+        setDefaultCrustSize(crust);
+        setDefaultToppings(itemToppings);
+
         sceneController.switchScene("CustomizePizza");
     }
-
 
 }

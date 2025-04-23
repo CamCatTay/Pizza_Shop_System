@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="customize-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.CustomizePizzaController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="1056.0" styleClass="customize-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.CustomizePizzaController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="customize-scroll-pane">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="420.0" prefWidth="590.0" spacing="15" styleClass="customize-container">
+            <VBox alignment="TOP_CENTER" prefHeight="489.0" prefWidth="755.0" spacing="15" styleClass="customize-container">
                <!-- Header -->
                <Label styleClass="customize-header" text="CUSTOMIZE YOUR PIZZA" />
 
@@ -40,23 +40,27 @@
                <VBox alignment="CENTER" maxWidth="150" styleClass="topping-category">
                   <Label text="Toppings" />
                </VBox>
-               <GridPane fx:id="toppingsContainer" alignment="CENTER" hgap="20" vgap="10">
-                  <columnConstraints>
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                  </columnConstraints>
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
-               </GridPane>
+               <HBox alignment="CENTER">
+                  <children>
+                     <GridPane fx:id="toppingsContainer" alignment="CENTER" hgap="20" vgap="10">
+                        <columnConstraints>
+                           <ColumnConstraints />
+                           <ColumnConstraints />
+                           <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints />
+                           <RowConstraints />
+                        </rowConstraints>
+                     </GridPane>
+                  </children>
+               </HBox>
 
                <!-- Quantity and Add to Order Section -->
                <HBox alignment="CENTER" spacing="20" styleClass="bottom-section">
                   <Label fx:id="priceLabel" styleClass="customize-price" text="[PRICE]" />
                   <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-                  <Button styleClass="add-to-order-button" text="ADD TO ORDER" />
+                  <Button fx:id="addToOrderButton" styleClass="add-to-order-button" text="ADD TO ORDER" />
                </HBox>
             </VBox>
          </content>
