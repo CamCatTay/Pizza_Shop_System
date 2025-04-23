@@ -155,7 +155,6 @@ public class CustomizePizzaController extends BaseController {
     // Set default customization option methods
 
     private void setDefaultPizzaSize(String pizzaSize) {
-        System.out.println(pizzaSize);
         switch (pizzaSize) {
             case "personal":
                 personalButton.setSelected(true);
