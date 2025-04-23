@@ -3,106 +3,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane maxHeight="-Infinity"
-           maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity"
-           prefHeight="400.0"
-           prefWidth="600.0"
-           xmlns="http://javafx.com/javafx/17.0.12"
-           xmlns:fx="http://javafx.com/fxml/1"
-           styleClass="customize-root"
-           fx:controller="pizza_shop_system.gui.CustomizePizzaController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="customize-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.CustomizePizzaController">
    <children>
-      <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="customize-scroll-pane">
+      <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="customize-scroll-pane">
          <content>
-            <VBox spacing="15" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="590.0" styleClass="customize-container">
+            <VBox alignment="TOP_CENTER" prefHeight="420.0" prefWidth="590.0" spacing="15" styleClass="customize-container">
                <!-- Header -->
-               <Label text="CUSTOMIZE YOUR PIZZA" styleClass="customize-header" />
+               <Label styleClass="customize-header" text="CUSTOMIZE YOUR PIZZA" />
 
                <!-- Size Section -->
-               <VBox styleClass="topping-category" alignment="CENTER" maxWidth="150">
+               <VBox alignment="CENTER" maxWidth="150" styleClass="topping-category">
                   <Label text="Size" />
                </VBox>
-               <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-                  <ToggleButton fx:id="personalSizeBtn" text="Personal" styleClass="choice-button"/>
-                  <ToggleButton fx:id="smallSizeBtn" text="Small" styleClass="choice-button"/>
-                  <ToggleButton fx:id="mediumSizeBtn" text="Medium" styleClass="choice-button"/>
-                  <ToggleButton fx:id="largeSizeBtn" text="Large" styleClass="choice-button"/>
-               </HBox>
+               <HBox fx:id="sizeContainer" alignment="CENTER" spacing="20" styleClass="customize-choice-container">
+                  <children>
+                     <ToggleButton fx:id="personalButton" mnemonicParsing="false" text="Personal" />
+                     <ToggleButton fx:id="smallButton" layoutX="283.0" layoutY="10.0" mnemonicParsing="false" text="Small" />
+                     <ToggleButton fx:id="mediumButton" layoutX="319.0" layoutY="10.0" mnemonicParsing="false" text="Medium" />
+                     <ToggleButton fx:id="largeButton" layoutX="355.0" layoutY="10.0" mnemonicParsing="false" text="Large" />
+                  </children></HBox>
 
                <!-- Crust Options -->
-               <VBox styleClass="topping-category" alignment="CENTER" maxWidth="150">
+               <VBox alignment="CENTER" maxWidth="150" styleClass="topping-category">
                   <Label text="Crusts" />
                </VBox>
-               <HBox spacing="20" alignment="CENTER" styleClass="customize-choice-container">
-                  <ToggleButton fx:id="regularCrustBtn" text="Regular" styleClass="choice-button"/>
-                  <ToggleButton fx:id="thinCrustBtn" text="Thin" styleClass="choice-button"/>
-                  <ToggleButton fx:id="stuffedCrustBtn" text="Stuffed Crust (+$2.00)" styleClass="choice-button"/>
-               </HBox>
+               <HBox fx:id="crustContainer" alignment="CENTER" spacing="20" styleClass="customize-choice-container">
+                  <children>
+                     <ToggleButton fx:id="regularButton" mnemonicParsing="false" text="Regular" />
+                     <ToggleButton fx:id="thinButton" layoutX="281.0" layoutY="10.0" mnemonicParsing="false" text="Thin" />
+                     <ToggleButton fx:id="stuffedButton" layoutX="319.0" layoutY="10.0" mnemonicParsing="false" text="Stuffed" />
+                  </children></HBox>
 
                <!-- Toppings Section -->
-               <Label text="UP to four toppings included!" styleClass="customize-label" />
+               <Label styleClass="customize-label" text="Select toppings (Up to 4)" />
 
-               <VBox styleClass="topping-category" alignment="CENTER" maxWidth="150">
-                  <Label text="Meats" />
+               <VBox alignment="CENTER" maxWidth="150" styleClass="topping-category">
+                  <Label text="Toppings" />
                </VBox>
-               <GridPane hgap="20" vgap="10" alignment="CENTER">
-                  <!-- Row 0 -->
-                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                     <CheckBox fx:id="pepperoniCheck"  text="Pepperoni" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                     <CheckBox fx:id="chickenCheck" text="Chicken" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
-                     <CheckBox fx:id="sausageCheck" text="Sausage" mnemonicParsing="false" />
-                  </HBox>
-
-                  <!-- Row 1 -->
-                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
-                     <CheckBox fx:id="hamCheck" text="Ham" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                     <CheckBox fx:id="baconCheck" text="Bacon" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
-                     <CheckBox fx:id="anchoviesCheck" text="Anchovies" mnemonicParsing="false" />
-                  </HBox>
-               </GridPane>
-
-               <VBox styleClass="topping-category" alignment="CENTER" maxWidth="150">
-                  <Label text="Veggies" />
-               </VBox>
-               <GridPane hgap="20" vgap="10" alignment="CENTER">
-                  <!-- Row 0 -->
-                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                     <CheckBox fx:id="onionCheck" text="Onion" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
-                     <CheckBox fx:id="jalapenoCheck" text="Jalapeno" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="2">
-                     <CheckBox fx:id="garlicCheck" text="Garlic" mnemonicParsing="false" />
-                  </HBox>
-
-                  <!-- Row 1 -->
-                  <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="0">
-                     <CheckBox fx:id="bellPepperCheck" text="Bell Pepper" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                     <CheckBox fx:id="tomatoCheck" text="Tomato" mnemonicParsing="false" />
-                  </HBox>
-                  <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="2">
-                     <CheckBox fx:id="artichokeCheck" text="Artichoke" mnemonicParsing="false" />
-                  </HBox>
+               <GridPane fx:id="toppingsContainer" alignment="CENTER" hgap="20" vgap="10">
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
                </GridPane>
 
                <!-- Quantity and Add to Order Section -->
-               <HBox spacing="20" alignment="CENTER" styleClass="bottom-section">
-                  <Label fx:id="priceLabel" text="[PRICE]" styleClass="customize-price" />
+               <HBox alignment="CENTER" spacing="20" styleClass="bottom-section">
+                  <Label fx:id="priceLabel" styleClass="customize-price" text="[PRICE]" />
                   <ChoiceBox fx:id="quantityChoiceBox" prefWidth="70.0" styleClass="quantity-choice" />
-                  <Button text="ADD TO ORDER" styleClass="add-to-order-button" onAction="#handleAddToOrder"/>
+                  <Button styleClass="add-to-order-button" text="ADD TO ORDER" />
                </HBox>
             </VBox>
          </content>
