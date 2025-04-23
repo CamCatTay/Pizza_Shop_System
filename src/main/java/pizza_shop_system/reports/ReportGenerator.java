@@ -6,14 +6,30 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportGenerator {
 
+    // Helper method to get user's name by accountId
+    private static String getUserNameByAccountId(int accountId) throws IOException {
+        String accountsContent = Files.readString(Paths.get("data_files/users.json"));
+        JSONObject accountsRoot = new JSONObject(accountsContent);
+        JSONArray usersArray = accountsRoot.getJSONArray("users");
+
+        for (int i = 0; i < usersArray.length(); i++) {
+            JSONObject user = usersArray.getJSONObject(i);
+            if (user.getInt("user_id") == accountId) {
+                return user.getString("name");
+            }
+        }
+
+        return "Unknown User"; // In case no matching account is found
+    }
+
+    // Read orders within a date range
     public static List<JSONObject> readOrders(LocalDate startDate, LocalDate endDate) throws IOException {
         List<JSONObject> matchingOrders = new ArrayList<>();
         String content = Files.readString(Paths.get("data_files/orders.json"));
@@ -23,7 +39,6 @@ public class ReportGenerator {
         for (int i = 0; i < ordersArray.length(); i++) {
             JSONObject order = ordersArray.getJSONObject(i);
 
-            // Skip if no date present
             if (!order.has("date")) {
                 System.err.println("Skipping order without date: " + order.optInt("orderId", -1));
                 continue;
@@ -40,7 +55,7 @@ public class ReportGenerator {
         return matchingOrders;
     }
 
-
+    // Generate daily report
     public static String generateDailyReport(LocalDate specifiedDate) throws IOException {
         List<JSONObject> orders = readOrders(specifiedDate, specifiedDate);
 
@@ -52,13 +67,6 @@ public class ReportGenerator {
         double totalTax = 0;
         double totalSubtotal = 0;
         int totalOrders = 0;
-
-        for (JSONObject order : orders) {
-            totalSubtotal += order.getDouble("subtotal");
-            totalTax += order.getDouble("tax");
-            totalSales += order.getDouble("total");
-            totalOrders++;
-        }
 
         StringBuilder report = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
@@ -78,7 +86,10 @@ public class ReportGenerator {
             JSONObject orderInfo = order.getJSONObject("orderInformation");
             JSONObject paymentInfo = order.getJSONObject("paymentInformation");
 
-            report.append("Order #").append(orderId).append("\n");
+            int accountId = order.getInt("accountId");
+            String userName = getUserNameByAccountId(accountId);
+
+            report.append(userName).append(" Order #").append(orderId).append("\n");
 
             JSONArray items = order.getJSONArray("orderItems");
             for (int i = 0; i < items.length(); i++) {
@@ -98,16 +109,14 @@ public class ReportGenerator {
         return report.toString();
     }
 
+    // Generate weekly report
+    public static String generateWeeklyReport(LocalDate startDate) throws IOException {
+        LocalDate endDate = startDate.plusDays(6); // Get the end date of the week (7 days from start)
 
-    public static String generateWeeklyReport(LocalDate startDate, LocalDate endDate) throws IOException {
         List<JSONObject> orders = readOrders(startDate, endDate);
 
         if (orders.isEmpty()) {
-            return "There are no orders from "
-                    + startDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
-                    + " to "
-                    + endDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
-                    + "!";
+            return "There are no orders for this week!";
         }
 
         double totalSales = 0;
@@ -115,18 +124,11 @@ public class ReportGenerator {
         double totalSubtotal = 0;
         int totalOrders = 0;
 
-        for (JSONObject order : orders) {
-            totalSubtotal += order.optDouble("subtotal", 0.0);
-            totalTax += order.optDouble("tax", 0.0);
-            totalSales += order.optDouble("total", order.optDouble("subtotal", 0.0) + order.optDouble("tax", 0.0));
-            totalOrders++;
-        }
-
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         StringBuilder report = new StringBuilder();
-        report.append("Weekly Report\n")
-                .append("From: ").append(startDate.format(fmt))
-                .append(" To: ").append(endDate.format(fmt)).append("\n")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+
+        report.append("Weekly Report for ").append(startDate.format(formatter))
+                .append(" to ").append(endDate.format(formatter)).append("\n")
                 .append("Total Orders: ").append(totalOrders).append("\n")
                 .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
                 .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
@@ -135,35 +137,29 @@ public class ReportGenerator {
 
         for (JSONObject order : orders) {
             int orderId = order.getInt("orderId");
-            double subtotal = order.optDouble("subtotal", 0.0);
-            double tax = order.optDouble("tax", 0.0);
-            double total = order.optDouble("total", subtotal + tax);
+            double subtotal = order.getDouble("subtotal");
+            double tax = order.getDouble("tax");
+            double total = order.getDouble("total");
+            JSONObject orderInfo = order.getJSONObject("orderInformation");
+            JSONObject paymentInfo = order.getJSONObject("paymentInformation");
 
-            JSONObject info = order.optJSONObject("orderInformation");
-            JSONObject pay = order.optJSONObject("paymentInformation");
+            int accountId = order.getInt("accountId");
+            String userName = getUserNameByAccountId(accountId);
 
-            report.append("Order #").append(orderId).append("\n");
+            report.append(userName).append(" Order #").append(orderId).append("\n");
 
             JSONArray items = order.getJSONArray("orderItems");
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-                String name = item.getString("name");
-                double price = item.optDouble("price", 0.0);
-                report.append(name)
-                        .append("\t$").append(String.format("%.2f", price))
-                        .append("\n");
+                report.append(item.getString("name"))
+                        .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
-            report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n")
-                    .append("Tax: $").append(String.format("%.2f", tax)).append("\n")
-                    .append("Total: $").append(String.format("%.2f", total)).append("\n");
-
-            if (pay != null) {
-                report.append("Payment Method: ").append(pay.optString("paymentMethod", "N/A")).append("\n");
-            }
-            if (info != null) {
-                report.append("Order Type: ").append(info.optString("orderType", "N/A")).append("\n");
-            }
+            report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
+            report.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
+            report.append("Total: $").append(String.format("%.2f", total)).append("\n");
+            report.append("Payment Method: ").append(paymentInfo.getString("paymentMethod")).append("\n");
+            report.append("Order Type: ").append(orderInfo.getString("orderType")).append("\n");
             report.append("__________________________________\n");
         }
 

@@ -104,8 +104,7 @@ public class ReportsController extends BaseController {
             if ("Daily Report".equals(reportType)) {
                 reportContent = ReportGenerator.generateDailyReport(selectedDate);
             } else if ("Weekly Report".equals(reportType)) {
-                LocalDate endDate = selectedDate.plusDays(6);
-                reportContent = ReportGenerator.generateWeeklyReport(selectedDate, endDate);
+                reportContent = ReportGenerator.generateWeeklyReport(selectedDate);
             }
 
             reportTextArea.setText(reportContent != null ? reportContent : "No data available.");
