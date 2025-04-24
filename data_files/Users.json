@@ -43,5 +43,15 @@
         "name": "EZ Login",
         "phone_number": "Random",
         "email": "1"
+    },
+
+    {
+        "password": "2",
+        "account_type": "manager",
+        "address": "Random",
+        "user_id": 6,
+        "name": "EZ Login Manager",
+        "phone_number": "Random",
+        "email": "2"
     }
 ]}
