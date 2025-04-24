@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public class ReportsController extends BaseController {
 
@@ -47,15 +48,34 @@ public class ReportsController extends BaseController {
         datePicker.setEditable(true); // Allow user to type in the DatePicker
 
         // Add a listener to detect text changes in the DatePicker's text field
-        datePicker.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (isValidDate(newValue)) {
-                LocalDate typedDate = LocalDate.parse(newValue, dateFormatter);
-                datePicker.setValue(typedDate); // Update the DatePicker value with the typed date
+        datePicker.getEditor().textProperty().addListener((_, _, newValue) -> {
+
+            // List of all possible (valid) input formats for the date
+            List<String> possibleFormats = List.of("M/d/yyyy", "MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy");
+            LocalDate parsedDate = null;
+
+            // Attempt to parse each possibleFormat until one succeeds
+            for (String format : possibleFormats) {
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                    parsedDate = LocalDate.parse(newValue, formatter);
+                    break;
+                } catch (DateTimeParseException ignored) {
+                }
+            }
+
+            // If there is a parsedDate then it is converted into the DatePickers format and DatePickers value is updated, otherwise its invalid input and is ignored
+            if (parsedDate != null) {
+                String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                datePicker.setValue(parsedDate);
+                System.out.println("Converted Date: " + formattedDate);
+            } else {
+                System.out.println("Invalid date format, ignoring input.");
             }
         });
 
         // Listener for report type selection
-        timeSelectionChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        timeSelectionChoiceBox.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             handleReportTypeSelection(newVal);
         });
 
