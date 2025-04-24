@@ -68,7 +68,6 @@ public class ReportsController extends BaseController {
             if (parsedDate != null) {
                 String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 datePicker.setValue(parsedDate);
-                System.out.println("Converted Date: " + formattedDate);
             } else {
                 System.out.println("Invalid date format, ignoring input.");
             }
