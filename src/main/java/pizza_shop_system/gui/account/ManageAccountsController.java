@@ -5,35 +5,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
 
-public class ManageAccountsController extends BaseController {
+import java.io.IOException;
 
+public class ManageAccountsController extends BaseController {
     @FXML
     private VBox accountsVBox;
-
     @FXML
     private Label totalAccountsLabel;
 
-    // Account records (This is just for example in sprint 1 we will take them from users file later)
-    private final String[][] accountData = {
-            {"001", "John Doe", "Customer"},
-            {"002", "Jane Smith", "Employee"},
-            {"003", "Michael Johnson", "Manager"}
-    };
+    private final AccountService accountService = new AccountService();
 
-    @FXML
-    private void initialize() {
-        // Load accounts dynamically
-        for (String[] account : accountData) {
-            addAccountRow(account[0], account[1], account[2]);
-        }
+    // Add a row to account vbox with attached id, name, and role of said account
+    private void addAccountRow(int id, String name, String role) {
 
-        // Update total accounts label
-        totalAccountsLabel.setText("Total Accounts: " + accountData.length);
-    }
-
-    private void addAccountRow(String id, String name, String role) {
         // Create an HBox for the account row
         HBox row = new HBox(10);
         row.getStyleClass().add("account-row");
@@ -51,11 +40,17 @@ public class ManageAccountsController extends BaseController {
         // Create buttons for 'Edit' and 'Delete'
         Button editButton = new Button("Edit");
         editButton.getStyleClass().add("account-button");
-        editButton.setOnAction(e -> handleEdit(id));
+        editButton.setOnAction(e -> editAccount(id));
 
         Button deleteButton = new Button("Delete");
         deleteButton.getStyleClass().add("account-button");
-        deleteButton.setOnAction(e -> handleDelete(id));
+        deleteButton.setOnAction(e -> {
+            try {
+                removeAccount(id);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         // Add all elements to the HBox
         row.getChildren().addAll(idLabel, nameLabel, roleLabel, editButton, deleteButton);
@@ -64,13 +59,35 @@ public class ManageAccountsController extends BaseController {
         accountsVBox.getChildren().add(row);
     }
 
-    private void handleEdit(String id) {
-        System.out.println("Edit button clicked for User ID: " + id);
-        // Add logic here to edit account (e.g., open a dialog)
+    // edit the information of selected account id
+    private void editAccount(int id) {
+        System.out.println("Editing account " + id + " not implemented yet");
     }
 
-    private void handleDelete(String id) {
-        System.out.println("Delete button clicked for User ID: " + id);
-        // Add logic here to delete account
+    // remove selected account id from files
+    private void removeAccount(int id) throws IOException {
+        accountService.removeUser(id);
+        updateAccountsDisplay();
     }
+
+    // display all the account information of all users in Users.json
+    public void updateAccountsDisplay() throws IOException {
+        accountsVBox.getChildren().clear(); // Clear previous accounts
+
+        int activeUserId = accountService.getActiveUserId();
+        JSONArray users = accountService.loadUsers();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            int userId = user.getInt("user_id");
+            if (userId == activeUserId) {continue;} // skip over the current manager account so it cannot be removed by mistake
+            addAccountRow(userId, user.getString("name"), user.getString("account_type"));
+        }
+    }
+
+    @FXML
+    private void initialize() throws IOException {
+        accountService.setManageAccountsController(this);
+    }
+
 }
