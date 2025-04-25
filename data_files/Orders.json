@@ -131,31 +131,22 @@
             "nextOrderItemId": 4
         },
         {
-            "total": 25.97,
+            "total": 14.22,
             "orderId": 24,
-            "subtotal": 24.28,
-            "tax": 1.69,
-            "orderItems": [
-                {
-                    "orderItemId": 6,
-                    "price": 10.99,
-                    "pizzaSize": "small",
-                    "toppings": ["pepperoni"],
-                    "crust": "regular"
-                },
-                {
-                    "orderItemId": 7,
-                    "price": 13.29,
-                    "pizzaSize": "medium",
-                    "toppings": [
-                        "onion",
-                        "sausage",
-                        "bellpepper",
-                        "pepperoni"
-                    ],
-                    "crust": "regular"
-                }
-            ],
+            "subtotal": 13.29,
+            "tax": 0.93,
+            "orderItems": [{
+                "orderItemId": 7,
+                "price": 13.29,
+                "pizzaSize": "medium",
+                "toppings": [
+                    "onion",
+                    "sausage",
+                    "bellpepper",
+                    "pepperoni"
+                ],
+                "crust": "regular"
+            }],
             "nextOrderItemId": 8
         }
     ]

@@ -26,14 +26,23 @@
                 <Label styleClass="checkout-title" text="Cart" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
                 <!-- Scrollable Order Items -->
-                <ScrollPane prefHeight="200.0" prefWidth="580.0" styleClass="order-scroll" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+                <ScrollPane fx:id="cartItemsScrollPane" maxWidth="1.7976931348623157E308" prefHeight="200.0" styleClass="order-scroll" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
                     <content>
                         <VBox fx:id="cartItemsVBox" spacing="10.0" styleClass="order-container">
                      <children>
-                        <HBox prefHeight="100.0" VBox.vgrow="SOMETIMES">
+                        <VBox VBox.vgrow="SOMETIMES">
                            <children>
-                              <Label text="Super long pizza name that does not fit unless this grows" HBox.hgrow="SOMETIMES" />
-                           </children></HBox>
+                              <HBox prefHeight="24.0">
+                                 <children>
+                                    <Label text="Super long pizza name that does not fit unless this grows" HBox.hgrow="SOMETIMES" />
+                                    <Region prefHeight="67.0" prefWidth="200.0" />
+                                    <Label layoutX="10.0" layoutY="10.0" text="[Price]" />
+                                    <Button mnemonicParsing="false" text="Button" />
+                                    <Button mnemonicParsing="false" text="Button" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children></VBox>
                     </content>
                 </ScrollPane>

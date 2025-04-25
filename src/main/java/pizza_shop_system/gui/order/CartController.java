@@ -1,5 +1,6 @@
 package pizza_shop_system.gui.order;
 
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ public class CartController extends BaseController {
     private static CustomizePizzaController customizePizzaController;
     private static CustomizeBeverageController customizeBeverageController;
 
+    @FXML private ScrollPane cartItemsScrollPane;
     @FXML private Button buttonCheckout;
     @FXML private VBox cartItemsVBox;
     @FXML private Label subTotalLabel;
@@ -89,14 +91,6 @@ public class CartController extends BaseController {
 
             orderItem.put("name", name);
 
-            Label nameLabel = new Label(name);
-            nameLabel.setStyle("-fx-font-weight: bold;");
-            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
-
-            Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
-            priceLabel.setPrefWidth(80);
-            priceLabel.setStyle("-fx-font-weight: bold;");
-
             // remove button
             Button removeButton = new Button("Remove");
             removeButton.setOnAction(_ -> {
@@ -128,17 +122,43 @@ public class CartController extends BaseController {
             }
              */
 
+            Label nameLabel = new Label(name);
+            nameLabel.setStyle("-fx-font-weight: bold;");
+            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
+            Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
+            priceLabel.setPrefWidth(80);
+            priceLabel.setStyle("-fx-font-weight: bold;");
+
+            System.out.println(priceLabel.getWidth());
+
+            // Ensure it fills width of application screen
+            cartItemsScrollPane.setFitToWidth(true);
+
+            // Ensure it fills the width dynamically
             VBox itemInfoBox = new VBox(nameLabel);
-            itemInfoBox.setSpacing(2);
-            itemInfoBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            itemInfoBox.prefWidthProperty().bind(cartItemsScrollPane.widthProperty());
 
-            Region region = new Region(); // Region to push price and edit elements to the far right
-            HBox.setHgrow(region, Priority.SOMETIMES);
+            // Ensure it expands as needed
+            nameLabel.setMaxWidth(Region.USE_COMPUTED_SIZE);
+            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            nameLabel.setStyle("-fx-font-weight: bold; -fx-background-color: #FFD700;");
+            HBox.setHgrow(nameLabel, Priority.ALWAYS);
+
+            // Push other elements (priceLabel, buttons) to the right
+            Region region = new Region();
+            region.setStyle("-fx-background-color: #FFC0CB; -fx-border-color: #000; -fx-border-width: 1px;");
             region.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            HBox.setHgrow(region, Priority.ALWAYS);
 
+            priceLabel.setStyle(" -fx-background-color: green;");
+
+            // Ensure the row fills the ScrollPane width
             HBox row = new HBox(10, itemInfoBox, region, priceLabel, removeButton, editButton);
-            row.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            row.prefWidthProperty().bind(cartItemsScrollPane.widthProperty());
             row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
+            HBox.setHgrow(row, Priority.ALWAYS);
+
             return row;
         } catch (Exception e) {
             System.out.println("Error creating row for item: " + orderItem.toString());
