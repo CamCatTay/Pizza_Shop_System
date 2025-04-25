@@ -64,8 +64,6 @@ public class AccountMenuController extends BaseController {
                 System.out.println("Could not set text of status label " + e.getClass());
             }
         }).start();
-
-
     }
 
     private void saveAccountInformation() throws IOException {
