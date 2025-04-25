@@ -108,5 +108,6 @@ public class NavigationBarController extends BaseController {
         buttonForward.setOnAction(_ -> sceneController.switchToForwardScene());
         setHomeButtonImage();
         setBackAndFowardButtonImage();
+        navigationBar.setViewOrder(-1); // Keep navbar on top of all other scenes so its drop shadow can be seen
     }
 }

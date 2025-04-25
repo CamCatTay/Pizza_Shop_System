@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="401.0" prefWidth="727.0" styleClass="checkout-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.CartController">
+<StackPane prefHeight="401.0" prefWidth="727.0" styleClass="cart-stackpane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.CartController">
     <children>
         <!-- GridPane to Organize Content -->
         <GridPane alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="checkout-grid">
@@ -11,10 +12,8 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
             </columnConstraints>
             <rowConstraints>
-                <!-- Title Row -->
-                <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
                 <!-- Cart Items ScrollPane -->
-                <RowConstraints minHeight="200.0" prefHeight="200.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="387.0" minHeight="200.0" prefHeight="228.0" vgrow="ALWAYS" />
                 <!-- Cart Totals -->
                 <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="NEVER" />
                 <!-- Checkout Button Row -->
@@ -22,11 +21,9 @@
             </rowConstraints>
 
             <children>
-                <!-- Title Label -->
-                <Label styleClass="checkout-title" text="Cart" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
                 <!-- Scrollable Order Items -->
-                <ScrollPane fx:id="cartItemsScrollPane" maxWidth="1.7976931348623157E308" prefHeight="200.0" styleClass="order-scroll" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+                <ScrollPane fx:id="cartItemsScrollPane" maxWidth="1.7976931348623157E308" prefHeight="200.0" styleClass="order-scroll" GridPane.hgrow="ALWAYS" GridPane.vgrow="SOMETIMES">
                     <content>
                         <VBox fx:id="cartItemsVBox" spacing="10.0" styleClass="order-container">
                      <children>
@@ -48,7 +45,7 @@
                 </ScrollPane>
 
                 <!-- Totals Section -->
-                <VBox prefWidth="580.0" spacing="10.0" styleClass="totals-container" GridPane.rowIndex="2">
+                <VBox prefWidth="580.0" spacing="10.0" styleClass="totals-container" GridPane.rowIndex="1">
                     <HBox spacing="10.0" styleClass="totals-line">
                         <Label styleClass="cart-label" text="Sub Total:" />
                         <Label fx:id="subTotalLabel" styleClass="cart-value" text="+$16.98" />
@@ -64,8 +61,11 @@
                 </VBox>
 
                 <!-- Checkout Button -->
-                <Button fx:id="buttonCheckout" prefHeight="40.0" prefWidth="200.0" styleClass="checkout-button" text="CHECKOUT" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                <Button fx:id="buttonCheckout" prefHeight="40.0" prefWidth="200.0" styleClass="cart-checkout-button" text="CHECKOUT" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             </children>
         </GridPane>
     </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </StackPane>

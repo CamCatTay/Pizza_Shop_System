@@ -131,23 +131,40 @@
             "nextOrderItemId": 4
         },
         {
-            "total": 14.22,
+            "total": 15.37,
             "orderId": 24,
-            "subtotal": 13.29,
-            "tax": 0.93,
-            "orderItems": [{
-                "orderItemId": 7,
-                "price": 13.29,
-                "pizzaSize": "medium",
-                "toppings": [
-                    "onion",
-                    "sausage",
-                    "bellpepper",
-                    "pepperoni"
-                ],
-                "crust": "regular"
-            }],
-            "nextOrderItemId": 8
+            "subtotal": 14.37,
+            "tax": 1,
+            "orderItems": [
+                {
+                    "orderItemId": 8,
+                    "price": 10.99,
+                    "name": "Hawaiian Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": ["ham"],
+                    "menuItemId": 6,
+                    "crust": "regular"
+                },
+                {
+                    "beverageSize": "medium",
+                    "orderItemId": 9,
+                    "price": 1.69,
+                    "name": "Lemonade",
+                    "ice": "regular",
+                    "category": "Beverage",
+                    "menuItemId": 8
+                },
+                {
+                    "beverageSize": "medium",
+                    "orderItemId": 10,
+                    "price": 1.69,
+                    "name": "Green Tea",
+                    "ice": "regular",
+                    "category": "Beverage",
+                    "menuItemId": 11
+                }
+            ],
+            "nextOrderItemId": 11
         }
     ]
 }

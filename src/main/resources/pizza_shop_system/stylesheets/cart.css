@@ -79,3 +79,40 @@
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
+
+.cart-checkout-button {
+    -fx-background-color: #58A4D7;
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Cart Items Display */
+.cart-item-row {
+    -fx-padding: 10;
+    -fx-background-color: #f2f2f2;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.cart-item-name {
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+}
+
+.cart-item-price {
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+}
+
+.cart-edit-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.cart-remove-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

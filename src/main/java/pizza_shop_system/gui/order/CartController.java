@@ -93,6 +93,7 @@ public class CartController extends BaseController {
 
             // remove button
             Button removeButton = new Button("Remove");
+            removeButton.getStyleClass().add("cart-remove-button");
             removeButton.setOnAction(_ -> {
                 try {
                     removeItemFromCart(orderItem);
@@ -103,6 +104,7 @@ public class CartController extends BaseController {
 
             // edit button
             Button editButton = new Button("Edit");
+            editButton.getStyleClass().add("cart-edit-button");
             editButton.setOnAction(_ -> {
                 try {
                     editItemInCart(orderItem);
@@ -111,55 +113,41 @@ public class CartController extends BaseController {
                 }
             });
 
+            // Setup cart item vbox
+            cartItemsVBox.setFillWidth(true);
 
-            // For displaying the customizations of an item. Implement after customizations are complete.
-            /*
-            VBox descriptionBox = new VBox();
-            if (item.getToppings() != null && !item.getToppings().isEmpty()) {
-                Label toppingsLabel = new Label("Toppings: " + String.join(", ", item.getToppings()));
-                toppingsLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #555;");
-                descriptionBox.getChildren().add(toppingsLabel);
-            }
-             */
-
-            Label nameLabel = new Label(name);
-            nameLabel.setStyle("-fx-font-weight: bold;");
-            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
-
-            Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
-            priceLabel.setPrefWidth(80);
-            priceLabel.setStyle("-fx-font-weight: bold;");
-
-            System.out.println(priceLabel.getWidth());
-
-            // Ensure it fills width of application screen
+            // Setup scroll pane
             cartItemsScrollPane.setFitToWidth(true);
 
-            // Ensure it fills the width dynamically
-            VBox itemInfoBox = new VBox(nameLabel);
-            itemInfoBox.prefWidthProperty().bind(cartItemsScrollPane.widthProperty());
+            // Setup item row
+            HBox itemRow = new HBox();
+            itemRow.setSpacing(10);
+            itemRow.setMaxWidth(Double.MAX_VALUE);
+            itemRow.getStyleClass().add("cart-item-row");
 
-            // Ensure it expands as needed
-            nameLabel.setMaxWidth(Region.USE_COMPUTED_SIZE);
-            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            nameLabel.setStyle("-fx-font-weight: bold; -fx-background-color: #FFD700;");
-            HBox.setHgrow(nameLabel, Priority.ALWAYS);
+            // Setup name label
+            Label nameLabel = new Label(name);
+            nameLabel.getStyleClass().add("cart-item-name");
+            nameLabel.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            nameLabel.setMaxHeight(Double.MAX_VALUE);
 
-            // Push other elements (priceLabel, buttons) to the right
-            Region region = new Region();
-            region.setStyle("-fx-background-color: #FFC0CB; -fx-border-color: #000; -fx-border-width: 1px;");
-            region.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            HBox.setHgrow(region, Priority.ALWAYS);
+            // Setup region
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.SOMETIMES);
+            spacer.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
-            priceLabel.setStyle(" -fx-background-color: green;");
+            // Setup price label
+            double orderItemPrice = orderItem.optDouble("price");
+            String price = "$" + Double.toString(orderItemPrice);
+            Label priceLabel = new Label(price);
+            priceLabel.getStyleClass().add("cart-item-price");
+            priceLabel.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            priceLabel.setMaxHeight(Double.MAX_VALUE);
 
-            // Ensure the row fills the ScrollPane width
-            HBox row = new HBox(10, itemInfoBox, region, priceLabel, removeButton, editButton);
-            row.prefWidthProperty().bind(cartItemsScrollPane.widthProperty());
-            row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
-            HBox.setHgrow(row, Priority.ALWAYS);
+            // Add all elements to item row
+            itemRow.getChildren().addAll(nameLabel, spacer, priceLabel, removeButton, editButton);
 
-            return row;
+            return itemRow;
         } catch (Exception e) {
             System.out.println("Error creating row for item: " + orderItem.toString());
             e.printStackTrace();

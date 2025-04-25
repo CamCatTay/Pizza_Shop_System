@@ -3,6 +3,7 @@
     "pepperoni": 1.00,
     "chicken": 1.50,
     "sausage": 1.30,
+    "extra cheese": 1.00,
     "ham": 0.00,
     "bacon": 0.00,
     "anchovies": 0.00,
@@ -11,7 +12,7 @@
     "garlic": 0.00,
     "bellpepper": 0.00,
     "tomato": 0.00,
-    "artichoke": 0.00
+    "artichoke": 0.00,
   },
 
   "pizzaSizes": {
