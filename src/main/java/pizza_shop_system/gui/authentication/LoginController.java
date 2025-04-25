@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import pizza_shop_system.account.services.AccountService;
+import pizza_shop_system.gui.account.AccountMenuController;
 import pizza_shop_system.gui.base.BaseController;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class LoginController extends BaseController {
                 var user = accountService.getActiveUser();
                 if (user != null) {
                     if ("manager".equalsIgnoreCase(user.getAccountType())) {
-                        sceneController.switchScene("ManagerHome");
+                        sceneController.switchScene("AccountMenu");
                     } else {
                         sceneController.switchScene("Menu");
                     }
@@ -47,6 +48,7 @@ public class LoginController extends BaseController {
         }
     }
 
+    @FXML
     public void initialize() {
         loginButton.setOnAction(e -> {
             try {

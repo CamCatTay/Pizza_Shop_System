@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
 
 import java.util.Objects;
@@ -15,10 +16,18 @@ public class HomeController extends BaseController {
     @FXML
     private ImageView logoView;
 
+    private final AccountService accountService = new AccountService();
+
     @FXML
     private void initialize() {
         logoView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
         orderButton.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
+        buttonLogin.setOnAction(e -> {
+            if (accountService.getActiveUserId() != 0) {
+                sceneController.switchScene("AccountMenu");
+            } else {
+                sceneController.switchScene("Login");
+            }
+        });
     }
 }

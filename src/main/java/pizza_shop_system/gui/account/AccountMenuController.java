@@ -22,7 +22,7 @@ public class AccountMenuController extends BaseController {
     @FXML
     private PasswordField oldPasswordField, newPasswordField;
     @FXML
-    private Button saveButton, generateReportsButton, manageAccountsButton;
+    private Button saveButton, generateReportsButton, manageAccountsButton, logoutButton;
     @FXML
     private StackPane managerMenusContainer;
 
@@ -72,13 +72,30 @@ public class AccountMenuController extends BaseController {
         setSaveStatusLabel("Saved!", 1);
     }
 
+    private void logout() {
+        accountService.logout();
+        sceneController.switchScene("Login");
+    }
+
+    public void setManagerMenuVisible(boolean visible) {
+        if (visible) {
+            managerMenusContainer.setVisible(true);
+            accountTypeLabel.setText("Manager"); // Can implicitly set the account type here as well
+        } else {
+            managerMenusContainer.setVisible(false);
+            accountTypeLabel.setText("Customer");
+        };
+    }
+
     @FXML
     public void initialize() {
+        accountService.setAccountMenuController(this);
         managerMenusContainer.setVisible(false);
 
         // set on actions for buttons
-        generateReportsButton.setOnAction(_ -> sceneController.switchScene("GenerateReports"));
+        generateReportsButton.setOnAction(_ -> sceneController.switchScene("Reports"));
         manageAccountsButton.setOnAction(_ -> sceneController.switchScene("ManageAccounts"));
+        logoutButton.setOnAction(_ -> logout());
         saveButton.setOnAction(_ -> {
             try {
                 saveAccountInformation();

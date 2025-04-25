@@ -3,6 +3,8 @@ package pizza_shop_system.account.services;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.account.entities.User;
+import pizza_shop_system.gui.account.AccountMenuController;
+import pizza_shop_system.gui.authentication.LoginController;
 import pizza_shop_system.order.entities.CreditCard;
 
 import java.io.File;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 public class AccountService {
     private static final String DATA_FILE = "data_files/Users.json";
     private static int activeUserId = 0;
+    private static AccountMenuController accountMenuController;
 
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
@@ -168,6 +171,14 @@ public class AccountService {
             if (user.optString("email").equalsIgnoreCase(email)) {
                 if (user.optString("password").equals(password)) {
                     activeUserId = user.getInt("user_id");
+
+                    // If manager logs in then show the manager menu buttons
+                    if (user.getString("account_type").equals("manager")) {
+                        accountMenuController.setManagerMenuVisible(true);
+                    } else {
+                        accountMenuController.setManagerMenuVisible(false);
+                    }
+
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -257,5 +268,9 @@ public class AccountService {
         }
 
         return "User not found.";
+    }
+
+    public void setAccountMenuController(AccountMenuController accountMenuController) {
+        AccountService.accountMenuController = accountMenuController;
     }
 }

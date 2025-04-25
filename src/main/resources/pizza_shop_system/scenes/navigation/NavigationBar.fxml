@@ -27,7 +27,7 @@
     <Button fx:id="buttonCart" styleClass="navButton" text="CART" HBox.hgrow="ALWAYS" />
 
     <!-- Login Button -->
-    <Button fx:id="buttonLogin" styleClass="navButton" text="LOG IN" HBox.hgrow="ALWAYS" />
+    <!-- Button fx:id="buttonLogin" styleClass="navButton" text="LOG IN" HBox.hgrow="ALWAYS" / -->
 
     <!-- Account Button -->
     <Button fx:id="buttonAccount" styleClass="navButton" text="ACCOUNT" HBox.hgrow="ALWAYS" />

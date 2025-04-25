@@ -21,7 +21,7 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonCart;
     @FXML private Button buttonBack;
     @FXML private Button buttonForward;
-    @FXML private Button buttonLogin;
+    //@FXML private Button buttonLogin;
     @FXML private Button buttonAccount;
     @FXML private ImageView logoView;
 
@@ -65,7 +65,7 @@ public class NavigationBarController extends BaseController {
     public void initialize() {
         buttonHome.setOnAction(_ -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(_ -> sceneController.switchScene("Menu"));
-        buttonLogin.setOnAction(_ -> sceneController.switchScene("Login"));
+        //buttonLogin.setOnAction(_ -> sceneController.switchScene("Login"));
         buttonCart.setOnAction(_ -> sceneController.switchScene("Cart"));
         buttonAccount.setOnAction(_ -> {
             if (accountService.getActiveUserId() != 0) {
