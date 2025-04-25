@@ -3,6 +3,9 @@ package pizza_shop_system.account.services;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.account.entities.User;
+import pizza_shop_system.gui.account.AccountMenuController;
+import pizza_shop_system.gui.account.ManageAccountsController;
+import pizza_shop_system.gui.authentication.LoginController;
 import pizza_shop_system.order.entities.CreditCard;
 
 import java.io.File;
@@ -14,6 +17,8 @@ import java.time.LocalDate;
 public class AccountService {
     private static final String DATA_FILE = "data_files/Users.json";
     private static int activeUserId = 0;
+    private static AccountMenuController accountMenuController;
+    private static ManageAccountsController manageAccountsController;
 
     // Load user data from the file
     public JSONArray loadUsers() throws IOException {
@@ -168,6 +173,16 @@ public class AccountService {
             if (user.optString("email").equalsIgnoreCase(email)) {
                 if (user.optString("password").equals(password)) {
                     activeUserId = user.getInt("user_id");
+
+                    // If manager logs in then show the manager menu buttons
+                    if (user.getString("account_type").equals("manager")) {
+                        accountMenuController.setManagerMenuVisible(true);
+                        manageAccountsController.updateAccountsDisplay(); // When manager logs in update the manage accounts display
+                    } else {
+                        accountMenuController.setManagerMenuVisible(false);
+                    }
+                    accountMenuController.updateAccountInformationDisplay();
+
                     return "Success";
                 } else {
                     return "IncorrectPassword";
@@ -239,8 +254,8 @@ public class AccountService {
         return "User not found.";
     }
 
-    // Delete a user account
-    public String deleteUser(int userId) throws IOException {
+    // Remove a user account
+    public String removeUser(int userId) throws IOException {
         JSONArray users = loadUsers();
 
         // Find and remove user by ID
@@ -252,10 +267,18 @@ public class AccountService {
 
                 // Save updated users
                 saveUsers(users);
-                return "User deleted successfully.";
+                return "User removed successfully.";
             }
         }
 
         return "User not found.";
+    }
+
+    public void setAccountMenuController(AccountMenuController accountMenuController) {
+        AccountService.accountMenuController = accountMenuController;
+    }
+
+    public void setManageAccountsController(ManageAccountsController manageAccountsController) {
+        AccountService.manageAccountsController = manageAccountsController;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.account.entities.User;
+import pizza_shop_system.gui.account.AccountMenuController;
 import pizza_shop_system.gui.base.BaseController;
 
 import java.io.IOException;
@@ -21,9 +22,10 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonCart;
     @FXML private Button buttonBack;
     @FXML private Button buttonForward;
-    @FXML private Button buttonLogin;
     @FXML private Button buttonAccount;
-    @FXML private ImageView logoView;
+
+    private final AccountService accountService = new AccountService();
+    private static AccountMenuController accountMenuController;
 
     private void setHomeButtonImage() {
         ImageView imageView = new ImageView();
@@ -34,30 +36,54 @@ public class NavigationBarController extends BaseController {
         buttonHome.setGraphic(imageView);
     }
 
-    private void setBackButtonImage() {
-        ImageView imageView = new ImageView();
-        imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/left-arrow.png"))));
-        imageView.setPreserveRatio(true);
-        imageView.setFitWidth(30);
-        imageView.setFitHeight(25);
+    private void setBackAndFowardButtonImage() {
+        ImageView backButtonImageView = new ImageView();
+        backButtonImageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/left-arrow.png"))));
+        backButtonImageView.setPreserveRatio(true);
+        backButtonImageView.setFitWidth(30);
+        backButtonImageView.setFitHeight(25);
+
+        ImageView fowardButtonImageView = new ImageView();
+        fowardButtonImageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/right-arrow.png"))));
+        fowardButtonImageView.setPreserveRatio(true);
+        fowardButtonImageView.setFitWidth(30);
+        fowardButtonImageView.setFitHeight(25);
 
         // Make arrow white
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(1);
-        imageView.setEffect(colorAdjust);
+        backButtonImageView.setEffect(colorAdjust);
+        fowardButtonImageView.setEffect(colorAdjust);
 
-        buttonBack.setGraphic(imageView);
+        buttonBack.setGraphic(backButtonImageView);
+        buttonForward.setGraphic(fowardButtonImageView);
+
     }
 
+    public void setAccountMenuController(AccountMenuController accountMenuController) {
+        NavigationBarController.accountMenuController = accountMenuController;
+    }
 
     @FXML
     public void initialize() {
-        buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
-        buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
-        buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
+        buttonHome.setOnAction(_ -> sceneController.switchScene("Home"));
+        buttonMenu.setOnAction(_ -> sceneController.switchScene("Menu"));
+        buttonCart.setOnAction(_ -> sceneController.switchScene("Cart"));
+        buttonAccount.setOnAction(_ -> {
+            if (accountService.getActiveUserId() != 0) {
+                sceneController.switchScene("AccountMenu");
+                try {
+                    accountMenuController.updateAccountInformationDisplay();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                sceneController.switchScene("Login");
+            }
+        });
 
-        buttonAccount.setOnAction(e -> {
+        /*
+        buttonAccount.setOnAction(_ -> {
             try {
                 AccountService accountService = new AccountService();
                 User currentUser = accountService.getActiveUser();
@@ -76,9 +102,11 @@ public class NavigationBarController extends BaseController {
             }
         });
 
-        buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
-        buttonBack.setOnAction(e -> sceneController.switchToForwardScene());
+         */
+
+        buttonBack.setOnAction(_ -> sceneController.switchToPreviousScene());
+        buttonForward.setOnAction(_ -> sceneController.switchToForwardScene());
         setHomeButtonImage();
-        setBackButtonImage();
+        setBackAndFowardButtonImage();
     }
 }

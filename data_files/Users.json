@@ -1,23 +1,5 @@
 {"users": [
     {
-        "password": "password1",
-        "account_type": "customer",
-        "address": "123 Main St",
-        "user_id": 1,
-        "name": "John Doe",
-        "phone_number": "+1-404-123-4567",
-        "email": "customer1@example.com"
-    },
-    {
-        "password": "password2",
-        "account_type": "customer",
-        "address": "456 Elm St",
-        "user_id": 2,
-        "name": "Sarah Johnson",
-        "phone_number": "+1-770-987-6543",
-        "email": "customer2@example.com"
-    },
-    {
         "password": "password",
         "account_type": "manager",
         "address": "789 Oak St",
@@ -27,30 +9,20 @@
         "email": "manager@pizzashop.org"
     },
     {
-        "password": "1234",
-        "account_type": "customer",
-        "address": "123 Random Rd",
-        "user_id": 4,
-        "name": "Cameron Taylor",
-        "phone_number": "1112223333",
-        "email": "cam@customer.com"
-    },
-    {
         "password": "1",
         "account_type": "customer",
         "address": "Random",
         "user_id": 5,
-        "name": "EZ Login",
+        "name": "Jane Doe",
         "phone_number": "Random",
         "email": "1"
     },
-
     {
         "password": "2",
         "account_type": "manager",
         "address": "Random",
         "user_id": 6,
-        "name": "EZ Login Manager",
+        "name": "Bob Pizza",
         "phone_number": "Random",
         "email": "2"
     }

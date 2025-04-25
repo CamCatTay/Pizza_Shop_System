@@ -3,24 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="manage-accounts-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.account.ManageAccountsController">
-
-    <!-- Main Container -->
-    <children>
-        <!-- Title -->
-        <Label layoutX="20.0" layoutY="20.0" styleClass="manage-accounts-title" text="Manage Accounts" />
-
-        <!-- Scroll Pane -->
-        <ScrollPane layoutX="20.0" layoutY="60.0" prefHeight="500.0" prefWidth="760.0" styleClass="accounts-scroll-pane">
-            <content>
-                <!-- VBox to Display Accounts -->
-                <VBox fx:id="accountsVBox" spacing="10" styleClass="accounts-container" />
-            </content>
-        </ScrollPane>
-
-        <!-- Optional Footer Section -->
-        <HBox alignment="CENTER" layoutX="20.0" layoutY="570.0" prefWidth="760.0" spacing="10" styleClass="manage-footer">
-            <Label fx:id="totalAccountsLabel" styleClass="footer-label" text="Total Accounts: " />
-        </HBox>
-    </children>
-</AnchorPane>
+<StackPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.account.ManageAccountsController">
+   <children>
+      <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="691.0" prefWidth="927.0">
+         <children>
+            <Region prefHeight="50.0" prefWidth="200.0" />
+            <Label text="Manage Accounts" />
+            <Region layoutX="298.0" layoutY="10.0" prefHeight="50.0" prefWidth="200.0" />
+      
+              <!-- Scroll Pane -->
+              <ScrollPane prefHeight="500.0" prefWidth="760.0" styleClass="accounts-scroll-pane">
+                  <content>
+                      <!-- VBox to Display Accounts -->
+                      <VBox fx:id="accountsVBox" spacing="10" styleClass="accounts-container" />
+                  </content>
+              </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
