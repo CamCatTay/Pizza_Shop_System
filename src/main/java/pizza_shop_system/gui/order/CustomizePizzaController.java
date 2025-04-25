@@ -115,7 +115,6 @@ public class CustomizePizzaController extends BaseController {
         setupToppings();
     }
 
-    private StringUtil stringUtil = new StringUtil();
     private void addToOrder() {
         for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
             JSONObject orderItem = new JSONObject();
@@ -128,22 +127,13 @@ public class CustomizePizzaController extends BaseController {
             orderItem.put("pizzaSize", selectedSize);
             orderItem.put("crust", selectedCrust);
 
-            String name = "";
-            name += stringUtil.captilizeWord(selectedSize) + " ";
-            name += stringUtil.captilizeWord(selectedCrust) + " " + "Crust Pizza";
-
-            StringBuilder toppingsString = new StringBuilder();
-
             JSONArray selectedToppings = new JSONArray();
             toppingCheckBoxes.values().forEach(checkbox -> {
                 if (checkbox.isSelected()) {
                     String toppingName = checkbox.getText().toLowerCase();
-                    toppingsString.append(stringUtil.captilizeWord(toppingName)).append(" ");
                     selectedToppings.put(toppingName);
                 }
             });
-
-            orderItem.put("name", name);
 
             orderItem.put("toppings", selectedToppings);
 

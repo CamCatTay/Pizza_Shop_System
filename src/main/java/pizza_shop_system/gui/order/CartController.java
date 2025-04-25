@@ -57,9 +57,12 @@ public class CartController extends BaseController {
 
     private HBox createItemRow(JSONObject orderItem) {
         try {
+            /*
             Label nameLabel = new Label(orderItem.getString("name"));
             nameLabel.setStyle("-fx-font-weight: bold;");
             nameLabel.setPrefWidth(250);
+
+             */
 
             Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
             priceLabel.setPrefWidth(80);
@@ -96,7 +99,7 @@ public class CartController extends BaseController {
             }
              */
 
-            VBox itemInfoBox = new VBox(nameLabel);
+            VBox itemInfoBox = new VBox();
             itemInfoBox.setSpacing(2);
             itemInfoBox.setPrefWidth(300);
 
