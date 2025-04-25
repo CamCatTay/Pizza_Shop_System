@@ -71,12 +71,7 @@ public class ReportGenerator {
         StringBuilder report = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 
-        report.append("Daily Report for ").append(specifiedDate.format(formatter)).append("\n")
-                .append("Total Orders: ").append(totalOrders).append("\n")
-                .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
-                .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
-                .append("Total Sales: $").append(String.format("%.2f", totalSales)).append("\n")
-                .append("__________________________\n");
+        report.append("Daily Report for ").append(specifiedDate.format(formatter)).append("\n");
 
         for (JSONObject order : orders) {
             int orderId = order.getInt("orderId");
@@ -88,6 +83,12 @@ public class ReportGenerator {
 
             int accountId = order.getInt("accountId");
             String userName = getUserNameByAccountId(accountId);
+
+            // Accumulate totals
+            totalOrders++;
+            totalSubtotal += subtotal;
+            totalTax += tax;
+            totalSales += total;
 
             report.append(userName).append(" Order #").append(orderId).append("\n");
 
@@ -106,12 +107,20 @@ public class ReportGenerator {
             report.append("__________________________________\n");
         }
 
+        report.insert(report.indexOf("\n") + 1,
+                "Total Orders: " + totalOrders + "\n" +
+                        "Subtotal: $" + String.format("%.2f", totalSubtotal) + "\n" +
+                        "Tax: $" + String.format("%.2f", totalTax) + "\n" +
+                        "Total Sales: $" + String.format("%.2f", totalSales) + "\n" +
+                        "__________________________\n"
+        );
+
         return report.toString();
     }
 
     // Generate weekly report
     public static String generateWeeklyReport(LocalDate startDate) throws IOException {
-        LocalDate endDate = startDate.plusDays(6); // Get the end date of the week (7 days from start)
+        LocalDate endDate = startDate.plusDays(6); // Week: 7 days from start
 
         List<JSONObject> orders = readOrders(startDate, endDate);
 
@@ -124,16 +133,8 @@ public class ReportGenerator {
         double totalSubtotal = 0;
         int totalOrders = 0;
 
-        StringBuilder report = new StringBuilder();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-
-        report.append("Weekly Report for ").append(startDate.format(formatter))
-                .append(" to ").append(endDate.format(formatter)).append("\n")
-                .append("Total Orders: ").append(totalOrders).append("\n")
-                .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
-                .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
-                .append("Total Sales: $").append(String.format("%.2f", totalSales)).append("\n")
-                .append("__________________________\n");
+        // Build detailed report while also accumulating totals
+        StringBuilder detailedSection = new StringBuilder();
 
         for (JSONObject order : orders) {
             int orderId = order.getInt("orderId");
@@ -146,24 +147,46 @@ public class ReportGenerator {
             int accountId = order.getInt("accountId");
             String userName = getUserNameByAccountId(accountId);
 
-            report.append(userName).append(" Order #").append(orderId).append("\n");
+            detailedSection.append(userName).append(" Order #").append(orderId).append("\n");
 
             JSONArray items = order.getJSONArray("orderItems");
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-                report.append(item.getString("name"))
+                detailedSection.append(item.getString("name"))
                         .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
-            report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
-            report.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
-            report.append("Total: $").append(String.format("%.2f", total)).append("\n");
-            report.append("Payment Method: ").append(paymentInfo.getString("paymentMethod")).append("\n");
-            report.append("Order Type: ").append(orderInfo.getString("orderType")).append("\n");
-            report.append("__________________________________\n");
+            detailedSection.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
+            detailedSection.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
+            detailedSection.append("Total: $").append(String.format("%.2f", total)).append("\n");
+            detailedSection.append("Payment Method: ").append(paymentInfo.getString("paymentMethod")).append("\n");
+            detailedSection.append("Order Type: ").append(orderInfo.getString("orderType")).append("\n");
+            detailedSection.append("__________________________________\n");
+
+            // Accumulate totals
+            totalOrders++;
+            totalSubtotal += subtotal;
+            totalTax += tax;
+            totalSales += total;
         }
+
+        // Build the summary first
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        StringBuilder report = new StringBuilder();
+        report.append("Weekly Report for ").append(startDate.format(formatter))
+                .append(" to ").append(endDate.format(formatter)).append("\n")
+                .append("__________________________\n")
+                .append("Total Orders: ").append(totalOrders).append("\n")
+                .append("Subtotal: $").append(String.format("%.2f", totalSubtotal)).append("\n")
+                .append("Tax: $").append(String.format("%.2f", totalTax)).append("\n")
+                .append("Total Sales: $").append(String.format("%.2f", totalSales)).append("\n")
+                .append("__________________________\n\n");
+
+        // Append detailed orders after summary
+        report.append(detailedSection);
 
         return report.toString();
     }
+
 
 }
