@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="400.0" fx:controller="pizza_shop_system.gui.order.CartController" prefWidth="600.0" styleClass="checkout-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="401.0" prefWidth="727.0" styleClass="checkout-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.CartController">
     <children>
         <!-- GridPane to Organize Content -->
         <GridPane alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="checkout-grid">
             <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="600.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
             </columnConstraints>
             <rowConstraints>
                 <!-- Title Row -->
@@ -26,20 +26,15 @@
                 <Label styleClass="checkout-title" text="Cart" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
 
                 <!-- Scrollable Order Items -->
-                <ScrollPane prefHeight="200.0" prefWidth="580.0" styleClass="order-scroll" GridPane.rowIndex="1">
+                <ScrollPane prefHeight="200.0" prefWidth="580.0" styleClass="order-scroll" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
                     <content>
-                        <VBox fx:id="cartItemsVBox" prefHeight="200.0" prefWidth="580.0" spacing="10.0" styleClass="order-container">
-                            <!-- Examples of items in the cart
-                            <HBox spacing="10.0" styleClass="cart-item">
-                                <Label styleClass="item-name" text="Pizza Margherita" />
-                                <Label styleClass="item-price" text="+$10.99" />
-                            </HBox>
-                            <HBox spacing="10.0" styleClass="cart-item">
-                                <Label styleClass="item-name" text="Chocolate Cake" />
-                                <Label styleClass="item-price" text="+$5.99" />
-                            </HBox>
-                            -->
-                        </VBox>
+                        <VBox fx:id="cartItemsVBox" spacing="10.0" styleClass="order-container">
+                     <children>
+                        <HBox prefHeight="100.0" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <Label text="Super long pizza name that does not fit unless this grows" HBox.hgrow="SOMETIMES" />
+                           </children></HBox>
+                     </children></VBox>
                     </content>
                 </ScrollPane>
 
@@ -60,7 +55,7 @@
                 </VBox>
 
                 <!-- Checkout Button -->
-                <Button prefHeight="40.0" prefWidth="200.0" fx:id="buttonCheckout" styleClass="checkout-button" text="CHECKOUT" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                <Button fx:id="buttonCheckout" prefHeight="40.0" prefWidth="200.0" styleClass="checkout-button" text="CHECKOUT" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             </children>
         </GridPane>
     </children>

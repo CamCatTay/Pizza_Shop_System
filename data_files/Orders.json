@@ -131,30 +131,28 @@
             "nextOrderItemId": 4
         },
         {
-            "total": 27.04,
+            "total": 25.97,
             "orderId": 24,
-            "subtotal": 25.28,
-            "tax": 1.76,
+            "subtotal": 24.28,
+            "tax": 1.69,
             "orderItems": [
                 {
                     "orderItemId": 6,
-                    "price": 11.99,
-                    "pizzaSize": "medium",
+                    "price": 10.99,
+                    "pizzaSize": "small",
                     "toppings": ["pepperoni"],
                     "crust": "regular"
                 },
                 {
                     "orderItemId": 7,
                     "price": 13.29,
-                    "name": "Supreme Pizza",
                     "pizzaSize": "medium",
                     "toppings": [
+                        "onion",
                         "sausage",
                         "bellpepper",
-                        "onion",
                         "pepperoni"
                     ],
-                    "menuItemId": 3,
                     "crust": "regular"
                 }
             ],

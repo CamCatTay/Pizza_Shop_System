@@ -1,5 +1,7 @@
 package pizza_shop_system.gui.order;
 
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.order.services.OrderService;
+import pizza_shop_system.utils.StringUtil;
 
 import java.io.IOException;
 
@@ -55,14 +58,40 @@ public class CartController extends BaseController {
         buttonCheckout.setDisable(orderItems.isEmpty()); // Disable the checkout button if there are no order items
     }
 
+    private StringUtil stringUtil = new StringUtil();
+    private String createPizzaName(JSONObject orderItem) {
+        StringBuilder name = new StringBuilder();
+        String size = stringUtil.captilizeWord(orderItem.optString("pizzaSize"));
+        String crust = stringUtil.captilizeWord(orderItem.optString("crust"));
+        JSONArray toppings = orderItem.getJSONArray("toppings");
+
+        name.append(size).append(" ").append(crust).append(" Crust");
+
+        for (int i = 0; i < toppings.length(); i++) {
+            String topping = toppings.getString(i);
+            name.append(" ").append(stringUtil.captilizeWord(topping));
+        }
+
+        name.append(" Pizza");
+        return name.toString();
+    }
+
     private HBox createItemRow(JSONObject orderItem) {
         try {
-            /*
-            Label nameLabel = new Label(orderItem.getString("name"));
-            nameLabel.setStyle("-fx-font-weight: bold;");
-            nameLabel.setPrefWidth(250);
 
-             */
+            // Try to get a name first because beverages use name element to determine price
+            String name = orderItem.optString("name");
+
+            // Pizza needs to have its name dynamically created
+            if (orderItem.has("pizzaSize")) {
+                name = createPizzaName(orderItem);
+            }
+
+            orderItem.put("name", name);
+
+            Label nameLabel = new Label(name);
+            nameLabel.setStyle("-fx-font-weight: bold;");
+            nameLabel.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
             Label priceLabel = new Label(String.format("$%.2f", orderItem.getDouble("price")));
             priceLabel.setPrefWidth(80);
@@ -99,11 +128,16 @@ public class CartController extends BaseController {
             }
              */
 
-            VBox itemInfoBox = new VBox();
+            VBox itemInfoBox = new VBox(nameLabel);
             itemInfoBox.setSpacing(2);
-            itemInfoBox.setPrefWidth(300);
+            itemInfoBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
-            HBox row = new HBox(10, itemInfoBox, priceLabel, removeButton, editButton);
+            Region region = new Region(); // Region to push price and edit elements to the far right
+            HBox.setHgrow(region, Priority.SOMETIMES);
+            region.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
+            HBox row = new HBox(10, itemInfoBox, region, priceLabel, removeButton, editButton);
+            row.setPrefWidth(Region.USE_COMPUTED_SIZE);
             row.setStyle("-fx-padding: 10; -fx-background-color: #f2f2f2; -fx-border-color: #ccc; -fx-border-width: 0 0 1px 0;");
             return row;
         } catch (Exception e) {
