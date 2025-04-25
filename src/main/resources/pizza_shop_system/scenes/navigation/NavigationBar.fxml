@@ -9,7 +9,7 @@
     <Button fx:id="buttonBack" styleClass="navButton" HBox.hgrow="ALWAYS" />
 
     <!-- Forward Button -->
-    <Button fx:id="buttonForward" styleClass="navButton" text="Forward" HBox.hgrow="ALWAYS">
+    <Button fx:id="buttonForward" styleClass="navButton" HBox.hgrow="ALWAYS">
         <HBox.margin>
             <Insets />
         </HBox.margin>

@@ -36,19 +36,28 @@ public class NavigationBarController extends BaseController {
         buttonHome.setGraphic(imageView);
     }
 
-    private void setBackButtonImage() {
-        ImageView imageView = new ImageView();
-        imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/left-arrow.png"))));
-        imageView.setPreserveRatio(true);
-        imageView.setFitWidth(30);
-        imageView.setFitHeight(25);
+    private void setBackAndFowardButtonImage() {
+        ImageView backButtonImageView = new ImageView();
+        backButtonImageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/left-arrow.png"))));
+        backButtonImageView.setPreserveRatio(true);
+        backButtonImageView.setFitWidth(30);
+        backButtonImageView.setFitHeight(25);
+
+        ImageView fowardButtonImageView = new ImageView();
+        fowardButtonImageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/right-arrow.png"))));
+        fowardButtonImageView.setPreserveRatio(true);
+        fowardButtonImageView.setFitWidth(30);
+        fowardButtonImageView.setFitHeight(25);
 
         // Make arrow white
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(1);
-        imageView.setEffect(colorAdjust);
+        backButtonImageView.setEffect(colorAdjust);
+        fowardButtonImageView.setEffect(colorAdjust);
 
-        buttonBack.setGraphic(imageView);
+        buttonBack.setGraphic(backButtonImageView);
+        buttonForward.setGraphic(fowardButtonImageView);
+
     }
 
 
@@ -91,6 +100,6 @@ public class NavigationBarController extends BaseController {
         buttonBack.setOnAction(_ -> sceneController.switchToPreviousScene());
         buttonForward.setOnAction(_ -> sceneController.switchToForwardScene());
         setHomeButtonImage();
-        setBackButtonImage();
+        setBackAndFowardButtonImage();
     }
 }
