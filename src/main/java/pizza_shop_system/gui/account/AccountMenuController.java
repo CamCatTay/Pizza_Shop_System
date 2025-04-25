@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.navigation.NavigationBarController;
 
 import java.io.IOException;
 
@@ -26,10 +27,31 @@ public class AccountMenuController extends BaseController {
     @FXML
     private StackPane managerMenusContainer;
 
-    private AccountService accountService = new AccountService();
+    private final AccountService accountService = new AccountService();
+    private final NavigationBarController navigationBarController = new NavigationBarController();
 
-    public void updateAccountInformationDisplay() {
+    public void updateAccountInformationDisplay() throws IOException {
+        int activeUserId = accountService.getActiveUserId();
+        JSONArray users = accountService.loadUsers();
+        JSONObject activeUser = null;
 
+        // set the active user
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if (user.getInt("user_id") == activeUserId) {
+                activeUser = user;
+                break;
+            }
+        }
+
+        if (activeUser != null) {
+
+            nameField.setText(activeUser.getString("name"));
+            emailField.setText(activeUser.getString("email"));
+
+        } else {
+            System.out.println("Failed to load account information");
+        }
     }
 
     private void setSaveStatusLabel(String text, int waitTime) {
@@ -90,6 +112,7 @@ public class AccountMenuController extends BaseController {
     @FXML
     public void initialize() {
         accountService.setAccountMenuController(this);
+        navigationBarController.setAccountMenuController(this);
         managerMenusContainer.setVisible(false);
 
         // set on actions for buttons

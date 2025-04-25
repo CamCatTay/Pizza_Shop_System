@@ -178,6 +178,7 @@ public class AccountService {
                     } else {
                         accountMenuController.setManagerMenuVisible(false);
                     }
+                    accountMenuController.updateAccountInformationDisplay();
 
                     return "Success";
                 } else {

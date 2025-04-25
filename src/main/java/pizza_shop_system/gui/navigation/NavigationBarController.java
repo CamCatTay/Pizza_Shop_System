@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.account.entities.User;
+import pizza_shop_system.gui.account.AccountMenuController;
 import pizza_shop_system.gui.base.BaseController;
 
 import java.io.IOException;
@@ -21,11 +22,10 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonCart;
     @FXML private Button buttonBack;
     @FXML private Button buttonForward;
-    //@FXML private Button buttonLogin;
     @FXML private Button buttonAccount;
-    @FXML private ImageView logoView;
 
-    private AccountService accountService = new AccountService();
+    private final AccountService accountService = new AccountService();
+    private static AccountMenuController accountMenuController;
 
     private void setHomeButtonImage() {
         ImageView imageView = new ImageView();
@@ -60,16 +60,23 @@ public class NavigationBarController extends BaseController {
 
     }
 
+    public void setAccountMenuController(AccountMenuController accountMenuController) {
+        NavigationBarController.accountMenuController = accountMenuController;
+    }
 
     @FXML
     public void initialize() {
         buttonHome.setOnAction(_ -> sceneController.switchScene("Home"));
         buttonMenu.setOnAction(_ -> sceneController.switchScene("Menu"));
-        //buttonLogin.setOnAction(_ -> sceneController.switchScene("Login"));
         buttonCart.setOnAction(_ -> sceneController.switchScene("Cart"));
         buttonAccount.setOnAction(_ -> {
             if (accountService.getActiveUserId() != 0) {
                 sceneController.switchScene("AccountMenu");
+                try {
+                    accountMenuController.updateAccountInformationDisplay();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 sceneController.switchScene("Login");
             }
