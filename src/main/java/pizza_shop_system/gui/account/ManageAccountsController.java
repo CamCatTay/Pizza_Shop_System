@@ -5,7 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.account.entities.User;
+import pizza_shop_system.account.services.AccountService;
+
+import java.io.IOException;
 
 public class ManageAccountsController extends BaseController {
 
@@ -15,47 +18,45 @@ public class ManageAccountsController extends BaseController {
     @FXML
     private Label totalAccountsLabel;
 
-    // Account records (This is just for example in sprint 1 we will take them from users file later)
-    private final String[][] accountData = {
-            {"001", "John Doe", "Customer"},
-            {"002", "Jane Smith", "Employee"},
-            {"003", "Michael Johnson", "Manager"}
-    };
+    private AccountService accountService = new AccountService(); // Service to manage account operations
 
     @FXML
     private void initialize() {
-        // Load accounts dynamically
-        for (String[] account : accountData) {
-            addAccountRow(account[0], account[1], account[2]);
-        }
-
-        // Update total accounts label
-        totalAccountsLabel.setText("Total Accounts: " + accountData.length);
+        loadAccounts();
     }
 
-    private void addAccountRow(String id, String name, String role) {
+    private void loadAccounts() {
+        try {
+            JSONArray users = accountService.loadUsers(); // Load all users
+            accountsVBox.getChildren().clear(); // Clear existing entries
+
+            for (int i = 1; i < users.length(); i++) { // Start from 1 to skip metadata
+                JSONObject user = users.getJSONObject(i);
+                addAccountRow(user);
+            }
+
+            totalAccountsLabel.setText("Total Accounts: " + (users.length() - 1)); // Adjust for metadata
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addAccountRow(JSONObject user) {
         // Create an HBox for the account row
         HBox row = new HBox(10);
         row.getStyleClass().add("account-row");
 
         // Create labels for ID, Name, and Role
-        Label idLabel = new Label("User ID: " + id);
-        idLabel.getStyleClass().add("account-info-label");
-
-        Label nameLabel = new Label("Name: " + name);
-        nameLabel.getStyleClass().add("account-info-label");
-
-        Label roleLabel = new Label("Role: " + role);
-        roleLabel.getStyleClass().add("account-info-label");
+        Label idLabel = new Label("User ID: " + user.getInt("user_id"));
+        Label nameLabel = new Label("Name: " + user.getString("name"));
+        Label roleLabel = new Label("Role: " + user.getString("account_type"));
 
         // Create buttons for 'Edit' and 'Delete'
         Button editButton = new Button("Edit");
-        editButton.getStyleClass().add("account-button");
-        editButton.setOnAction(e -> handleEdit(id));
+        editButton.setOnAction(e -> handleEdit(user));
 
         Button deleteButton = new Button("Delete");
-        deleteButton.getStyleClass().add("account-button");
-        deleteButton.setOnAction(e -> handleDelete(id));
+        deleteButton.setOnAction(e -> handleDelete(user.getInt("user_id")));
 
         // Add all elements to the HBox
         row.getChildren().addAll(idLabel, nameLabel, roleLabel, editButton, deleteButton);
@@ -64,13 +65,23 @@ public class ManageAccountsController extends BaseController {
         accountsVBox.getChildren().add(row);
     }
 
-    private void handleEdit(String id) {
-        System.out.println("Edit button clicked for User ID: " + id);
-        // Add logic here to edit account (e.g., open a dialog)
+    private void handleEdit(JSONObject user) {
+        // Open an edit dialog or a new screen to edit user details
+        EditUserDialog dialog = new EditUserDialog(user, accountService);
+        dialog.showAndWait().ifPresent(result -> {
+            if (result) {
+                loadAccounts(); // Reload accounts after editing
+            }
+        });
     }
 
-    private void handleDelete(String id) {
-        System.out.println("Delete button clicked for User ID: " + id);
-        // Add logic here to delete account
+    private void handleDelete(int userId) {
+        try {
+            String response = accountService.deleteUser(userId);
+            System.out.println(response);
+            loadAccounts(); // Reload accounts after deletion
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
