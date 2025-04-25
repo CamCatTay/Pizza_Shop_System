@@ -127,7 +127,7 @@ public class AccountService {
 
         // Implement validation for empty fields
         if (email.isEmpty() || password.isEmpty() || verifyPassword.isEmpty() || name.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
-            return "InvalidInput";
+            return "EmptyField";
         }
 
         // Check if email already exists
