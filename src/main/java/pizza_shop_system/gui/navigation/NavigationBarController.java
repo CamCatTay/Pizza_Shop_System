@@ -25,6 +25,8 @@ public class NavigationBarController extends BaseController {
     @FXML private Button buttonAccount;
     @FXML private ImageView logoView;
 
+    private AccountService accountService = new AccountService();
+
     private void setHomeButtonImage() {
         ImageView imageView = new ImageView();
         imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
@@ -52,12 +54,20 @@ public class NavigationBarController extends BaseController {
 
     @FXML
     public void initialize() {
-        buttonHome.setOnAction(e -> sceneController.switchScene("Home"));
-        buttonMenu.setOnAction(e -> sceneController.switchScene("Menu"));
-        buttonLogin.setOnAction(e -> sceneController.switchScene("Login"));
-        buttonCart.setOnAction(e -> sceneController.switchScene("Cart"));
+        buttonHome.setOnAction(_ -> sceneController.switchScene("Home"));
+        buttonMenu.setOnAction(_ -> sceneController.switchScene("Menu"));
+        buttonLogin.setOnAction(_ -> sceneController.switchScene("Login"));
+        buttonCart.setOnAction(_ -> sceneController.switchScene("Cart"));
+        buttonAccount.setOnAction(_ -> {
+            if (accountService.getActiveUserId() != 0) {
+                sceneController.switchScene("AccountMenu");
+            } else {
+                sceneController.switchScene("Login");
+            }
+        });
 
-        buttonAccount.setOnAction(e -> {
+        /*
+        buttonAccount.setOnAction(_ -> {
             try {
                 AccountService accountService = new AccountService();
                 User currentUser = accountService.getActiveUser();
@@ -76,8 +86,10 @@ public class NavigationBarController extends BaseController {
             }
         });
 
-        buttonBack.setOnAction(e -> sceneController.switchToPreviousScene());
-        buttonBack.setOnAction(e -> sceneController.switchToForwardScene());
+         */
+
+        buttonBack.setOnAction(_ -> sceneController.switchToPreviousScene());
+        buttonForward.setOnAction(_ -> sceneController.switchToForwardScene());
         setHomeButtonImage();
         setBackButtonImage();
     }
