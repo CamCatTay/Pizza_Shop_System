@@ -155,6 +155,6 @@ public class MenuController extends BaseController {
         buttonBeverage.setOnAction(_ -> displayMenuItemsByCategory("beverage"));
         styleUtil.fadeButtonOnHover(buttonBeverage);
 
-        displayMenuItemsByCategory("all");
+        displayMenuItemsByCategory("pizza");
     }
 }
