@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.order.services.OrderService;
 import pizza_shop_system.utils.StringUtil;
 
@@ -21,6 +22,7 @@ public class CartController extends BaseController {
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
     private static CustomizeBeverageController customizeBeverageController;
+    private final StyleUtil styleUtil = new StyleUtil();
 
     @FXML private ScrollPane cartItemsScrollPane;
     @FXML private Button buttonCheckout;
@@ -35,6 +37,7 @@ public class CartController extends BaseController {
         displayCurrentOrder(orderService.loadOrders()); // Load the current order
 
         buttonCheckout.setOnAction(_ -> sceneController.switchScene("Checkout"));
+        styleUtil.fadeButtonOnHover(buttonCheckout);
     }
 
     public void displayCurrentOrder(JSONObject orderData) throws IOException {
@@ -94,6 +97,7 @@ public class CartController extends BaseController {
             // remove button
             Button removeButton = new Button("Remove");
             removeButton.getStyleClass().add("cart-remove-button");
+            styleUtil.fadeButtonOnHover(removeButton);
             removeButton.setOnAction(_ -> {
                 try {
                     removeItemFromCart(orderItem);
@@ -105,6 +109,7 @@ public class CartController extends BaseController {
             // edit button
             Button editButton = new Button("Edit");
             editButton.getStyleClass().add("cart-edit-button");
+            styleUtil.fadeButtonOnHover(editButton);
             editButton.setOnAction(_ -> {
                 try {
                     editItemInCart(orderItem);

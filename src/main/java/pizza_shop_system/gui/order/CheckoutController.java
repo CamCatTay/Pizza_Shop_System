@@ -38,6 +38,7 @@ public class CheckoutController extends BaseController {
     private static double orderTotal;
 
     private final OrderService orderService = new OrderService();
+    private final AccountService accountService = new AccountService();
 
     @FXML
     private void initialize() {
@@ -213,9 +214,12 @@ public class CheckoutController extends BaseController {
 
 
         if (success) {
-            sceneController.switchScene("Home");
-            System.out.println("Order confirmed! Total: $" + orderTotal);
-        } else {
+            if (accountService.getActiveUserId() == 0) {
+                sceneController.switchScene("Login");
+            } else
+                sceneController.switchScene("Home");
+        }
+        else {
             System.out.println("Payment failed. Please try again.");
         }
     }

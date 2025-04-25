@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.order.utils.JSONUtil;
 import pizza_shop_system.order.services.OrderService;
 
@@ -29,6 +30,7 @@ public class MenuController extends BaseController {
     private final OrderService orderService = new OrderService();
     private static CustomizePizzaController customizePizzaController;
     private static CustomizeBeverageController customizeBeverageController;
+    private final StyleUtil styleUtil = new StyleUtil();
 
     private JSONObject loadMenuItems() throws IOException {
         String MENU_ITEMS_FILE_PATH = "data_files/MenuItems.json";
@@ -58,6 +60,7 @@ public class MenuController extends BaseController {
 
             Button addToOrderButton = new Button("Add to Order");
             addToOrderButton.getStyleClass().add("button-add-to-order");
+            styleUtil.fadeButtonOnHover(addToOrderButton);
 
             // add to order action
             addToOrderButton.setOnAction(_ -> {
@@ -73,6 +76,7 @@ public class MenuController extends BaseController {
 
             Button customizeButton = new Button("Customize");
             customizeButton.getStyleClass().add("button-customize");
+            styleUtil.fadeButtonOnHover(customizeButton);
 
             // customize action
             customizeButton.setOnAction(_ -> {
@@ -146,7 +150,11 @@ public class MenuController extends BaseController {
     @FXML
     private void initialize() {
         buttonPizza.setOnAction(_ -> displayMenuItemsByCategory("pizza"));
+        styleUtil.fadeButtonOnHover(buttonPizza);
+
         buttonBeverage.setOnAction(_ -> displayMenuItemsByCategory("beverage"));
+        styleUtil.fadeButtonOnHover(buttonBeverage);
+
         displayMenuItemsByCategory("all");
     }
 }
