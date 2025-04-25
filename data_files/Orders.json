@@ -129,6 +129,14 @@
                 }
             ],
             "nextOrderItemId": 4
+        },
+        {
+            "total": 0,
+            "orderId": 24,
+            "subtotal": 0,
+            "tax": 0,
+            "orderItems": [],
+            "nextOrderItemId": 6
         }
     ]
 }

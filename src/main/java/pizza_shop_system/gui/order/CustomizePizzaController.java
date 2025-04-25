@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.order.services.OrderService;
+import pizza_shop_system.utils.StringUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -114,11 +115,10 @@ public class CustomizePizzaController extends BaseController {
         setupToppings();
     }
 
+    private StringUtil stringUtil = new StringUtil();
     private void addToOrder() {
         for (int i = 0; i < quantityChoiceBox.getValue(); i++) {
             JSONObject orderItem = new JSONObject();
-
-            orderItem.put("name", "Customized Pizza");
 
             ToggleButton selectedSizeButton = (ToggleButton) sizeToggleGroup.getSelectedToggle();
             ToggleButton selectedCrustButton = (ToggleButton) crustToggleGroup.getSelectedToggle();
@@ -128,12 +128,22 @@ public class CustomizePizzaController extends BaseController {
             orderItem.put("pizzaSize", selectedSize);
             orderItem.put("crust", selectedCrust);
 
+            String name = "";
+            name += stringUtil.captilizeWord(selectedSize) + " ";
+            name += stringUtil.captilizeWord(selectedCrust) + " " + "Crust Pizza";
+
+            StringBuilder toppingsString = new StringBuilder();
+
             JSONArray selectedToppings = new JSONArray();
-            toppingCheckBoxes.values().forEach(cb -> {
-                if (cb.isSelected()) {
-                    selectedToppings.put(cb.getText().toLowerCase());
+            toppingCheckBoxes.values().forEach(checkbox -> {
+                if (checkbox.isSelected()) {
+                    String toppingName = checkbox.getText().toLowerCase();
+                    toppingsString.append(stringUtil.captilizeWord(toppingName)).append(" ");
+                    selectedToppings.put(toppingName);
                 }
             });
+
+            orderItem.put("name", name);
 
             orderItem.put("toppings", selectedToppings);
 
