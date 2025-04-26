@@ -137,7 +137,7 @@ public class ReportsController extends BaseController {
 
     private void goBack() {
         System.out.println("Navigating back to the Manager Dashboard...");
-        switchScene("ManagerHome");
+        switchScene("AccountMenu");
     }
 
     public void showError(String message) {
