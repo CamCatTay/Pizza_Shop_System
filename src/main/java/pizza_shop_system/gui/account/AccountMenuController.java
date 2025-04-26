@@ -23,12 +23,17 @@ public class AccountMenuController extends BaseController {
     @FXML
     private PasswordField oldPasswordField, newPasswordField;
     @FXML
-    private Button saveButton, generateReportsButton, manageAccountsButton, logoutButton;
+    private Button saveButton, generateReportsButton, manageAccountsButton, logoutButton, viewTransactionsButton;
     @FXML
     private StackPane managerMenusContainer;
 
     private final AccountService accountService = new AccountService();
     private final NavigationBarController navigationBarController = new NavigationBarController();
+    private static ViewTransactionsController viewTransactionsController;
+
+    public void setViewTransactionsController(ViewTransactionsController viewTransactionsController) {
+        AccountMenuController.viewTransactionsController = viewTransactionsController;
+    }
 
     public void updateAccountInformationDisplay() throws IOException {
         int activeUserId = accountService.getActiveUserId();
@@ -120,6 +125,14 @@ public class AccountMenuController extends BaseController {
         saveButton.setOnAction(_ -> {
             try {
                 saveAccountInformation();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        viewTransactionsButton.setOnAction(_ -> {
+            try {
+                viewTransactionsController.updateTransactionsDisplay();
+                sceneController.switchScene("ViewTransactions");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -47,6 +47,22 @@ public class OrderService {
         return newOrder;
     }
 
+    public JSONArray getOrdersByAccount(int accountId) throws IOException {
+        JSONObject ordersData = loadOrders();
+        JSONArray orders = ordersData.getJSONArray("orders");
+        JSONArray ordersByAccount = new JSONArray();
+
+        for (int i = 0; i < orders.length(); i++) {
+            JSONObject order = orders.getJSONObject(i);
+            int userAccountId = order.optInt("accountId");
+            if (userAccountId != 0 && userAccountId == accountId) {
+                ordersByAccount.put(order);
+            }
+        }
+
+        return ordersByAccount;
+    }
+
     // Save changes to the orders file
     public void saveOrders(JSONObject orders) throws IOException {
         try (FileWriter file = new FileWriter(ORDERS_FILE_PATH)) {

@@ -51,7 +51,7 @@
             </HBox>
         </GridPane>
         <HBox alignment="CENTER" prefHeight="77.0" prefWidth="655.0">
-            <GridPane prefHeight="62.0" prefWidth="217.0">
+            <GridPane prefHeight="76.0" prefWidth="267.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -64,6 +64,7 @@
                 <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Save" GridPane.rowIndex="1" />
                 <Label fx:id="saveStatusLabel" alignment="CENTER" prefHeight="17.0" prefWidth="123.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Logout" GridPane.rowIndex="2" />
+            <Button fx:id="viewTransactionsButton" layoutX="10.0" layoutY="55.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="View Transactions" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </GridPane>
         </HBox>
         <Region prefHeight="12.0" prefWidth="655.0" />

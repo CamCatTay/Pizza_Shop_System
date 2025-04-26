@@ -1,99 +1,68 @@
 {
-    "nextOrderId": 24,
+    "nextOrderId": 28,
     "orders": [
         {
-            "date": "2025-04-23T04:03:19Z",
-            "accountId": 5,
-            "total": 37.41,
-            "orderId": 21,
-            "subtotal": 34.97,
-            "tax": 2.44,
-            "orderInformation": {"orderType": "Pickup"},
-            "paymentInformation": {"paymentMethod": "Cash"},
-            "orderItems": [
-                {
-                    "orderItemId": 2,
-                    "price": 9.99,
-                    "name": "Custom Pizza",
-                    "pizzaSize": "personal",
-                    "toppings": [
-                        "onion",
-                        "pepperoni",
-                        "anchovies"
-                    ],
-                    "crust": "regular"
-                },
-                {
-                    "orderItemId": 3,
-                    "price": 13.99,
-                    "name": "Customized Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": [
-                        "ham",
-                        "onion",
-                        "pepperoni",
-                        "anchovies"
-                    ],
-                    "crust": "stuffed"
-                },
-                {
-                    "orderItemId": 5,
-                    "price": 10.99,
-                    "name": "Customized Pizza",
-                    "pizzaSize": "small",
-                    "toppings": [
-                        "onion",
-                        "pepperoni"
-                    ],
-                    "crust": "regular"
-                }
-            ],
-            "nextOrderItemId": 9
-        },
-        {
-            "date": "2025-04-23T20:15:42Z",
-            "accountId": 3,
-            "total": 17.41,
-            "orderId": 22,
-            "subtotal": 16.27,
-            "tax": 1.13,
-            "orderInformation": {"orderType": "Pickup"},
-            "paymentInformation": {"paymentMethod": "Cash"},
-            "orderItems": [
-                {
-                    "beverageSize": "large",
-                    "orderItemId": 10,
-                    "price": 1.99,
-                    "name": "Coca-Cola",
-                    "ice": "extra"
-                },
-                {
-                    "orderItemId": 8,
-                    "price": 14.29,
-                    "name": "Customized Pizza",
-                    "pizzaSize": "large",
-                    "toppings": [
-                        "onion",
-                        "sausage",
-                        "bellpepper",
-                        "pepperoni"
-                    ],
-                    "crust": "regular"
-                }
-            ],
-            "nextOrderItemId": 11
-        },
-        {
-            "date": "2025-04-25T01:53:09Z",
+            "date": "2025-04-26T14:25:26Z",
             "accountId": 6,
-            "total": 36.34,
-            "orderId": 23,
-            "subtotal": 33.97,
-            "tax": 2.37,
+            "total": 12.82,
+            "orderId": 24,
+            "subtotal": 11.99,
+            "tax": 0.83,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [{
+                "orderItemId": 1,
+                "price": 11.99,
+                "name": "Pepperoni Pizza",
+                "pizzaSize": "medium",
+                "toppings": ["pepperoni"],
+                "menuItemId": 2,
+                "crust": "regular"
+            }],
+            "nextOrderItemId": 2
+        },
+        {
+            "date": "2025-04-26T14:25:41Z",
+            "accountId": 6,
+            "total": 14.63,
+            "orderId": 25,
+            "subtotal": 13.68,
+            "tax": 0.95,
             "orderInformation": {
                 "orderType": "Delivery",
-                "address": "1234 Pizza Ave"
+                "address": "123 Pizza Rd"
             },
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [
+                {
+                    "orderItemId": 1,
+                    "price": 11.99,
+                    "name": "Pepperoni Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": ["pepperoni"],
+                    "menuItemId": 2,
+                    "crust": "regular"
+                },
+                {
+                    "beverageSize": "medium",
+                    "orderItemId": 2,
+                    "price": 1.69,
+                    "name": "Milkshake",
+                    "ice": "none",
+                    "category": "Beverage",
+                    "menuItemId": 9
+                }
+            ],
+            "nextOrderItemId": 3
+        },
+        {
+            "date": "2025-04-26T14:59:37Z",
+            "accountId": 6,
+            "total": 36.88,
+            "orderId": 26,
+            "subtotal": 34.47,
+            "tax": 2.41,
+            "orderInformation": {"orderType": "Pickup"},
             "paymentInformation": {"paymentMethod": "Cash"},
             "orderItems": [
                 {
@@ -107,11 +76,14 @@
                 },
                 {
                     "orderItemId": 2,
-                    "price": 11.99,
-                    "name": "Pepperoni Pizza",
+                    "price": 12.49,
+                    "name": "BBQ Chicken Pizza",
                     "pizzaSize": "medium",
-                    "toppings": ["pepperoni"],
-                    "menuItemId": 2,
+                    "toppings": [
+                        "chicken",
+                        "bacon"
+                    ],
+                    "menuItemId": 4,
                     "crust": "regular"
                 },
                 {
@@ -131,78 +103,24 @@
             "nextOrderItemId": 4
         },
         {
-            "total": 22.6,
-            "orderId": 24,
-            "subtotal": 21.13,
-            "tax": 1.47,
+            "date": "2025-04-26T15:17:39Z",
+            "accountId": 5,
+            "total": 1.8,
+            "orderId": 27,
+            "subtotal": 1.69,
+            "tax": 0.11,
             "orderInformation": {"orderType": "Pickup"},
             "paymentInformation": {"paymentMethod": "Cash"},
-            "orderItems": [
-                {
-                    "orderItemId": 8,
-                    "price": 10.99,
-                    "name": "Hawaiian Pizza",
-                    "pizzaSize": "medium",
-                    "toppings": ["ham"],
-                    "menuItemId": 6,
-                    "crust": "regular"
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 9,
-                    "price": 1.69,
-                    "name": "Lemonade",
-                    "ice": "regular",
-                    "category": "Beverage",
-                    "menuItemId": 8
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 10,
-                    "price": 1.69,
-                    "name": "Green Tea",
-                    "ice": "regular",
-                    "category": "Beverage",
-                    "menuItemId": 11
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 11,
-                    "price": 1.69,
-                    "name": "Milkshake",
-                    "ice": "none",
-                    "category": "Beverage",
-                    "menuItemId": 9
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 12,
-                    "price": 1.69,
-                    "name": "Milkshake",
-                    "ice": "none",
-                    "category": "Beverage",
-                    "menuItemId": 9
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 13,
-                    "price": 1.69,
-                    "name": "Milkshake",
-                    "ice": "none",
-                    "category": "Beverage",
-                    "menuItemId": 9
-                },
-                {
-                    "beverageSize": "medium",
-                    "orderItemId": 14,
-                    "price": 1.69,
-                    "name": "Milkshake",
-                    "ice": "none",
-                    "category": "Beverage",
-                    "menuItemId": 9
-                }
-            ],
-            "nextOrderItemId": 15
+            "orderItems": [{
+                "beverageSize": "medium",
+                "orderItemId": 2,
+                "price": 1.69,
+                "name": "Green Tea",
+                "ice": "regular",
+                "category": "Beverage",
+                "menuItemId": 11
+            }],
+            "nextOrderItemId": 3
         }
     ]
 }

@@ -63,8 +63,9 @@ public class CartController extends BaseController {
         buttonCheckout.setDisable(orderItems.isEmpty()); // Disable the checkout button if there are no order items
     }
 
-    private StringUtil stringUtil = new StringUtil();
-    private String createPizzaName(JSONObject orderItem) {
+    private final StringUtil stringUtil = new StringUtil();
+
+    public String generatePizzaName(JSONObject orderItem) {
         StringBuilder name = new StringBuilder();
         String size = stringUtil.captilizeWord(orderItem.optString("pizzaSize"));
         String crust = stringUtil.captilizeWord(orderItem.optString("crust"));
@@ -81,15 +82,28 @@ public class CartController extends BaseController {
         return name.toString();
     }
 
+    public String generateBeverageName(JSONObject orderItem) {
+        StringBuilder name = new StringBuilder();
+        String beverage = stringUtil.captilizeWord(orderItem.optString("name"));
+        String size = stringUtil.captilizeWord(orderItem.optString("beverageSize"));
+        String ice = stringUtil.captilizeWord(orderItem.optString("ice"));
+        name.append(size).append(" ").append(beverage).append(" With ").append(ice).append(" Ice");
+        return name.toString();
+    }
+
     private HBox createItemRow(JSONObject orderItem) {
         try {
 
             // Try to get a name first because beverages use name element to determine price
             String name = orderItem.optString("name");
+            String displayName = null;
 
             // Pizza needs to have its name dynamically created
             if (orderItem.has("pizzaSize")) {
-                name = createPizzaName(orderItem);
+                name = generatePizzaName(orderItem);
+                displayName = name;
+            } else if (orderItem.has("beverageSize")) {
+                displayName = generateBeverageName(orderItem);
             }
 
             orderItem.put("name", name);
@@ -131,7 +145,7 @@ public class CartController extends BaseController {
             itemRow.getStyleClass().add("cart-item-row");
 
             // Setup name label
-            Label nameLabel = new Label(name);
+            Label nameLabel = new Label(displayName);
             nameLabel.getStyleClass().add("cart-item-name");
             nameLabel.setPrefHeight(Region.USE_COMPUTED_SIZE);
             nameLabel.setMaxHeight(Double.MAX_VALUE);
