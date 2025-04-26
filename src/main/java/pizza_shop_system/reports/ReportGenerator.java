@@ -96,20 +96,22 @@ public class ReportGenerator {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
 
-                // Collect toppings into a List<String>
-                JSONArray toppingsArray = item.getJSONArray("toppings");
-                List<String> toppings = new ArrayList<>();
-                for (int j = 0; j < toppingsArray.length(); j++) {
-                    toppings.add(toppingsArray.getString(j));
+                if (item.has("pizzaSize")) {
+                    // Collect toppings into a List<String>
+                    JSONArray toppingsArray = item.getJSONArray("toppings");
+                    List<String> toppings = new ArrayList<>();
+                    for (int j = 0; j < toppingsArray.length(); j++) {
+                        toppings.add(toppingsArray.getString(j));
+                    }
+
+                    // Join toppings into a single string
+                    String toppingsString = String.join(", ", toppings);
+
+                    // Append the pizza details to the report
+                    report.append(item.getString("pizzaSize")).append(" pizza with ")
+                            .append(toppingsString)
+                            .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
                 }
-
-                // Join toppings into a single string
-                String toppingsString = String.join(", ", toppings);
-
-                // Append the pizza details to the report
-                report.append(item.getString("pizzaSize")).append(" pizza with ")
-                        .append(toppingsString)
-                        .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
             report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
