@@ -74,8 +74,9 @@
                 <Region prefHeight="12.0" prefWidth="655.0" />
                 <Button fx:id="generateReportsButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="Generate Reports" />
                 <Region layoutX="10.0" layoutY="27.0" prefHeight="12.0" prefWidth="655.0" />
-                <Button fx:id="manageAccountsButton" layoutX="228.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="Manage Accounts" />
+                <Button fx:id="generateReceiptsButton" layoutX="228.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="Generate Receipts" />
                 <Region layoutX="10.0" layoutY="64.0" prefHeight="12.0" prefWidth="655.0" />
+            <Button fx:id="manageAccountsButton" layoutX="228.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="Manage Accounts" />
             </VBox>
         </StackPane>
     </VBox>

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.gui.navigation.NavigationBarController;
+import pizza_shop_system.gui.order.GenerateReceiptsController;
 
 import java.io.IOException;
 
@@ -23,16 +24,21 @@ public class AccountMenuController extends BaseController {
     @FXML
     private PasswordField oldPasswordField, newPasswordField;
     @FXML
-    private Button saveButton, generateReportsButton, manageAccountsButton, logoutButton, viewTransactionsButton;
+    private Button saveButton, generateReportsButton, generateReceiptsButton, manageAccountsButton, logoutButton, viewTransactionsButton;
     @FXML
     private StackPane managerMenusContainer;
 
     private final AccountService accountService = new AccountService();
     private final NavigationBarController navigationBarController = new NavigationBarController();
     private static ViewTransactionsController viewTransactionsController;
+    private static GenerateReceiptsController generateReceiptsController;
 
     public void setViewTransactionsController(ViewTransactionsController viewTransactionsController) {
         AccountMenuController.viewTransactionsController = viewTransactionsController;
+    }
+
+    public void setGenerateReceiptsController(GenerateReceiptsController generateReceiptsController) {
+        AccountMenuController.generateReceiptsController = generateReceiptsController;
     }
 
     public void updateAccountInformationDisplay() throws IOException {
@@ -120,6 +126,14 @@ public class AccountMenuController extends BaseController {
 
         // set on actions for buttons
         generateReportsButton.setOnAction(_ -> sceneController.switchScene("Reports"));
+        generateReceiptsButton.setOnAction(_ -> {
+            try {
+                generateReceiptsController.updateOrdersDisplay();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            sceneController.switchScene("GenerateReceipts");
+        });
         manageAccountsButton.setOnAction(_ -> sceneController.switchScene("ManageAccounts"));
         logoutButton.setOnAction(_ -> logout());
         saveButton.setOnAction(_ -> {

@@ -280,6 +280,11 @@ public class OrderService {
         return null;
     }
 
+    public JSONArray getOrders() throws IOException {
+        JSONObject ordersData = loadOrders();
+        return ordersData.getJSONArray("orders");
+    }
+
     public JSONObject getPreviousOrder() throws IOException {
         JSONObject ordersData = loadOrders();
         int previousOrderId = ordersData.getInt("nextOrderId") - 1;
