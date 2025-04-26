@@ -1,6 +1,7 @@
 package pizza_shop_system.gui.order;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -18,9 +19,9 @@ public class MenuController extends BaseController {
     @FXML private GridPane menuContainer;
 
     // Customize how menu items are displayed
-    private static final int MAX_COLUMNS = 3;
-    private static final int MAX_ROWS = 4;
-    private static final int CELL_SIZE = 150;
+    private static final int MAX_COLUMNS = 7;
+    private static final int MAX_ROWS = 999;
+    private static final int CELL_SIZE = 250;
     private static final int CELL_SPACING = 5;
 
     @FXML private Button buttonPizza;
@@ -49,14 +50,16 @@ public class MenuController extends BaseController {
             JSONObject menuItem = categoryItems.getJSONObject(i);
 
             VBox itemBox = new VBox();
-            itemBox.setSpacing(5);
+            itemBox.setSpacing(10);
             itemBox.setStyle("-fx-padding: 10px; -fx-border-color: gray; -fx-background-color: white;");
             itemBox.setPrefSize(CELL_SIZE, CELL_SIZE);
+            itemBox.setAlignment(Pos.CENTER);
 
             Label itemLabel = new Label(menuItem.getString("name"));
             itemLabel.setWrapText(true);
             itemLabel.setMaxWidth(Double.MAX_VALUE);
             itemLabel.setStyle("-fx-font-size: 16px; -fx-padding: 5px; -fx-text-fill: black;");
+            itemLabel.setAlignment(Pos.CENTER);
 
             Button addToOrderButton = new Button("Add to Order");
             addToOrderButton.getStyleClass().add("button-add-to-order");
