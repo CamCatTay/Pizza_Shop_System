@@ -258,7 +258,7 @@ public class OrderService {
             // System.out.println("Ice option exist");
         }
 
-        orderItem.put("price", totalPrice); // Set the price of the order item with the calculated total price
+        orderItem.put("price", floorCurrency(totalPrice)); // Set the price of the order item with the calculated total price
     }
 
     public double getCurrentOrderTotal() throws IOException {
