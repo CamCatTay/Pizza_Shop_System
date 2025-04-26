@@ -39,6 +39,11 @@ public class CheckoutController extends BaseController {
 
     private final OrderService orderService = new OrderService();
     private final AccountService accountService = new AccountService();
+    private static OrderCompletionController orderCompletionController;
+
+    public void setOrderCompletionController (OrderCompletionController orderCompletionController) {
+        CheckoutController.orderCompletionController = orderCompletionController;
+    }
 
     @FXML
     private void initialize() {
@@ -217,6 +222,7 @@ public class CheckoutController extends BaseController {
             if (accountService.getActiveUserId() == 0) {
                 sceneController.switchScene("Login");
             } else
+                orderCompletionController.updateReceiptDisplay(orderService.getPreviousOrder());
                 sceneController.switchScene("OrderCompletion");
         }
         else {

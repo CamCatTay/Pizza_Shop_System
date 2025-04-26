@@ -228,6 +228,18 @@ public class AccountService {
         return "User not found.";
     }
 
+    public String getUserName(int userId) throws IOException {
+        JSONArray users = loadUsers();
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if (user.getInt("user_id") == userId) {
+                return user.getString("name");
+            }
+        }
+
+        return "N/A";
+    }
+
     // Change the password for a user, user needs to verify old password first
     public String changePassword(int userId, String oldPassword, String newPassword) throws IOException {
         JSONArray users = loadUsers();

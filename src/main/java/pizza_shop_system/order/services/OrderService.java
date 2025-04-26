@@ -268,6 +268,24 @@ public class OrderService {
         return currentOrder.optDouble("total", 0.00); //If no total present returns 0.00
     }
 
+    private JSONObject getOrderById(int orderId) throws IOException {
+        JSONObject ordersData = loadOrders();
+        JSONArray orders = ordersData.getJSONArray("orders");
+        for (int i = 0; i < orders.length(); i++) {
+            JSONObject order = orders.getJSONObject(i);
+            if (order.getInt("orderId") == orderId) {
+                return order;
+            }
+        }
+        return null;
+    }
+
+    public JSONObject getPreviousOrder() throws IOException {
+        JSONObject ordersData = loadOrders();
+        int previousOrderId = ordersData.getInt("nextOrderId") - 1;
+        return getOrderById(previousOrderId);
+    }
+
     // Cuts off to 2 decimal points and does not round
     private double floorCurrency(double currencyAmount) {
         return  Math.floor(currencyAmount * 100) / 100;
@@ -296,6 +314,7 @@ public class OrderService {
         currentOrder.put("tax", tax);
         currentOrder.put("total", total);
     }
+
 
     // for testing
     public static void main(String[] args) throws IOException {
