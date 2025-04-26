@@ -15,8 +15,6 @@ import java.io.IOException;
 public class ManageAccountsController extends BaseController {
     @FXML
     private VBox accountsVBox;
-    @FXML
-    private Label totalAccountsLabel;
 
     private final AccountService accountService = new AccountService();
 
@@ -37,11 +35,6 @@ public class ManageAccountsController extends BaseController {
         Label roleLabel = new Label("Role: " + role);
         roleLabel.getStyleClass().add("account-info-label");
 
-        // Create buttons for 'Edit' and 'Delete'
-        Button editButton = new Button("Edit");
-        editButton.getStyleClass().add("account-button");
-        editButton.setOnAction(e -> editAccount(id));
-
         Button deleteButton = new Button("Delete");
         deleteButton.getStyleClass().add("account-button");
         deleteButton.setOnAction(e -> {
@@ -53,15 +46,10 @@ public class ManageAccountsController extends BaseController {
         });
 
         // Add all elements to the HBox
-        row.getChildren().addAll(idLabel, nameLabel, roleLabel, editButton, deleteButton);
+        row.getChildren().addAll(idLabel, nameLabel, roleLabel, deleteButton);
 
         // Add the row to the VBox
         accountsVBox.getChildren().add(row);
-    }
-
-    // edit the information of selected account id
-    private void editAccount(int id) {
-        System.out.println("Editing account " + id + " not implemented yet");
     }
 
     // remove selected account id from files
