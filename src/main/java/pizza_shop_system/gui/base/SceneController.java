@@ -13,9 +13,10 @@ public class SceneController {
     private final HashMap<String, Parent> scenes = new HashMap<>();
     private String currentSceneName;
     private String previousSceneName;
-    
+
     // Stack to maintain the history of scenes for forward navigation
-    private final Stack<String> sceneHistory = new Stack<>();
+    private final Stack<String> backHistory = new Stack<>();
+    private final Stack<String> forwardHistory = new Stack<>();
 
     public SceneController(BorderPane mainLayout) {
         this.mainLayout = mainLayout;
@@ -52,7 +53,7 @@ public class SceneController {
             if (!name.equals(currentSceneName)) {
                 // Push the current scene onto the history stack before switching
                 if (currentSceneName != null) {
-                    sceneHistory.push(currentSceneName);
+                    backHistory.push(currentSceneName);
                 }
                 previousSceneName = currentSceneName;
                 currentSceneName = name;
@@ -66,22 +67,29 @@ public class SceneController {
     }
 
     public void switchToPreviousScene() {
-        if (previousSceneName != null) {
-            mainLayout.setCenter(scenes.get(previousSceneName));
-            currentSceneName = previousSceneName;
-            previousSceneName = sceneHistory.isEmpty() ? null : sceneHistory.pop(); // Get the last scene from history
+        if (!backHistory.isEmpty()) {
+            String prevSceneName = backHistory.pop();
+            if (prevSceneName != null) {
+                // Push current scene to forward history before switching
+                forwardHistory.push(currentSceneName);
+
+                mainLayout.setCenter(scenes.get(prevSceneName));
+                previousSceneName = currentSceneName;
+                currentSceneName = prevSceneName;
+            }
         }
     }
 
     public void switchToForwardScene() {
-        System.out.println("Forward");
-        if (!sceneHistory.isEmpty()) {
-            String forwardSceneName = sceneHistory.peek(); // Peek at the next scene
-            if (forwardSceneName != null) {
-                mainLayout.setCenter(scenes.get(forwardSceneName));
+        if (!forwardHistory.isEmpty()) {
+            String nextSceneName = forwardHistory.pop();
+            if (nextSceneName != null) {
+                // Push current scene to back history before switching
+                backHistory.push(currentSceneName);
+
+                mainLayout.setCenter(scenes.get(nextSceneName));
                 previousSceneName = currentSceneName;
-                currentSceneName = forwardSceneName;
-                sceneHistory.pop(); // Remove the scene from stack once visited
+                currentSceneName = nextSceneName;
             }
         }
     }
