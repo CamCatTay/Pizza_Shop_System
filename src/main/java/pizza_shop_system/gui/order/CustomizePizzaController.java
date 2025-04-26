@@ -81,6 +81,8 @@ public class CustomizePizzaController extends BaseController {
 
     // Creates the checkboxes for each topping that is stored in the MenuItemCustomizations.json
     private void setupToppings() {
+
+        StringUtil stringUtil = new StringUtil();
         JSONObject toppings = customizations.getJSONObject("toppings");
 
         // Constants
@@ -94,6 +96,7 @@ public class CustomizePizzaController extends BaseController {
         for (String toppingName : toppings.keySet()) {
             if (row >= MAX_ROWS) break;
 
+            toppingName = stringUtil.captilizeWord(toppingName);
             CheckBox toppingCheckBox = new CheckBox(toppingName);
             toppingsContainer.add(toppingCheckBox, col, row);
             toppingCheckBoxes.put(toppingName, toppingCheckBox); // Store check boxes in map for later reference
@@ -186,11 +189,14 @@ public class CustomizePizzaController extends BaseController {
 
     private void setDefaultToppings(JSONArray itemToppings) {
 
+        StringUtil stringUtil = new StringUtil();
+
         // Reset checkboxes to prevent rollovers
         toppingCheckBoxes.values().forEach(checkbox -> {checkbox.setSelected(false);});
 
         for (int i = 0; i < itemToppings.length(); i++) {
             String toppingName = itemToppings.getString(i);
+            toppingName = stringUtil.captilizeWord(toppingName); // Just for capitalization
             toppingCheckBoxes.get(toppingName).setSelected(true); // Get topping check box by its name and then set it to true because it was selected by default
         }
         ensureMaxToppingsIsNotExceeded();
