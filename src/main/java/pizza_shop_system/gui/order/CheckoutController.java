@@ -2,6 +2,7 @@ package pizza_shop_system.gui.order;
 
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.reports.ReportsController;
 import pizza_shop_system.order.services.OrderService;
 import pizza_shop_system.order.entities.Payment;
 import pizza_shop_system.account.services.AccountService;
@@ -40,6 +41,7 @@ public class CheckoutController extends BaseController {
     private final OrderService orderService = new OrderService();
     private final AccountService accountService = new AccountService();
     private static OrderCompletionController orderCompletionController;
+    private final ReportsController reportsController = new ReportsController();
 
     public void setOrderCompletionController (OrderCompletionController orderCompletionController) {
         CheckoutController.orderCompletionController = orderCompletionController;
@@ -221,6 +223,7 @@ public class CheckoutController extends BaseController {
         if (success) {
             if (accountService.getActiveUserId() == 0) {
                 sceneController.switchScene("Login");
+                reportsController.showError("Must be logged in to place an order.");
             } else {
                 orderCompletionController.updateReceiptDisplay(orderService.getPreviousOrder());
                 sceneController.switchScene("OrderCompletion");
