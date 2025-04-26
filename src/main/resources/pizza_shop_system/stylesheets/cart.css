@@ -95,7 +95,7 @@
 }
 
 .cart-remove-button {
-    -fx-background-color: #f44336;
+    -fx-background-color: #993131;
     -fx-cursor: hand;
     -fx-text-fill: white;
     -fx-font-weight: bold;

@@ -1,5 +1,87 @@
 {
-    "nextOrderId": 35,
+    "nextOrderId": 37,
     "orders": [
+        {
+            "date": "2025-04-26T21:19:07Z",
+            "accountId": 6,
+            "total": 13.56,
+            "orderId": 35,
+            "subtotal": 12.68,
+            "tax": 0.88,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [
+                {
+                    "orderItemId": 1,
+                    "price": 10.99,
+                    "name": "Cheese Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": [],
+                    "menuItemId": 1,
+                    "crust": "regular"
+                },
+                {
+                    "beverageSize": "medium",
+                    "orderItemId": 2,
+                    "price": 1.69,
+                    "name": "Milkshake",
+                    "ice": "none",
+                    "category": "Beverage",
+                    "menuItemId": 9
+                }
+            ],
+            "nextOrderItemId": 3
+        },
+        {
+            "date": "2025-04-26T21:19:23Z",
+            "accountId": 6,
+            "total": 33.45,
+            "orderId": 36,
+            "subtotal": 31.26,
+            "tax": 2.18,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {
+                "cvv": "111",
+                "paymentMethod": "Credit Card",
+                "cardNumber": "111",
+                "expirationDate": "11/22"
+            },
+            "orderItems": [
+                {
+                    "beverageSize": "medium",
+                    "orderItemId": 1,
+                    "price": 1.69,
+                    "name": "Lemonade",
+                    "ice": "light"
+                },
+                {
+                    "orderItemId": 2,
+                    "price": 13.29,
+                    "name": "Supreme Pizza",
+                    "pizzaSize": "medium",
+                    "toppings": [
+                        "sausage",
+                        "bellpepper",
+                        "onion",
+                        "pepperoni"
+                    ],
+                    "menuItemId": 3,
+                    "crust": "regular"
+                },
+                {
+                    "orderItemId": 3,
+                    "price": 16.29,
+                    "pizzaSize": "large",
+                    "toppings": [
+                        "sausage",
+                        "jalapeno",
+                        "bellpepper",
+                        "pepperoni"
+                    ],
+                    "crust": "stuffed"
+                }
+            ],
+            "nextOrderItemId": 4
+        }
     ]
 }

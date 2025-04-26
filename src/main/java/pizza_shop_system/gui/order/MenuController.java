@@ -120,8 +120,6 @@ public class MenuController extends BaseController {
     // category name should match MenuItems.json category name
     private void displayMenuItemsByCategory(String category) {
             menuContainer.getChildren().clear(); // Clear previously displayed menu items
-            menuContainer.setHgap(CELL_SPACING);
-            menuContainer.setVgap(CELL_SPACING);
 
             try {
                 JSONObject data = loadMenuItems(); // contains items and nextId
@@ -156,5 +154,6 @@ public class MenuController extends BaseController {
         styleUtil.fadeButtonOnHover(buttonBeverage);
 
         displayMenuItemsByCategory("pizza");
+
     }
 }
