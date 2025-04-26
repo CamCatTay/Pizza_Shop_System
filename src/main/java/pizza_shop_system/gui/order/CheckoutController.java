@@ -217,7 +217,7 @@ public class CheckoutController extends BaseController {
             if (accountService.getActiveUserId() == 0) {
                 sceneController.switchScene("Login");
             } else
-                sceneController.switchScene("Home");
+                sceneController.switchScene("OrderCompletion");
         }
         else {
             System.out.println("Payment failed. Please try again.");
