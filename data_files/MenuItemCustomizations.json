@@ -1,18 +1,18 @@
 {
   "toppings": {
-    "Pepperoni": 1.00,
-    "Chicken": 1.50,
-    "Sausage": 1.30,
-    "Extra cheese": 1.00,
-    "Ham": 0.00,
-    "Bacon": 0.00,
-    "Anchovies": 0.00,
-    "Onion": 0.00,
-    "Jalapeno": 0.00,
-    "Garlic": 0.00,
-    "Bell pepper": 0.00,
-    "Tomato": 0.00,
-    "Artichoke": 0.00
+    "pepperoni": 1.00,
+    "chicken": 1.50,
+    "sausage": 1.30,
+    "extracheese": 1.00,
+    "ham": 0.00,
+    "bacon": 0.00,
+    "anchovies": 0.00,
+    "onion": 0.00,
+    "jalapeno": 0.00,
+    "garlic": 0.00,
+    "bellpepper": 0.00,
+    "tomato": 0.00,
+    "artichoke": 0.00
   },
 
   "pizzaSizes": {
