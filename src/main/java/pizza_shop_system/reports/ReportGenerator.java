@@ -2,6 +2,7 @@ package pizza_shop_system.reports;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pizza_shop_system.gui.order.CartController;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportGenerator {
+
+    private final CartController cartController = new CartController();
 
     // Helper method to get user's name by accountId
     private static String getUserNameByAccountId(int accountId) throws IOException {
@@ -56,7 +59,7 @@ public class ReportGenerator {
     }
 
     // Generate daily report
-    public static String generateDailyReport(LocalDate specifiedDate) throws IOException {
+    public String generateDailyReport(LocalDate specifiedDate) throws IOException {
         List<JSONObject> orders = readOrders(specifiedDate, specifiedDate);
 
         if (orders.isEmpty()) {
@@ -93,25 +96,19 @@ public class ReportGenerator {
             report.append(userName).append(" Order #").append(orderId).append("\n");
 
             JSONArray items = order.getJSONArray("orderItems");
+
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
 
+                String itemName = null;
+
                 if (item.has("pizzaSize")) {
-                    // Collect toppings into a List<String>
-                    JSONArray toppingsArray = item.getJSONArray("toppings");
-                    List<String> toppings = new ArrayList<>();
-                    for (int j = 0; j < toppingsArray.length(); j++) {
-                        toppings.add(toppingsArray.getString(j));
-                    }
-
-                    // Join toppings into a single string
-                    String toppingsString = String.join(", ", toppings);
-
-                    // Append the pizza details to the report
-                    report.append(item.getString("pizzaSize")).append(" pizza with ")
-                            .append(toppingsString)
-                            .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
+                    itemName = cartController.generatePizzaName(item);
+                } else if (item.has("beverageSize")) {
+                    itemName = cartController.generateBeverageName(item);
                 }
+
+                report.append(itemName).append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
             report.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
@@ -134,7 +131,7 @@ public class ReportGenerator {
     }
 
     // Generate weekly report
-    public static String generateWeeklyReport(LocalDate startDate) throws IOException {
+    public String generateWeeklyReport(LocalDate startDate) throws IOException {
         LocalDate endDate = startDate.plusDays(6); // Week: 7 days from start
 
         List<JSONObject> orders = readOrders(startDate, endDate);
@@ -168,21 +165,17 @@ public class ReportGenerator {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
 
-                // Collect toppings into a List<String>
-                JSONArray toppingsArray = item.getJSONArray("toppings");
-                List<String> toppings = new ArrayList<>();
-                for (int j = 0; j < toppingsArray.length(); j++) {
-                    toppings.add(toppingsArray.getString(j));
+                String itemName = null;
+
+                if (item.has("pizzaSize")) {
+                    itemName = cartController.generatePizzaName(item);
+                } else if (item.has("beverageSize")) {
+                    itemName = cartController.generateBeverageName(item);
                 }
 
-                // Join toppings into a single string
-                String toppingsString = String.join(", ", toppings);
-
-                // Append the pizza details to the report
-                detailedSection.append(item.getString("pizzaSize")).append(" pizza with ")
-                        .append(toppingsString)
-                        .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
+                detailedSection.append(itemName).append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
+
 
             detailedSection.append("Subtotal: $").append(String.format("%.2f", subtotal)).append("\n");
             detailedSection.append("Tax: $").append(String.format("%.2f", tax)).append("\n");

@@ -32,6 +32,7 @@ public class ReportsController extends BaseController {
     private Button backButton;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final ReportGenerator reportGenerator = new ReportGenerator();
 
     @FXML
     private void initialize() {
@@ -121,9 +122,9 @@ public class ReportsController extends BaseController {
 
         try {
             if ("Daily Report".equals(reportType)) {
-                reportContent = ReportGenerator.generateDailyReport(selectedDate);
+                reportContent = reportGenerator.generateDailyReport(selectedDate);
             } else if ("Weekly Report".equals(reportType)) {
-                reportContent = ReportGenerator.generateWeeklyReport(selectedDate);
+                reportContent = reportGenerator.generateWeeklyReport(selectedDate);
             }
 
             reportTextArea.setText(reportContent != null ? reportContent : "No data available.");
