@@ -95,7 +95,20 @@ public class ReportGenerator {
             JSONArray items = order.getJSONArray("orderItems");
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-                report.append(item.getString("name"))
+
+                // Collect toppings into a List<String>
+                JSONArray toppingsArray = item.getJSONArray("toppings");
+                List<String> toppings = new ArrayList<>();
+                for (int j = 0; j < toppingsArray.length(); j++) {
+                    toppings.add(toppingsArray.getString(j));
+                }
+
+                // Join toppings into a single string
+                String toppingsString = String.join(", ", toppings);
+
+                // Append the pizza details to the report
+                report.append(item.getString("pizzaSize")).append(" pizza with ")
+                        .append(toppingsString)
                         .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
@@ -152,7 +165,20 @@ public class ReportGenerator {
             JSONArray items = order.getJSONArray("orderItems");
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-                detailedSection.append(item.getString("name"))
+
+                // Collect toppings into a List<String>
+                JSONArray toppingsArray = item.getJSONArray("toppings");
+                List<String> toppings = new ArrayList<>();
+                for (int j = 0; j < toppingsArray.length(); j++) {
+                    toppings.add(toppingsArray.getString(j));
+                }
+
+                // Join toppings into a single string
+                String toppingsString = String.join(", ", toppings);
+
+                // Append the pizza details to the report
+                detailedSection.append(item.getString("pizzaSize")).append(" pizza with ")
+                        .append(toppingsString)
                         .append("\t$").append(String.format("%.2f", item.getDouble("price"))).append("\n");
             }
 
@@ -187,6 +213,4 @@ public class ReportGenerator {
 
         return report.toString();
     }
-
-
 }
