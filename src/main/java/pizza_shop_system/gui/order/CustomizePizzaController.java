@@ -185,6 +185,10 @@ public class CustomizePizzaController extends BaseController {
     }
 
     private void setDefaultToppings(JSONArray itemToppings) {
+
+        // Reset checkboxes to prevent rollovers
+        toppingCheckBoxes.values().forEach(checkbox -> {checkbox.setSelected(false);});
+
         for (int i = 0; i < itemToppings.length(); i++) {
             String toppingName = itemToppings.getString(i);
             toppingCheckBoxes.get(toppingName).setSelected(true); // Get topping check box by its name and then set it to true because it was selected by default
