@@ -25,6 +25,7 @@ public class SceneController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
+            root.getStyleClass().add(name); // Add a style class for each scene so all their elements can be edited easily
             scenes.put(name, root);
 
             // Pass SceneController reference to each controller
@@ -73,6 +74,7 @@ public class SceneController {
     }
 
     public void switchToForwardScene() {
+        System.out.println("Forward");
         if (!sceneHistory.isEmpty()) {
             String forwardSceneName = sceneHistory.peek(); // Peek at the next scene
             if (forwardSceneName != null) {
