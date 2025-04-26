@@ -98,6 +98,7 @@ public class CustomizePizzaController extends BaseController {
 
             toppingName = stringUtil.captilizeWord(toppingName);
             CheckBox toppingCheckBox = new CheckBox(toppingName);
+            toppingCheckBox.getStyleClass().add("customize-checkbox");
             toppingsContainer.add(toppingCheckBox, col, row);
             toppingCheckBoxes.put(toppingName, toppingCheckBox); // Store check boxes in map for later reference
 
