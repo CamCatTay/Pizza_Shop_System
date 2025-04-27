@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pizza_shop_system.gui.navigation.NavigationBarController;
 import pizza_shop_system.gui.base.SceneController;
+import pizza_shop_system.utils.DataFileManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -127,6 +128,8 @@ public class App extends Application {
     // Start the GUI
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        DataFileManager.initializeDataFiles();
 
         // Constants
         String DEFAULT_SCENE = "Home";

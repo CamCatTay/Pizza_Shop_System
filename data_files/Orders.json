@@ -1,5 +1,5 @@
 {
-    "nextOrderId": 42,
+    "nextOrderId": 43,
     "orders": [
         {
             "date": "2025-04-27T03:32:11Z",
@@ -194,6 +194,27 @@
                 }
             ],
             "nextOrderItemId": 13
+        },
+        {
+            "date": "2025-04-27T15:15:29Z",
+            "accountId": 2,
+            "total": 15.5,
+            "orderId": 42,
+            "subtotal": 14.49,
+            "tax": 1.01,
+            "orderInformation": {"orderType": "Pickup"},
+            "paymentInformation": {"paymentMethod": "Cash"},
+            "orderItems": [{
+                "orderItemId": 1,
+                "price": 14.49,
+                "pizzaSize": "medium",
+                "toppings": [
+                    "bacon",
+                    "chicken"
+                ],
+                "crust": "stuffed"
+            }],
+            "nextOrderItemId": 2
         }
     ]
 }

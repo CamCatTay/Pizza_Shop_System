@@ -1,4 +1,4 @@
-package pizza_shop_system.order.utils;
+package pizza_shop_system.utils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

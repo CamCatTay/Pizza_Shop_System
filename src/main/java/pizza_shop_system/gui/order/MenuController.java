@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.gui.utils.StyleUtil;
-import pizza_shop_system.order.utils.JSONUtil;
+import pizza_shop_system.utils.JSONUtil;
 import pizza_shop_system.order.services.OrderService;
 
 import java.io.IOException;
