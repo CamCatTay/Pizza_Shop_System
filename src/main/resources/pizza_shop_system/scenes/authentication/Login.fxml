@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -8,12 +9,11 @@
       <SplitPane fx:id="splitPane" dividerPositions="0.1" prefHeight="448.0" prefWidth="411.0" styleClass="invisible-split-pane">
          <items>
             <!-- ImageView positioned to the right using StackPane -->
-            <StackPane alignment="CENTER_RIGHT">
-               <ImageView fx:id="logoImage" preserveRatio="true" styleClass="account-logo" />
-            </StackPane>
+            <StackPane alignment="CENTER_RIGHT" />
 
             <VBox alignment="CENTER">
                <children>
+                  <ImageView fx:id="logoImage" preserveRatio="true" styleClass="account-logo" />
                   <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="101.0" prefWidth="411.0" />
                   <HBox alignment="CENTER">
                      <children>
@@ -26,10 +26,10 @@
                         <StackPane prefWidth="270.0">
                            <children>
                               <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="300.0" promptText="Password" />
-                              <TextField fx:id="visiblePasswordField" alignment="CENTER" prefWidth="300.0" promptText="Password" visible="false" managed="false"/>
+                              <TextField fx:id="visiblePasswordField" alignment="CENTER" managed="false" prefWidth="300.0" promptText="Password" visible="false" />
                            </children>
                         </StackPane>
-                        <Button fx:id="togglePasswordButton" text="👁" prefWidth="30.0" prefHeight="30.0" />
+                        <Button fx:id="togglePasswordButton" prefHeight="30.0" prefWidth="30.0" text="👁" />
                      </children>
                   </HBox>
 
