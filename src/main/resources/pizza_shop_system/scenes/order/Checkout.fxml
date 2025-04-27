@@ -1,67 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.RadioButton?>
 
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="pizza_shop_system.gui.order.CheckoutController"
-          styleClass="checkout-root"
-          alignment="CENTER" hgap="15" vgap="15" prefHeight="450.0" prefWidth="600.0">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-    <!-- Title -->
-    <Label text="Checkout" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
-           styleClass="checkout-title"/>
-
-    <!-- Total Amount -->
-    <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="checkout-label"/>
-    <Label fx:id="totalLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="checkout-value"/>
-
-    <!-- Payment Method -->
-    <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="checkout-label"/>
-    <ComboBox fx:id="paymentMethodComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"
-              promptText="Select Payment Method" styleClass="checkout-combo-box"/>
-
-    <!-- Card Credentials -->
-    <Label fx:id="cardNumberLabel" text="Card Number:" GridPane.columnIndex="0" GridPane.rowIndex="3" visible="false"
-           styleClass="checkout-label"/>
-    <TextField fx:id="cardNumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"
-               promptText="Enter Card Number" styleClass="checkout-textfield"/>
-
-    <Label fx:id="cvvLabel" text="CVV:" GridPane.columnIndex="0" GridPane.rowIndex="4" visible="false"
-           styleClass="checkout-label"/>
-    <TextField fx:id="cvvField" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"
-               promptText="Enter CVV" styleClass="checkout-textfield"/>
-
-    <Label fx:id="expirationLabel" text="Expiration Date (MM/YY):" GridPane.columnIndex="0" GridPane.rowIndex="5" visible="false"
-           styleClass="checkout-label"/>
-    <TextField fx:id="expirationDateField" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"
-               promptText="MM/YY" styleClass="checkout-textfield"/>
-
-    <!-- Check Payment -->
-    <Label fx:id="checkNumberLabel" text="Check Number:" GridPane.columnIndex="0" GridPane.rowIndex="6" visible="false"
-           styleClass="checkout-label"/>
-    <TextField fx:id="checkNumberField" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"
-               promptText="Enter Check Number" styleClass="checkout-textfield"/>
-
-    <!-- Delivery or Pickup Option -->
-    <Label text="Order Type:" GridPane.columnIndex="0" GridPane.rowIndex="7" styleClass="checkout-label"/>
-    <HBox GridPane.columnIndex="1" GridPane.rowIndex="7" spacing="10">
-        <RadioButton fx:id="deliveryRadioButton" text="Delivery" styleClass="checkout-radio-button"/>
-        <RadioButton fx:id="pickupRadioButton" text="Pickup" styleClass="checkout-radio-button"/>
-    </HBox>
-
-    <!-- Address Input (Visible only if Delivery is selected) -->
-    <Label fx:id="addressLabel" text="Delivery Address:" GridPane.columnIndex="0"
-           GridPane.rowIndex="8" visible="false" styleClass="checkout-label"/>
-    <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="8" visible="false"
-               promptText="Enter Delivery Address" styleClass="checkout-textfield"/>
-
-    <!-- Confirm Button -->
-    <Button text="Confirm Order" fx:id="confirmButton" GridPane.columnIndex="0" GridPane.rowIndex="9"
-            GridPane.columnSpan="2" styleClass="checkout-button"/>
-</GridPane>
+<VBox alignment="CENTER" prefHeight="533.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.CheckoutController">
+   <children>
+   
+          <!-- Title -->
+       <Label styleClass="checkout-title" text="Checkout" />
+      <GridPane alignment="CENTER" hgap="15" prefHeight="471.0" prefWidth="600.0" styleClass="checkout-root" vgap="15">
+      
+          <!-- Total Amount -->
+          <Label styleClass="checkout-label" text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+          <Label fx:id="totalLabel" styleClass="checkout-value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+          <!-- Payment Method -->
+          <Label styleClass="checkout-label" text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+          <ComboBox fx:id="paymentMethodComboBox" promptText="Select Payment Method" styleClass="checkout-combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      
+          <!-- Card Credentials -->
+          <Label fx:id="cardNumberLabel" styleClass="checkout-label" text="Card Number:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+          <TextField fx:id="cardNumberField" promptText="Enter Card Number" styleClass="checkout-textfield" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+          <Label fx:id="cvvLabel" styleClass="checkout-label" text="CVV:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+          <TextField fx:id="cvvField" promptText="Enter CVV" styleClass="checkout-textfield" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      
+          <Label fx:id="expirationLabel" styleClass="checkout-label" text="Expiration Date (MM/YY):" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+          <TextField fx:id="expirationDateField" promptText="MM/YY" styleClass="checkout-textfield" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      
+          <!-- Check Payment -->
+          <Label fx:id="checkNumberLabel" styleClass="checkout-label" text="Check Number:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+          <TextField fx:id="checkNumberField" promptText="Enter Check Number" styleClass="checkout-textfield" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      
+          <!-- Delivery or Pickup Option -->
+          <Label styleClass="checkout-label" text="Order Type:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+          <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="7">
+              <RadioButton fx:id="deliveryRadioButton" styleClass="checkout-radio-button" text="Delivery" />
+              <RadioButton fx:id="pickupRadioButton" styleClass="checkout-radio-button" text="Pickup" />
+          </HBox>
+      
+          <!-- Address Input (Visible only if Delivery is selected) -->
+          <Label fx:id="addressLabel" styleClass="checkout-label" text="Delivery Address:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+          <TextField fx:id="addressField" promptText="Enter Delivery Address" styleClass="checkout-textfield" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+   
+          <!-- Confirm Button -->
+       <Button fx:id="confirmButton" styleClass="checkout-confirm-order-button" text="CONFIRM ORDER" />
+   </children>
+</VBox>
