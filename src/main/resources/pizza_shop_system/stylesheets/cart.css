@@ -1,72 +1,23 @@
-/* Checkout Scene Root */
-.checkout-root {
-    -fx-background-color: white; /* White background for the checkout scene */
-}
-
-/* GridPane for the Main Layout */
-.checkout-grid {
-    -fx-padding: 20; /* Add padding around the content */
-    -fx-hgap: 10; /* Horizontal spacing */
-    -fx-vgap: 15; /* Vertical spacing */
-}
-
 /* Title Label Styling */
-.checkout-title {
-    -fx-font-size: 24px;
+.cart-title {
+    -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: black;
 }
 
 /* Scroll Pane for Cart Items */
-.order-scroll {
+.Cart ScrollPane {
     -fx-border-color: #e0e0e0; /* Light border */
     -fx-border-width: 1px;
     -fx-background-color: white;
 }
 
-.order-container {
-    -fx-padding: 10;
-}
-
-/* Totals Section */
-.totals-container {
-    -fx-padding: 10;
-    -fx-border-color: #bdbdbd; /* Light gray */
-    -fx-border-width: 1px;
-    -fx-background-color: #f5f5f5; /* Light gray background for totals */
-    -fx-border-radius: 5;
-    -fx-spacing: 10;
-}
-
-.totals-line {
-    -fx-spacing: 20;
-    -fx-alignment: CENTER_RIGHT;
-}
-
-.cart-label {
+.cart-item-name {
     -fx-font-size: 14px;
-    -fx-text-fill: black;
-}
-
-.cart-value {
-    -fx-font-size: 14px;
-    -fx-text-fill: black;
     -fx-font-weight: bold;
 }
 
-.cart-total-value {
-    -fx-font-size: 16px;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-}
-
-/* Cart Items Display */
-
-.cart-checkout-button {
-    -fx-background-color: #58A4D7;
-    -fx-cursor: hand;
-    -fx-font-size: 20;
-    -fx-text-fill: white;
+.cart-item-price {
+    -fx-font-size: 15;
     -fx-font-weight: bold;
 }
 
@@ -77,26 +28,52 @@
     -fx-border-width: 0 0 1px 0;
 }
 
-.cart-item-name {
-    -fx-font-size: 15;
+.cart-item-row Button {
+    -fx-pref-width: 80px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-}
-
-.cart-item-price {
-    -fx-font-size: 15;
-    -fx-font-weight: bold;
-}
-
-.cart-edit-button {
-    -fx-background-color: #4CAF50;
+    -fx-border-color: #bdbdbd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
     -fx-cursor: hand;
-    -fx-text-fill: white;
+}
+
+.cart-item-row Button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.order-container {
+    -fx-padding: 10;
+}
+
+/* Totals Section */
+.cart-totals-container {
+    -fx-padding: 10;
+    -fx-border-color: #bdbdbd; /* Light gray */
+    -fx-border-width: 1px;
+    -fx-background-color: #f5f5f5; /* Light gray background for totals */
+    -fx-border-radius: 5;
+    -fx-spacing: 10;
+}
+
+.cart-totals-container Label {
+    -fx-font-size: 15;
     -fx-font-weight: bold;
 }
 
-.cart-remove-button {
+/* Cart Items Display */
+
+.cart-checkout-button {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
     -fx-background-color: #993131;
-    -fx-cursor: hand;
     -fx-text-fill: white;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }

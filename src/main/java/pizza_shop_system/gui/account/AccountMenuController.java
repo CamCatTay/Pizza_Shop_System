@@ -13,6 +13,7 @@ import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.gui.navigation.NavigationBarController;
 import pizza_shop_system.gui.order.GenerateReceiptsController;
+import pizza_shop_system.gui.utils.StyleUtil;
 
 import java.io.IOException;
 
@@ -32,6 +33,7 @@ public class AccountMenuController extends BaseController {
     private final NavigationBarController navigationBarController = new NavigationBarController();
     private static ViewTransactionsController viewTransactionsController;
     private static GenerateReceiptsController generateReceiptsController;
+    private final StyleUtil styleUtil = new StyleUtil();
 
     public void setViewTransactionsController(ViewTransactionsController viewTransactionsController) {
         AccountMenuController.viewTransactionsController = viewTransactionsController;
@@ -118,8 +120,20 @@ public class AccountMenuController extends BaseController {
         };
     }
 
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(viewTransactionsButton);
+        styleUtil.fadeButtonOnHover(generateReceiptsButton);
+        styleUtil.fadeButtonOnHover(manageAccountsButton);
+        styleUtil.fadeButtonOnHover(logoutButton);
+        styleUtil.fadeButtonOnHover(saveButton);
+        styleUtil.fadeButtonOnHover(generateReportsButton);
+        styleUtil.fadeButtonOnHover(manageAccountsButton);
+    }
+
     @FXML
     public void initialize() {
+        stylize();
+
         accountService.setAccountMenuController(this);
         navigationBarController.setAccountMenuController(this);
         managerMenusContainer.setVisible(false);

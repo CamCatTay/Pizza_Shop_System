@@ -78,6 +78,7 @@ public class Main extends Application {
         String DEFAULT_SCENE = "Home";
         int DEFAULT_WIDTH = 1000;
         int DEFAULT_HEIGHT = 800;
+        boolean START_IN_FULLSCREEN = true;
 
         FXMLLoader navigationBarLoader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/navigation/NavigationBar.fxml"));
         Parent navigationBar = navigationBarLoader.load();
@@ -88,6 +89,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(mainLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(START_IN_FULLSCREEN);
         primaryStage.show();
 
         // Load all scenes upfront so we don't have to reload each time (Return scene controller so we can switch to default scene)

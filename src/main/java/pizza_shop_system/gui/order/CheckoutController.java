@@ -3,6 +3,7 @@ package pizza_shop_system.gui.order;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
 import pizza_shop_system.gui.reports.ReportsController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.order.services.OrderService;
 import pizza_shop_system.order.entities.Payment;
 import pizza_shop_system.account.services.AccountService;
@@ -42,13 +43,20 @@ public class CheckoutController extends BaseController {
     private final AccountService accountService = new AccountService();
     private static OrderCompletionController orderCompletionController;
     private final ReportsController reportsController = new ReportsController();
+    private final StyleUtil styleUtil = new StyleUtil();
 
     public void setOrderCompletionController (OrderCompletionController orderCompletionController) {
         CheckoutController.orderCompletionController = orderCompletionController;
     }
 
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(confirmButton);
+    }
+
     @FXML
     private void initialize() {
+        stylize();
+
         ToggleGroup orderTypeGroup = new ToggleGroup();
         deliveryRadioButton.setToggleGroup(orderTypeGroup);
         pickupRadioButton.setToggleGroup(orderTypeGroup);

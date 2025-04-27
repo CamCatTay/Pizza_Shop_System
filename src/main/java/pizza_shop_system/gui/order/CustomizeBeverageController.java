@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.order.services.OrderService;
 import java.io.IOException;
 
@@ -26,6 +27,7 @@ public class CustomizeBeverageController extends BaseController {
     private final MenuController menuController = new MenuController();
     private final CartController cartController = new CartController();
     private final OrderService orderService = new OrderService();
+    private final StyleUtil styleUtil = new StyleUtil();
 
     // Add all the options to quantity choice box up to MAX_QUANTITY
     private void setupQuantityChoiceBox() {
@@ -121,8 +123,14 @@ public class CustomizeBeverageController extends BaseController {
         }
     }
 
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(addToOrderButton);
+    }
+
     @FXML
     public void initialize() {
+        stylize();
+
         menuController.setCustomizeBeverageController(this);
         cartController.setCustomizeBeverageController(this);
 

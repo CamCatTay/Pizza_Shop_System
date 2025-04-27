@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane prefHeight="600.0" prefWidth="800.0" styleClass="menu-root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.MenuController">
+<StackPane styleClass="menu-stackpane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.order.MenuController">
     <children>
-        <VBox alignment="TOP_CENTER" prefWidth="800.0" spacing="10.0" styleClass="menu-container">
+        <VBox alignment="TOP_CENTER" spacing="10.0" styleClass="menu-container">
             <!-- Category Selection Buttons -->
-            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="52.0" prefWidth="800.0" spacing="20.0" styleClass="menu-bar" VBox.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="52.0" prefWidth="800.0" spacing="20.0" styleClass="menu-navigation-bar" VBox.vgrow="SOMETIMES">
                 <Button fx:id="buttonPizza" styleClass="menu-button" text="PIZZA" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="Franklin Gothic Demi" size="12.0" />
@@ -17,8 +17,8 @@
             </HBox>
 
             <!-- Scrollable Menu Items -->
-            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="menu-scroll" vbarPolicy="AS_NEEDED">
-                <GridPane fx:id="menuContainer" alignment="CENTER" styleClass="menu-grid">
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="menu-scrollpane" vbarPolicy="AS_NEEDED">
+                <GridPane fx:id="menuContainer" alignment="TOP_CENTER" styleClass="menu-grid">
                     <!-- Dynamic content populated via MenuController.java -->
                 </GridPane>
             </ScrollPane>
