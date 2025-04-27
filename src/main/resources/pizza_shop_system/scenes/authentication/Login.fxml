@@ -1,42 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <StackPane prefHeight="448.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizza_shop_system.gui.authentication.LoginController">
    <children>
-      <VBox>
-         <children>
-            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="101.0" prefWidth="411.0" />
-            <HBox alignment="CENTER">
+      <SplitPane fx:id="splitPane" dividerPositions="0.1" prefHeight="448.0" prefWidth="411.0" styleClass="invisible-split-pane">
+         <items>
+            <!-- ImageView positioned to the right using StackPane -->
+            <StackPane alignment="CENTER_RIGHT">
+               <ImageView fx:id="logoImage" preserveRatio="true" styleClass="account-logo" />
+            </StackPane>
+
+            <VBox alignment="CENTER">
                <children>
-            
-                        <TextField fx:id="emailField" alignment="CENTER" prefWidth="250.0" promptText="Email" styleClass="input-field" />
-               </children>
-            </HBox>
-            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-            <HBox alignment="CENTER">
-               <children>
-                  <PasswordField fx:id="passwordField" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" promptText="Password" />
-               </children>
-            </HBox>
-            <Region layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-            <HBox alignment="CENTER">
-               <children>
-            
-                        <Button fx:id="loginButton" prefHeight="35.0" prefWidth="250.0" styleClass="primary-button" text="Login" />
-               </children>
-            </HBox>
-            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-            <HBox alignment="CENTER">
-               <children>
-            
+                  <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="101.0" prefWidth="411.0" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <TextField fx:id="emailField" alignment="CENTER" prefWidth="300.0" promptText="Email" styleClass="input-field" />
+                     </children>
+                  </HBox>
+                  <Region prefHeight="15.0" />
+                  <HBox alignment="CENTER" prefWidth="300.0">
+                     <children>
+                        <StackPane prefWidth="270.0">
+                           <children>
+                              <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="300.0" promptText="Password" />
+                              <TextField fx:id="visiblePasswordField" alignment="CENTER" prefWidth="300.0" promptText="Password" visible="false" managed="false"/>
+                           </children>
+                        </StackPane>
+                        <Button fx:id="togglePasswordButton" text="👁" prefWidth="30.0" prefHeight="30.0" />
+                     </children>
+                  </HBox>
+
+                  <Region layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Button fx:id="loginButton" prefHeight="35.0" prefWidth="250.0" styleClass="home-login-button" text="Login" />
+                     </children>
+                  </HBox>
+                  <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+                  <HBox alignment="CENTER">
+                     <children>
                         <Button fx:id="signupButton" prefHeight="35.0" prefWidth="250.0" styleClass="secondary-button" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </HBox>
+                  <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
+                  <VBox fx:id="resultsContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" />
                </children>
-            </HBox>
-            <Region maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="200.0" />
-            <VBox fx:id="resultsContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" />
-         </children>
-      </VBox>
+            </VBox>
+         </items>
+      </SplitPane>
    </children>
 </StackPane>

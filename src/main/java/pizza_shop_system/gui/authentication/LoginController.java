@@ -1,19 +1,21 @@
 package pizza_shop_system.gui.authentication;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
 import pizza_shop_system.account.services.AccountService;
-import pizza_shop_system.gui.account.AccountMenuController;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController extends BaseController {
     private final AccountService accountService = new AccountService();
+    private final StyleUtil styleUtil = new StyleUtil();
 
     @FXML
     private VBox resultsContainer;
@@ -23,10 +25,21 @@ public class LoginController extends BaseController {
     private PasswordField passwordField;
     @FXML
     private Button loginButton, signupButton;
+    @FXML
+    private ImageView logoImage;
+    @FXML
+    private TextField visiblePasswordField;
+    @FXML
+    private Button togglePasswordButton;
+    @FXML
+    private SplitPane splitPane;
+
+    private boolean passwordVisible = false;
 
     private void switchToSignUpScreen() {
         sceneController.switchScene("SignUp");
     }
+
 
     // Email or password was invalid so notify user of this
     private void displayIncorrectEmailOrPassword() {
@@ -79,6 +92,27 @@ public class LoginController extends BaseController {
 
     @FXML
     public void initialize() {
+
+        logoImage.setImage(new Image(Objects.requireNonNull(getClass()
+                .getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
+
+        //Ensures password fields are synced
+        passwordField.textProperty().addListener((obs, oldText, newText) -> visiblePasswordField.setText(newText));
+        visiblePasswordField.textProperty().addListener((obs, oldText, newText) -> passwordField.setText(newText));
+
+        togglePasswordButton.setOnAction(event -> {
+            passwordVisible = !passwordVisible;
+            visiblePasswordField.setVisible(passwordVisible);
+            visiblePasswordField.setManaged(passwordVisible);
+
+            passwordField.setVisible(!passwordVisible);
+            passwordField.setManaged(!passwordVisible);
+        });
+
+        splitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+            divider.setMouseTransparent(true);
+        });
+
         loginButton.setOnAction(e -> {
             try {
                 login();
@@ -87,5 +121,7 @@ public class LoginController extends BaseController {
             }
         });
         signupButton.setOnAction(e -> switchToSignUpScreen());
+        styleUtil.fadeButtonOnHover(loginButton);
+        styleUtil.fadeButtonOnHover(signupButton);
     }
 }
