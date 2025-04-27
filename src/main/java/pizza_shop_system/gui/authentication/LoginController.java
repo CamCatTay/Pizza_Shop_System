@@ -31,8 +31,6 @@ public class LoginController extends BaseController {
     private TextField visiblePasswordField;
     @FXML
     private Button togglePasswordButton;
-    @FXML
-    private SplitPane splitPane;
 
     private boolean passwordVisible = false;
 
@@ -93,6 +91,8 @@ public class LoginController extends BaseController {
     @FXML
     public void initialize() {
 
+        visiblePasswordField.toBack();
+
         logoImage.setImage(new Image(Objects.requireNonNull(getClass()
                 .getResourceAsStream("/pizza_shop_system/images/Bobs_Logo.png"))));
 
@@ -107,10 +107,6 @@ public class LoginController extends BaseController {
 
             passwordField.setVisible(!passwordVisible);
             passwordField.setManaged(!passwordVisible);
-        });
-
-        splitPane.lookupAll(".split-pane-divider").forEach(divider -> {
-            divider.setMouseTransparent(true);
         });
 
         loginButton.setOnAction(e -> {
