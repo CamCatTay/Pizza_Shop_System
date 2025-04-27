@@ -146,7 +146,7 @@ public class App extends Application {
         String DEFAULT_SCENE = "Home";
         int DEFAULT_WIDTH = 1000;
         int DEFAULT_HEIGHT = 800;
-        boolean START_IN_FULLSCREEN = false;
+        boolean START_IN_FULLSCREEN = true;
 
         FXMLLoader navigationBarLoader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/navigation/NavigationBar.fxml"));
         Parent navigationBar = navigationBarLoader.load();
