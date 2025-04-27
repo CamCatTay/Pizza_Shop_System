@@ -21,7 +21,7 @@
                      <children>
                         <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="300.0" promptText="Password" />
                         <Button fx:id="togglePasswordButton" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="login-eye-button" text="👁" />
-                        <TextField fx:id="visiblePasswordField" alignment="CENTER" translateZ="-1.0" visible="false" />
+                        <TextField fx:id="visiblePasswordField" alignment="CENTER" promptText="Password" translateZ="-1.0" visible="false" />
                      </children>
                   </StackPane>
                </children>
