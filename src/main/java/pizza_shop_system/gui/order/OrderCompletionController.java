@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import org.json.JSONArray;
@@ -95,7 +96,10 @@ public class OrderCompletionController extends BaseController {
 
         // Signature Section (if payment method is Credit Card)
         if (paymentMethod.equalsIgnoreCase("Credit Card")) {
-            receiptBox.getChildren().add(new Label("\nSignature:"));
+            receiptBox.getChildren().add(new Label("Signature:"));
+            receiptBox.getChildren().add(new Region());
+            receiptBox.getChildren().add(new Region());
+            receiptBox.getChildren().add(new Region());
             receiptBox.getChildren().add(new Line(0, 0, 200, 0)); // Placeholder for signature
         }
 

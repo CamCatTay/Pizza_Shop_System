@@ -31,8 +31,12 @@ public class GenerateReceiptsController extends BaseController {
     public ToggleButton createOrderToggle(JSONObject order) {
         // Extract necessary order details
         int orderId = order.getInt("orderId");
-        String date = order.getString("date");
+        String date = order.optString("date");
         double total = order.getDouble("total");
+
+        if (date.isEmpty()) {
+            return null;
+        }
 
         // Format button text
         String buttonText = String.format("Order #%d | %s | $%.2f", orderId, date, total);
@@ -61,7 +65,10 @@ public class GenerateReceiptsController extends BaseController {
         JSONArray orders = orderService.getOrders();
         for (int i = 0; i < orders.length(); i++) {
             JSONObject order = orders.getJSONObject(i);
-            ordersContainer.getChildren().add(createOrderToggle(order));
+            ToggleButton toggleButton = createOrderToggle(order);
+            if (toggleButton != null) {
+                ordersContainer.getChildren().add(toggleButton);
+            }
         }
     }
 
