@@ -36,7 +36,7 @@
                   <Button fx:id="signupButton" prefHeight="35.0" prefWidth="250.0" styleClass="login-secondary-button" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
                </children>
             </HBox>
-            <VBox fx:id="resultsContainer" prefHeight="29.0" prefWidth="411.0" />
+            <VBox fx:id="resultsContainer" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="411.0" />
          </children>
       </VBox>
    </children>
