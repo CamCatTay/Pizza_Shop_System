@@ -12,14 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 
 import javax.print.DocFlavor;
 import java.io.IOException;
 
 public class OrderCompletionController extends BaseController {
-
-    @FXML
-    private ScrollPane reciptScrollPane;
     @FXML
     private Button orderAgainButton;
     @FXML
@@ -28,9 +26,16 @@ public class OrderCompletionController extends BaseController {
     private final CheckoutController checkoutController = new CheckoutController();
     private final CartController cartController = new CartController();
     private final AccountService accountService = new AccountService();
+    private final StyleUtil styleUtil = new StyleUtil();
+
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(orderAgainButton);
+    }
 
     @FXML
     private void initialize() {
+        stylize();
+
         checkoutController.setOrderCompletionController(this);
         orderAgainButton.setOnAction(e -> orderAgain());
     }
@@ -46,7 +51,7 @@ public class OrderCompletionController extends BaseController {
 
         VBox receiptBox = new VBox();
         receiptBox.setFillWidth(true);
-        receiptBox.setAlignment(Pos.TOP_LEFT);
+        receiptBox.setAlignment(Pos.TOP_CENTER);
         receiptBox.setSpacing(10);
 
         // Business Header
