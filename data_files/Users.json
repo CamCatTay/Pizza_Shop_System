@@ -1,14 +1,23 @@
 {
-    "nextUserId": 5,
+    "nextUserId": 6,
     "users": [
         {
-            "password": "password",
+            "password": "1234",
             "account_type": "manager",
             "address": "789 Oak St",
             "user_id": 1,
             "name": "Bob Smith",
             "phone_number": "+1-678-555-1234",
             "email": "manager@pizzashop.org"
+        },
+        {
+            "password": "1234",
+            "account_type": "customer",
+            "address": "267 Log Rd",
+            "user_id": 5,
+            "name": "Mr Anderson",
+            "phone_number": "+1-678-555-1234",
+            "email": "customer@example.com"
         },
         {
             "password": "1",
