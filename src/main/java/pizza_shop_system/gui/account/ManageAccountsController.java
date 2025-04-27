@@ -70,7 +70,7 @@ public class ManageAccountsController extends BaseController {
         updateAccountsDisplay();
     }
 
-    // display all the account information of all users in Users.json
+    // display all the account information of all users
     public void updateAccountsDisplay() throws IOException {
         accountsVBox.getChildren().clear(); // Clear previous accounts
 

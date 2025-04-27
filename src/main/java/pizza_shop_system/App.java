@@ -129,7 +129,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        DataFileManager.initializeDataFiles();
+        DataFileManager dataFileManager = new DataFileManager();
+        dataFileManager.initializeDataFiles(); // Important to create a copy of the data_files on the local machine for writing
 
         // Constants
         String DEFAULT_SCENE = "Home";
