@@ -3,6 +3,7 @@ package pizza_shop_system.gui.reports;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.reports.ReportGenerator;
 
 import java.io.IOException;
@@ -28,14 +29,18 @@ public class ReportsController extends BaseController {
     @FXML
     private TextArea reportTextArea;
 
-    @FXML
-    private Button backButton;
-
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final ReportGenerator reportGenerator = new ReportGenerator();
+    private final StyleUtil styleUtil = new StyleUtil();
+
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(generateButton);
+    }
 
     @FXML
     private void initialize() {
+        stylize();
+
         // Populate ComboBox with report types
         timeSelectionChoiceBox.getItems().addAll("Daily Report", "Weekly Report");
         timeSelectionChoiceBox.getSelectionModel().select("Daily Report");
@@ -90,8 +95,6 @@ public class ReportsController extends BaseController {
                 showError("Failed to generate report: " + ex.getMessage());
             }
         });
-
-        backButton.setOnAction(e -> goBack());
     }
 
     private boolean isValidDate(String date) {
@@ -134,11 +137,6 @@ public class ReportsController extends BaseController {
             e.printStackTrace();
             showError("An error occurred while generating the report: " + e.getMessage());
         }
-    }
-
-    private void goBack() {
-        System.out.println("Navigating back to the Manager Dashboard...");
-        switchScene("AccountMenu");
     }
 
     public void showError(String message) {
