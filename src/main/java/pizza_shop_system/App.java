@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.NoSuchFileException;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.jar.JarEntry;
@@ -47,26 +50,26 @@ public class App extends Application {
                     }
                 }
             } else if (url.getProtocol().equals("jar")) {
-                // Packaged mode (running from .jar)
-                String pathInsideJar = baseScenesPath.substring(1); // remove leading '/'
-                String jarPath = url.getPath().substring(5, url.getPath().indexOf("!"));
+                // Running in packaged JAR: Read all JAR entries
+                String jarBaseScenesPath = baseScenesPath.startsWith("/") ? baseScenesPath.substring(1) : baseScenesPath;
+                String jarPath = URLDecoder.decode(url.getPath().substring(5, url.getPath().indexOf("!")), StandardCharsets.UTF_8); // Remove spaces
+
                 try (JarFile jar = new JarFile(jarPath)) {
                     Enumeration<JarEntry> entries = jar.entries();
                     while (entries.hasMoreElements()) {
                         JarEntry entry = entries.nextElement();
                         String name = entry.getName();
-                        if (name.startsWith(pathInsideJar) && name.endsWith(".fxml")) {
-                            // Scene Name: take only the file name, without folders
+                        if (name.startsWith(jarBaseScenesPath) && name.endsWith(".fxml")) {
                             String sceneFileName = name.substring(name.lastIndexOf("/") + 1);
                             String sceneName = sceneFileName.replace(".fxml", "");
-                            String scenePath = "/" + name; // Always use absolute path when loading from resource
+                            String scenePath = "/" + name; // Absolute resource path
                             sceneController.addScene(sceneName, scenePath);
                         }
                     }
                 }
             }
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            System.out.println("Could not find jar file " + e.getMessage());
         }
     }
 
@@ -94,23 +97,30 @@ public class App extends Application {
                     }
                 }
             } else if (url.getProtocol().equals("jar")) {
-                // Packaged mode (inside JAR)
-                String pathInsideJar = baseStylesheetPath.substring(1); // remove leading '/'
-                String jarPath = url.getPath().substring(5, url.getPath().indexOf("!"));
+                // Running in packaged JAR: Read all JAR entries
+                String jarBaseStylesheetPath = baseStylesheetPath.startsWith("/") ? baseStylesheetPath.substring(1) : baseStylesheetPath;
+                String jarPath = URLDecoder.decode(url.getPath().substring(5, url.getPath().indexOf("!")), StandardCharsets.UTF_8);
+
                 try (JarFile jar = new JarFile(jarPath)) {
                     Enumeration<JarEntry> entries = jar.entries();
                     while (entries.hasMoreElements()) {
                         JarEntry entry = entries.nextElement();
                         String name = entry.getName();
-                        if (name.startsWith(pathInsideJar) && name.endsWith(".css")) {
-                            String stylesheetPath = "/" + name;
-                            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylesheetPath)).toExternalForm());
+                        if (name.startsWith(jarBaseStylesheetPath) && name.endsWith(".css")) {
+                            String stylesheetPath = "/" + name; // Use absolute resource path
+                            URL resourceUrl = getClass().getResource(stylesheetPath);
+
+                            if (resourceUrl != null) {
+                                scene.getStylesheets().add(resourceUrl.toExternalForm());
+                            } else {
+                                System.out.println("WARNING: Stylesheet not found -> " + stylesheetPath);
+                            }
                         }
                     }
                 }
             }
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            System.out.println("Could not find jar file " + e.getMessage());
         }
     }
 
@@ -136,7 +146,7 @@ public class App extends Application {
         String DEFAULT_SCENE = "Home";
         int DEFAULT_WIDTH = 1000;
         int DEFAULT_HEIGHT = 800;
-        boolean START_IN_FULLSCREEN = true;
+        boolean START_IN_FULLSCREEN = false;
 
         FXMLLoader navigationBarLoader = new FXMLLoader(getClass().getResource("/pizza_shop_system/scenes/navigation/NavigationBar.fxml"));
         Parent navigationBar = navigationBarLoader.load();
