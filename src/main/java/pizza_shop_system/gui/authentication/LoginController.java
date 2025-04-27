@@ -1,6 +1,7 @@
 package pizza_shop_system.gui.authentication;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,6 +43,7 @@ public class LoginController extends BaseController {
     // Email or password was invalid so notify user of this
     private void displayIncorrectEmailOrPassword() {
         Label label = new Label("Incorrect Email or Password");
+        label.setAlignment(Pos.CENTER);
         resultsContainer.getChildren().add(label);
     }
 

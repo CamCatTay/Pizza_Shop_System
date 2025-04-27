@@ -1,6 +1,7 @@
 package pizza_shop_system.gui.authentication;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -24,10 +25,11 @@ public class SignUpController extends BaseController {
     @FXML
     private Button signupButton, loginButton;
 
-    private StyleUtil styleUtil = new StyleUtil();
+    private final StyleUtil styleUtil = new StyleUtil();
 
     private void displayResult(String result) {
         Label label = new Label(result);
+        label.setAlignment(Pos.CENTER);
         resultsContainer.getChildren().add(label);
     }
 
@@ -38,7 +40,7 @@ public class SignUpController extends BaseController {
 
         // All possible results when attempting to sign up
         switch (result) {
-            case "Success" -> System.out.println("Sign Up Success");
+            case "Success" -> sceneController.switchScene("Login");
             case "DuplicateEmail" -> displayResult("This email already belongs to an account.");
             case "PasswordsDoNotMatch" -> displayResult("Passwords do not match.");
             case "EmptyField" -> displayResult("Please fill out all fields.");
@@ -60,7 +62,7 @@ public class SignUpController extends BaseController {
 
         signupButton.setOnAction(e -> {
             try {
-                signUp();
+                 signUp();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

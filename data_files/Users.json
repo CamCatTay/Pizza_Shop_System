@@ -1,5 +1,5 @@
 {
-    "nextUserId": 6,
+    "nextUserId": 7,
     "users": [
         {
             "password": "1234",
@@ -45,6 +45,15 @@
             "name": "Cameron Taylor",
             "phone_number": "777-770-3333",
             "email": "cam@pizzashop.org"
+        },
+        {
+            "password": "6",
+            "account_type": "customer",
+            "address": "6",
+            "user_id": 6,
+            "name": "6",
+            "phone_number": "6",
+            "email": "6"
         }
     ]
 }
