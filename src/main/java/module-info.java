@@ -29,8 +29,6 @@ module org.example.demo {
     opens pizza_shop_system.gui.navigation to javafx.fxml;
     exports pizza_shop_system.menu.entities;
     opens pizza_shop_system.menu.entities to javafx.fxml;
-    exports pizza_shop_system.menu.services;
-    opens pizza_shop_system.menu.services to javafx.fxml;
     exports pizza_shop_system.order.entities;
     opens pizza_shop_system.order.entities to javafx.fxml;
 }
