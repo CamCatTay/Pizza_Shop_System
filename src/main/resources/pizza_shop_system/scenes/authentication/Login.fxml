@@ -28,12 +28,12 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button fx:id="loginButton" prefHeight="35.0" prefWidth="250.0" styleClass="home-login-button" text="LOGIN" />
+                  <Button fx:id="loginButton" prefHeight="35.0" prefWidth="250.0" styleClass="login-primary-button" text="LOGIN" />
                </children>
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button fx:id="signupButton" prefHeight="35.0" prefWidth="250.0" styleClass="sign-up-button" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="signupButton" prefHeight="35.0" prefWidth="250.0" styleClass="login-secondary-button" text="Don't have an account? Click here!" textAlignment="CENTER" wrapText="true" />
                </children>
             </HBox>
             <VBox fx:id="resultsContainer" prefHeight="29.0" prefWidth="411.0" />

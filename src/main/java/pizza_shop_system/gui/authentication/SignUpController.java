@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 
 import java.io.IOException;
 
@@ -22,6 +23,8 @@ public class SignUpController extends BaseController {
     private PasswordField passwordField, verifyPasswordField;
     @FXML
     private Button signupButton, loginButton;
+
+    private StyleUtil styleUtil = new StyleUtil();
 
     private void displayResult(String result) {
         Label label = new Label(result);
@@ -47,7 +50,14 @@ public class SignUpController extends BaseController {
         sceneController.switchScene("Login");
     }
 
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(loginButton);
+        styleUtil.fadeButtonOnHover(signupButton);
+    }
+
     public void initialize() {
+        stylize();
+
         signupButton.setOnAction(e -> {
             try {
                 signUp();
