@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
 import pizza_shop_system.order.services.OrderService;
 import pizza_shop_system.utils.StringUtil;
 
@@ -38,6 +39,7 @@ public class CustomizePizzaController extends BaseController {
     private final CartController cartController = new CartController();
     private final MenuController menuController = new MenuController();
     private JSONObject customizations;
+    private final StyleUtil styleUtil = new StyleUtil();
 
     // Add buttons to their appropriate toggle groups
     private void setupToggleButtons() {
@@ -218,8 +220,14 @@ public class CustomizePizzaController extends BaseController {
         sceneController.switchScene("CustomizePizza");
     }
 
+    private void stylize() {
+        styleUtil.fadeButtonOnHover(addToOrderButton);
+    }
+
     @FXML
     public void initialize() throws IOException {
+        stylize();
+
         menuController.setCustomizePizzaController(this);
         customizations = orderService.loadCustomizations();
         setupCustomizePizzaGUI();
