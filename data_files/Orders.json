@@ -1,5 +1,44 @@
 {
-    "nextOrderId": 40,
-    "orders": [
-    ]
+    "nextOrderId": 41,
+    "orders": [{
+        "date": "2025-04-27T03:32:11Z",
+        "accountId": 2,
+        "total": 15.69,
+        "orderId": 40,
+        "subtotal": 14.67,
+        "tax": 1.02,
+        "orderInformation": {
+            "orderType": "Delivery",
+            "address": "123 Hello Mate Rd"
+        },
+        "paymentInformation": {"paymentMethod": "Cash"},
+        "orderItems": [
+            {
+                "orderItemId": 1,
+                "price": 10.99,
+                "name": "Cheese Pizza",
+                "pizzaSize": "medium",
+                "toppings": [],
+                "menuItemId": 1,
+                "crust": "regular"
+            },
+            {
+                "beverageSize": "medium",
+                "orderItemId": 2,
+                "price": 1.69,
+                "name": "Green Tea",
+                "ice": "regular",
+                "category": "Beverage",
+                "menuItemId": 11
+            },
+            {
+                "beverageSize": "large",
+                "orderItemId": 3,
+                "price": 1.99,
+                "name": "Fruit Punch",
+                "ice": "extra"
+            }
+        ],
+        "nextOrderItemId": 4
+    }]
 }
