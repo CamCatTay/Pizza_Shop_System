@@ -4,11 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pizza_shop_system.account.services.AccountService;
 import pizza_shop_system.gui.base.BaseController;
+import pizza_shop_system.gui.utils.StyleUtil;
+import pizza_shop_system.utils.StringUtil;
 
 import java.io.IOException;
 
@@ -17,26 +21,34 @@ public class ManageAccountsController extends BaseController {
     private VBox accountsVBox;
 
     private final AccountService accountService = new AccountService();
+    private final StringUtil stringUtil = new StringUtil();
+    private final StyleUtil styleUtil = new StyleUtil();
 
     // Add a row to account vbox with attached id, name, and role of said account
     private void addAccountRow(int id, String name, String role) {
 
-        // Create an HBox for the account row
-        HBox row = new HBox(10);
-        row.getStyleClass().add("account-row");
+        // Setup item row
+        HBox accountRow = new HBox();
+        accountRow.setSpacing(10);
+        accountRow.setMaxWidth(Double.MAX_VALUE);
+        accountRow.getStyleClass().add("account-row");
 
         // Create labels for ID, Name, and Role
         Label idLabel = new Label("User ID: " + id);
-        idLabel.getStyleClass().add("account-info-label");
 
         Label nameLabel = new Label("Name: " + name);
-        nameLabel.getStyleClass().add("account-info-label");
 
-        Label roleLabel = new Label("Role: " + role);
-        roleLabel.getStyleClass().add("account-info-label");
+        Label roleLabel = new Label("Role: " + stringUtil.captilizeWord(role));
+
+        // Setup region
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.SOMETIMES);
+        spacer.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
         Button deleteButton = new Button("Delete");
         deleteButton.getStyleClass().add("account-button");
+        styleUtil.fadeButtonOnHover(deleteButton);
+
         deleteButton.setOnAction(e -> {
             try {
                 removeAccount(id);
@@ -46,10 +58,10 @@ public class ManageAccountsController extends BaseController {
         });
 
         // Add all elements to the HBox
-        row.getChildren().addAll(idLabel, nameLabel, roleLabel, deleteButton);
+        accountRow.getChildren().addAll(idLabel, nameLabel, roleLabel, spacer, deleteButton);
 
         // Add the row to the VBox
-        accountsVBox.getChildren().add(row);
+        accountsVBox.getChildren().add(accountRow);
     }
 
     // remove selected account id from files

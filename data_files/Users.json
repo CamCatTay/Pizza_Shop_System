@@ -3,7 +3,7 @@
         "password": "password",
         "account_type": "manager",
         "address": "789 Oak St",
-        "user_id": 3,
+        "user_id": 1,
         "name": "Bob Smith",
         "phone_number": "+1-678-555-1234",
         "email": "manager@pizzashop.org"
@@ -12,7 +12,7 @@
         "password": "1",
         "account_type": "customer",
         "address": "Random",
-        "user_id": 5,
+        "user_id": 2,
         "name": "Jane Doe",
         "phone_number": "Random",
         "email": "1"
@@ -21,7 +21,7 @@
         "password": "2",
         "account_type": "manager",
         "address": "Random",
-        "user_id": 6,
+        "user_id": 3,
         "name": "Bob Pizza",
         "phone_number": "Random",
         "email": "2"
